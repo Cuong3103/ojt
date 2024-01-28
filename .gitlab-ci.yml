@@ -76,6 +76,8 @@ test:
 deploy-staging:
   stage: deploy
   image: node:20-alpine
+  only:
+    - merge_requests
   needs:
     - job: test
   script:
