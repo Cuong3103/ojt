@@ -12,6 +12,9 @@ stages:
 build-app:
   stage: build
   image: node:20-alpine
+  only:
+    - main
+    - merge_requests
   script:
     - npm --version
     - npm ci
@@ -35,8 +38,9 @@ build-app:
 lint:
   stage: misc
   image: node:20-alpine
-  needs:
-    - job: build-app
+  only:
+    - main
+    - merge_requests
   script:
     - npm ci
     - npm run lint
@@ -45,11 +49,37 @@ test:
   stage: misc
   image: node:20-alpine
   needs:
-    - job: lint
+    - lint
+  only:
+    - main
+    - merge_requests
   script:
     - npm ci
     - npm run test:ci
 
+deploy-staging:
+  stage: deploy
+  image: node:20-alpine
+  only:
+    - merge_requests
+  script:
+    - npm i
+    - npm install --global vercel
+    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+    - vercel build --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --token=$VERCEL_TOKEN
+
+deploy-prod:
+  stage: deploy
+  image: node:20-alpine
+  only:
+    - main
+  script:
+    - npm i
+    - npm install --global vercel
+    - vercel pull --yes --token=$VERCEL_TOKEN
+    - vercel build --token=$VERCEL_TOKEN
+    - vercel deploy --token=$VERCEL_TOKEN
 # FIXME: E2E testing would be modified later
 # e2e-testing:
 #   stage: misc
@@ -72,31 +102,3 @@ test:
 #       - ./Screenshot/
 #     when: always
 #     expire_in: 4 days
-
-deploy-staging:
-  stage: deploy
-  image: node:20-alpine
-  only:
-    - merge_requests
-  needs:
-    - job: test
-  script:
-    - npm i
-    - npm install --global vercel
-    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
-    - vercel build --token=$VERCEL_TOKEN
-    - vercel deploy --prebuilt --token=$VERCEL_TOKEN
-
-deploy-prod:
-  stage: deploy
-  image: node:20-alpine
-  only:
-    - main
-  needs:
-    - job: test
-  script:
-    - npm i
-    - npm install --global vercel
-    - vercel pull --yes --token=$VERCEL_TOKEN
-    - vercel build --token=$VERCEL_TOKEN
-    - vercel deploy --token=$VERCEL_TOKEN
