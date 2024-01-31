@@ -7,6 +7,9 @@ const createJestConfig = nextJest({
 
 const config: Config = {
   coverageProvider: 'babel',
+  coverageReporters: ['html', 'text', 'text-summary', 'cobertura'],
+  collectCoverageFrom: ["**/*/*.ts", "!**/node_modules/**"],
+  testMatch: ['**/*.test.ts'],
   clearMocks: true,
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
