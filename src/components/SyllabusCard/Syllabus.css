@@ -1,0 +1,65 @@
+.syllabus-container{
+    width: 800px;
+    border-radius: 20px;
+    padding: 14px 20px;
+    -webkit-box-shadow: 0px 4px 8px 3px rgba(0,0,0,0.19);
+    -moz-box-shadow: 0px 4px 8px 3px rgba(0,0,0,0.19);
+    box-shadow: 0px 4px 8px 3px rgba(0,0,0,0.19);
+}
+.top-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px 0;
+}
+.top-left-content{
+    width: 180px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+}
+
+.top-right-icon{
+    padding: 5px 5px 0 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.status{
+    margin-left: 20px;
+    border-radius: 50px;
+    border: 1.5px solid #FFFFFF;
+    padding: 0 15px 0 15px; 
+    background-color: #2D3748;
+    font-weight: 500;
+    font-size: 12px;
+    color: #FFFFFF;
+    padding: 5px 15px 5px 15px;
+}
+
+.course-name{
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: 0.2em;
+    color: #2D3748;
+}
+
+.bot-content{
+    width: 540px;
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+.vertical-line{
+    border-left: 2px solid #474747;
+    height: 22px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+.course-content{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    color: #474747
+}
