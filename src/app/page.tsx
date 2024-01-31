@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import SyllabusCard from "./components/SyllabusCard/SyllabusCard";
+import SyllabusCard from "@/components/SyllabusCard/SyllabusCard";
 
 export default function Home() {
   const [option, setOption] = useState('');
@@ -12,8 +12,6 @@ export default function Home() {
   return (
     <div>
       <SyllabusCard />
-
-
     </div>
   );
 }
