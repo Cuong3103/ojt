@@ -1,14 +1,14 @@
 "use client"
 
-import Dropdown from "./components/Dropdown/Dropdown";
+import Dropdown from "@/components/Dropdown/Dropdown";
 import { useState } from "react";
 
 export default function Home() {
-  const [option, setOption] = useState('');
+  // const [option, setOption] = useState('');
 
-  const handleOptionChange = (event: any) => {
-    setOption(event.target.value);
-  };
+  // const handleOptionChange = (event: any) => {
+  //   setOption(event.target.value);
+  // };
 
   return (
     <div>
