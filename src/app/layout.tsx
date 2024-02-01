@@ -5,6 +5,8 @@ import { Sidebar } from "./components/sidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import SessionProviders from "./components/sesstion-provider/session-provider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,10 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="pastel">
       <body className={`${inter.className} flex m-auto`} data-theme="pastel">
-        <ToastContainer autoClose={2000} />
-        <Sidebar />
-
-        {children}
+        <SessionProviders>
+          <ToastContainer autoClose={2000} />
+          <Sidebar />
+          {children}
+        </SessionProviders>
       </body>
     </html>
   );
