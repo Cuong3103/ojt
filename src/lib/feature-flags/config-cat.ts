@@ -1,13 +1,20 @@
-import * as configcat from 'configcat-js-ssr';
+import * as configcat from "configcat-js-ssr";
 
 const configCatClient = configcat.getClient(
-  '1BzcCHay5kGCTJQpIo-OzQ/hdUeGcY0eEKTxyy2vCuhOw',
-  configcat.PollingMode.AutoPoll, {
+  "gCDcCER8Q0CAICZto0BEyA/C_OuuhAS9EuM_vfxgKhWcQ",
+  configcat.PollingMode.AutoPoll,
+  {
     pollIntervalSeconds: 360,
-    logger: configcat.createConsoleLogger(configcat.LogLevel.Debug)
-  },
+    logger: configcat.createConsoleLogger(configcat.LogLevel.Debug),
+  }
 );
 
-export const isFlagEnabled = (flagName: string) => {
-  configCatClient.getValueAsync(flagName, false).then((value) => value);
-}
+export const isFlagEnabled = async (flagName: string): Promise<boolean> => {
+  try {
+    const value = await configCatClient.getValueAsync(flagName, false);
+    return value;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
