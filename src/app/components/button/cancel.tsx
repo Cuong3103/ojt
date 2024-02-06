@@ -1,10 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 
-const Cancel = () => {
+export const Cancel: FC = () => {
   const buttonTextStyle = {
     color: "#E74A3B",
-    textDecoration: "underline", // Set text-decoration to create an underline
-    // Add any additional styles as needed
+    textDecoration: "underline",
   };
 
   return (
@@ -18,5 +17,3 @@ const Cancel = () => {
     </div>
   );
 };
-
-export default Cancel;

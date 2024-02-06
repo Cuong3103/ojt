@@ -1,7 +1,7 @@
 "use client";
 
-import { Menu } from "./Menu";
-import { MenuItem, menuItems } from "./menu-items.config";
+import { Menu } from "./menu";
+import { menuItems } from "./menu-items.config";
 
 export const MenuList = ({ openSidebar }: { openSidebar: boolean }) => {
   return (

@@ -1,10 +1,6 @@
 import React from "react";
 
-interface ProgressBarProps {
-  text: String;
-}
-
-const ProgressBar: React.FC<ProgressBarProps> = ({ text }) => {
+const ProgressBar: React.FC<String> = (text) => {
   let status: string | undefined;
 
   if (text === "General") {
@@ -31,7 +27,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ text }) => {
   const getProgressBarClass = (status: string | undefined): string => {
     switch (status) {
       case "General":
-        return "bg-main"; // Tùy chỉnh màu sắc của Tailwind CSS
+        return "bg-main";
       case "Outline":
         return "bg-blue-main";
       case "Other":

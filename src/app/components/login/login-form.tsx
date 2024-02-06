@@ -1,13 +1,11 @@
 "use client";
-import React from "react";
+import React, { FC } from "react";
 import Link from "next/link";
 
-const Login = () => {
+export const Login: FC = () => {
   return (
     <div>
       <Link href={"/api/auth/signin"}>Log In</Link>
     </div>
   );
 };
-
-export default Login;

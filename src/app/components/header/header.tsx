@@ -1,13 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 
-const Header: React.FC = () => {
+export const Header: FC = () => {
   return (
     <div className="navbar p-0">
       <div className="flex bg-main justify-between pt-2.5 pr-10 pb-2.5 pl-10 items-center ">
-        {/* LOGO */}
         <img className=" w-22 h-14" src="./assets/Logo.png" alt="logo" />
 
-        {/* HALF LEFT */}
         <div className="flex justify-center items-center h-11 w-72 gap-9">
           <div className="unigate w-28 h-8 bg-deep-black px-4 py-1.5 rounded-3xl">
             <div className="w-20 h-5 flex gap-2 items-center">
@@ -41,5 +39,3 @@ const Header: React.FC = () => {
     </div>
   );
 };
-
-export default Header;

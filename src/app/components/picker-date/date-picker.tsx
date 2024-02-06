@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import dayjs from "dayjs";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
-import cn, { generateDate, months, days } from "../../helpers/calendar";
+import cn, { generateDate, months, days } from "../../../helpers/calendar";
 
-export default function DatePicker() {
+export const DatePicker: FC = () => {
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
   const [selectDate, setSelectDate] = useState(currentDate);
@@ -120,4 +120,4 @@ export default function DatePicker() {
       </div>
     </>
   );
-}
+};
