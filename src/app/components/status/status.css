@@ -1,0 +1,70 @@
+.status {
+  display: flex;
+  gap: 30px;
+  padding-left: 20px;
+  padding-right: 50px;
+  grid: 10px;
+}
+
+.badge.badge-neutral {
+  width: 60px;
+  height: 28px;
+  font-size: 12px;
+}
+
+.badge.badge-secondary.badge-outline {
+  color: #d45b13;
+  width: 60px;
+  height: 28px;
+  font-size: 12px;
+}
+
+.toggle {
+  color: #d45b13;
+}
+
+.chip.p-10 {
+  display: flex;
+  gap: 30px;
+  padding-left: 20px;
+  padding-right: 50px;
+  grid: 10px;
+  font-size: 12px;
+}
+
+.badge.badge-neutrall {
+  width: 72px;
+  height: 27px;
+  color: #fff;
+  font-size: 12px;
+  background-color: #2d3748;
+}
+
+.badge.badge-ghost {
+  width: 72px;
+  height: 27px;
+  background-color: #2d3748;
+  color: #fff;
+  font-size: 12px;
+}
+
+.badge.badge-info {
+  width: 72px;
+  height: 27px;
+  background-color: #285d9a;
+  color: #fff;
+  font-size: 12px;
+}
+
+#badge-dismiss-dark {
+  width: 86px;
+  height: 28px;
+  color: #fff;
+  font-size: 12px;
+  background-color: #2d3748;
+  border-radius: 16px;
+  gap: 0;
+  margin: 0;
+  padding-left: 15px;
+  display: flex;
+}

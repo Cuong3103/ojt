@@ -4,7 +4,7 @@ import { FC, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import "../../styles/sidebar.css";
-import { MenuList } from "./MenuList";
+import { MenuList } from "./menu-list";
 
 export const Sidebar: FC<any> = (props) => {
   const [openSidebar, setOpenSidebar] = useState(true);
