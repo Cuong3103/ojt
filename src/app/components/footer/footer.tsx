@@ -2,8 +2,10 @@ import React, { FC } from "react";
 
 export const Footer: FC = () => {
   return (
-    <div className="flex justify-center items-center  bg-main text-white p-2.5 h-20 text-lg font-normal">
-      Copyright @2022 BA Warrior. All right reserved
-    </div>
+    <footer className="footer footer-center p-4 bg-primary-color text-white ">
+      <aside>
+        <p>Copyright © 2022 - All right reserved</p>
+      </aside>
+    </footer>
   );
 };

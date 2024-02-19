@@ -1,6 +1,6 @@
-import React from "react";
+import React, { CSSProperties, FC } from "react";
 
-const ProgressBar: React.FC<String> = (text) => {
+export const ProgressBar: FC<String> = (text) => {
   let status: string | undefined;
 
   if (text === "General") {
@@ -13,7 +13,7 @@ const ProgressBar: React.FC<String> = (text) => {
     status = "Done";
   }
 
-  const progressStyle: React.CSSProperties = {
+  const progressStyle: CSSProperties = {
     width:
       text === "General"
         ? "12.5%"
@@ -72,5 +72,3 @@ const ProgressBar: React.FC<String> = (text) => {
     </div>
   );
 };
-
-export default ProgressBar;

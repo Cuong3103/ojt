@@ -5,14 +5,15 @@ const axiosInstance = axios.create({
   baseURL: process.env.BASE_API_URL,
   headers: {
     "x-api-key": process.env.API_KEY,
+    "Content-Type": "application/json",
   },
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token"); //FIXME: Modify localStorage.getItem after NextAuth implemented
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  // const token = localStorage.getItem("token"); //FIXME: Modify localStorage.getItem after NextAuth implemented
+  // if (token) {
+  //   config.headers.Authorization = `Bearer ${token}`;
+  // }
 
   return config;
 });

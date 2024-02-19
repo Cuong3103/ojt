@@ -1,32 +1,32 @@
+import { User } from "./../../node_modules/next-auth/core/types.d";
 import NextAuth from "next-auth";
 import { JWT } from "next-auth/jwt";
 
 declare module "next-auth" {
   interface Session {
     user: {
-      id: string;
+      id: number;
       username: string;
+      role: string;
+      avatarUrl: string;
     };
 
-    backendTokens: {
-      accessToken: string;
-      refreshToken: string;
-      expiresIn: number;
-    };
+    accessToken: string;
+    refreshToken: string;
   }
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     user: {
-      id: string;
+      id: number;
       username: string;
+      role: string;
+      avatarUrl: string;
     };
 
-    backendTokens: {
-      accessToken: string;
-      refreshToken: string;
-      expiresIn: number;
-    };
+    accessToken: string;
+    accessTokenExpiry: number;
+    refreshToken: string;
   }
 }
