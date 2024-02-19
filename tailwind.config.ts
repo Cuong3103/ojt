@@ -20,6 +20,15 @@ const config: Config = {
       backgroundColor: {
         "secondary-sidebar": "#ECF8FF",
         "primary-sidebar": "",
+        "primary-color": "#2D3748",
+        "deep-primary-color": "#0B2136",
+      },
+      textColor: {
+        "primary-color": "#2D3748",
+        "secondary-color": "#D45B13",
+      },
+      minHeight: {
+        middle: "100vh",
       },
     },
   },

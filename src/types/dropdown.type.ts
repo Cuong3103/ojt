@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export type Option = {
   label: string;
   value: string;
@@ -6,6 +8,6 @@ export type Option = {
 export type DropdownProps = {
   value: string;
   options: Option[];
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   placeholder?: string;
 };

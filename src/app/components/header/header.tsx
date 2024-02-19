@@ -1,38 +1,68 @@
+"use client";
+
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import React, { FC } from "react";
 
-export const Header: FC = () => {
+export const Header: FC = (props) => {
+  const { data: session } = useSession();
+
+  const handleLogout = () => {
+    if (session && session.user) {
+      signOut();
+    }
+  };
+
   return (
-    <div className="navbar p-0">
-      <div className="flex bg-main justify-between pt-2.5 pr-10 pb-2.5 pl-10 items-center ">
-        <img className=" w-22 h-14" src="./assets/Logo.png" alt="logo" />
-
-        <div className="flex justify-center items-center h-11 w-72 gap-9">
-          <div className="unigate w-28 h-8 bg-deep-black px-4 py-1.5 rounded-3xl">
-            <div className="w-20 h-5 flex gap-2 items-center">
-              <div>
-                <img className="w-7 h-5" src="./assets/unigate.png" alt="" />
-              </div>
-              <p className=" text-white text-xs font-normal ">uniGate</p>
-            </div>
-          </div>
-
-          {/* HALF RIGHT */}
-          <div className="flex gap-x-3">
-            <div className="w-11 h-11">
-              <img
-                className="w-11 h-11 rounded-full  border-white border-solid border-2 "
-                alt="Tailwind CSS Navbar component"
-                src="./assets/avatar.png"
+    <div className="navbar bg-primary-color">
+      <div className="flex-1">
+        <Image
+          src="https://fsoft-academy.edu.vn/wp-content/uploads/2021/04/logo.svg"
+          alt="FA logo"
+          width={130}
+          height={14}
+          className="cursor-pointer"
+        />
+      </div>
+      <div className="flex-none">
+        <div className="unigate w-28 h-8 bg-deep-primary-color mx-4 px-4 py-1.5 rounded-3xl">
+          <div className="w-20 h-5 flex gap-2 items-center">
+            <div>
+              <Image
+                src="/unigate.svg"
+                alt="unitgate"
+                width={100}
+                height={15}
               />
             </div>
-            <div className="flex flex-col w-24 h-11">
-              <p className="text-white text-base w-max max-h-5 font-bold ">
-                Warrior Tran
-              </p>
-              <a className="text-white text-base max-h-5 font-normal" href="">
-                Log out
-              </a>
-            </div>
+            <p className=" text-white text-xs font-normal ">uniGate</p>
+          </div>
+        </div>
+
+        <div className="flex gap-x-3 mx-4">
+          <div className="w-11 h-11">
+            <Image
+              className="rounded-full  border-white border-solid border-2 "
+              alt="Tailwind CSS Navbar component"
+              src={
+                session?.user.avatarUrl
+                  ? session.user.avatarUrl
+                  : "https://robohash.org/fe9d699531c5b7c3eb9b1eaa8f2ef319?set=set4&bgset=bg2&size=400x400"
+              }
+              width={200}
+              height={11}
+            />
+          </div>
+          <div className="flex flex-col w-24 h-11">
+            <p className="text-white text-base w-max max-h-5 font-bold ">
+              {session?.user.username}
+            </p>
+            <a
+              className="text-white text-base max-h-5 font-normal"
+              onClick={() => handleLogout()}
+            >
+              Log out
+            </a>
           </div>
         </div>
       </div>

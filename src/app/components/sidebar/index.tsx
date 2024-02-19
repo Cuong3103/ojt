@@ -4,14 +4,15 @@ import { FC, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import "../../styles/sidebar.css";
+import { useSession } from "next-auth/react";
 import { MenuList } from "./menu-list";
 
-export const Sidebar: FC<any> = (props) => {
+const Sidebar: FC<any> = (props) => {
   const [openSidebar, setOpenSidebar] = useState(true);
 
-  return (
+  const renderSidebar = () => (
     <article
-      className={`sidebar h-screen flex ${
+      className={`sidebar flex  absolute ${
         openSidebar ? "w-72" : "w-20"
       } duration-100 relative justify-center items-start`}
     >
@@ -30,4 +31,8 @@ export const Sidebar: FC<any> = (props) => {
       </section>
     </article>
   );
+
+  return renderSidebar();
 };
+
+export default Sidebar;

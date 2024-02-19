@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useState } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 import dayjs from "dayjs";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
@@ -12,13 +12,13 @@ export const DatePicker: FC = () => {
   const [selectedMonth, setSelectedMonth] = useState(dayjs().month());
   const [selectedYear, setSelectedYear] = useState(dayjs().year());
 
-  const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleMonthChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = parseInt(event.target.value, 10);
     setSelectedMonth(selectedValue);
     setToday(today.month(selectedValue));
   };
 
-  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleYearChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = parseInt(event.target.value, 10);
     setSelectedYear(selectedValue);
     setToday(today.year(selectedValue));

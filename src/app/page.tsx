@@ -1,23 +1,21 @@
 "use client";
+
 import { useSession } from "next-auth/react";
-import Login from "./components/login/login-form";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
-  if (session && session.user) {
+  if (status === "loading") {
     return (
-      <main className="">
-        <p>Welcome, {session.user.username}!</p>
-        <Link href={"/api/auth/signout"}>Log Out</Link>
-      </main>
+      <div className="flex items-center">
+        Redirecting to dashboard
+        <span className="loading loading-infinity loading-lg"></span>
+      </div>
     );
   }
 
-  return (
-    <main className="">
-      <Login />
-    </main>
-  );
+  if (session && session.user) {
+    return redirect("/dashboard");
+  }
 }

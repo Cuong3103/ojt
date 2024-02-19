@@ -49,7 +49,7 @@ export const Menu: FC<MenuItemProps> = ({ index, item, openSidebar }) => {
     <>
       <div
         key={index}
-        className="flex m-auto justify-start  items-center gap-x-4 rounded-md h-20 "
+        className="flex m-auto justify-start  items-center gap-x-4 rounded-md h-14"
       >
         <button
           className={`btn bg-transparent hover:rounded-full cursor-pointer ${
@@ -62,7 +62,7 @@ export const Menu: FC<MenuItemProps> = ({ index, item, openSidebar }) => {
             {item.icon ? item.icon({}) : <MdOutlineFilterNone />}
           </span>
           <span
-            className={`font-medium flex-1 text-base duration-750 ${
+            className={`flex-1 text-md duration-750 ${
               !openSidebar && "hidden"
             }`}
           >
@@ -71,7 +71,7 @@ export const Menu: FC<MenuItemProps> = ({ index, item, openSidebar }) => {
 
           {openSidebar && item.submenu && (
             <>
-              <span className="text-2xl cursor-pointer">
+              <span className="text-md cursor-pointer">
                 <RiArrowDropDownLine
                   className={`${openSubmenu && "rotate-180"}`}
                 />
