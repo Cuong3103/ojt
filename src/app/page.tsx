@@ -17,5 +17,7 @@ export default function Home() {
 
   if (session && session.user) {
     return redirect("/dashboard");
+  } else {
+    return redirect("/login");
   }
 }

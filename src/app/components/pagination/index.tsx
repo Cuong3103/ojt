@@ -1,15 +1,16 @@
-import React from "react";
-import ReactPaginate from "react-paginate";
+"use client"
+import ReactPaginate, { ReactPaginateProps } from "react-paginate";
 import "./pagination.css";
 import Image from "next/image";
+import { FC } from "react";
 
 interface PaginationProps {
   page: number;
 }
-const Pagination: React.FC<PaginationProps> = ({ page }) => {
+const Pagination: FC<PaginationProps & ReactPaginateProps> = (props) => {
   return (
     <div>
-      {/** 
+      {/**
       <button onClick={handleFirstPage}>First</button>{" "}*/}
       <ReactPaginate
         nextLabel={
@@ -24,7 +25,7 @@ const Pagination: React.FC<PaginationProps> = ({ page }) => {
         // onPageChange={handlePageClick}
         pageRangeDisplayed={3}
         marginPagesDisplayed={2}
-        pageCount={page}
+        pageCount={props.page}
         previousLabel={
           <Image
             className="arrowImg"
@@ -47,7 +48,7 @@ const Pagination: React.FC<PaginationProps> = ({ page }) => {
         activeClassName="active"
         renderOnZeroPageCount={null}
       />
-      {/** 
+      {/**
       <button onClick={handleLastPage}>Last</button>*/}
     </div>
   );
