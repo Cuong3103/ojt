@@ -1,6 +1,7 @@
 "use client";
 
 import { FC, useState } from "react";
+import Link from "next/link";
 import { MdOutlineFilterNone } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { MenuItemProps } from "@/types/menu-item-props.type";
@@ -20,7 +21,7 @@ export const Menu: FC<MenuItemProps> = ({ index, item, openSidebar }) => {
               key={index}
               className="cursor-pointer bg-secondary-sidebar rounded-full hover:bg-blue-400 px-10 py-2"
             >
-              <p>{submenu.title}</p>
+              <Link href={submenu.path}>{submenu.title}</Link>
             </span>
           ))}
       </span>

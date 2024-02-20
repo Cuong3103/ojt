@@ -1,4 +1,4 @@
-import './inputbox.css'
+import './input-box.css'
 
 function InputBox() {
     return (

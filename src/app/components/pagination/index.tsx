@@ -1,40 +1,21 @@
-"use client"
+"use client";
+import React from "react";
 import ReactPaginate, { ReactPaginateProps } from "react-paginate";
 import "./pagination.css";
-import Image from "next/image";
-import { FC } from "react";
+import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
-interface PaginationProps {
+type PaginationProps = {
   page: number;
-}
-const Pagination: FC<PaginationProps & ReactPaginateProps> = (props) => {
+};
+const Pagination: React.FC<PaginationProps & ReactPaginateProps> = (props) => {
   return (
     <div>
-      {/**
-      <button onClick={handleFirstPage}>First</button>{" "}*/}
       <ReactPaginate
-        nextLabel={
-          <Image
-            className="arrowImg"
-            height={24}
-            width={24}
-            src={"./assets/arrow_forward_ios.svg"}
-            alt=""
-          />
-        }
-        // onPageChange={handlePageClick}
+        nextLabel={<MdNavigateNext />}
         pageRangeDisplayed={3}
         marginPagesDisplayed={2}
         pageCount={props.page}
-        previousLabel={
-          <Image
-            className="arrowImg"
-            height={24}
-            width={24}
-            src={"./assets/arrow_back_ios.svg"}
-            alt=""
-          />
-        }
+        previousLabel={<MdNavigateBefore />}
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"
@@ -48,8 +29,6 @@ const Pagination: FC<PaginationProps & ReactPaginateProps> = (props) => {
         activeClassName="active"
         renderOnZeroPageCount={null}
       />
-      {/**
-      <button onClick={handleLastPage}>Last</button>*/}
     </div>
   );
 };
