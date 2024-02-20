@@ -16,7 +16,10 @@ export const menuItems: MenuItem[] = [
     title: "Syllabus",
     submenu: true,
     icon: FiBookOpen,
-    submenuItems: [{ title: "View syllabus" }, { title: "Create syllabus" }],
+    submenuItems: [
+      { title: "View syllabus", path: "" },
+      { title: "Create syllabus", path: "" },
+    ],
   },
   {
     title: "Training program",
@@ -26,7 +29,10 @@ export const menuItems: MenuItem[] = [
     title: "Class",
     submenu: true,
     icon: GoMortarBoard,
-    submenuItems: [{ title: "View class" }, { title: "Create class" }],
+    submenuItems: [
+      { title: "View class", path: "" },
+      { title: "Create class", path: "" },
+    ],
   },
   {
     title: "Training calendar",
@@ -36,7 +42,10 @@ export const menuItems: MenuItem[] = [
     title: "User management",
     submenu: true,
     icon: LuUsers,
-    submenuItems: [{ title: "User list" }, { title: "User permission" }],
+    submenuItems: [
+      { title: "User list", path: "/users" },
+      { title: "User permission", path: "" },
+    ],
   },
   {
     title: "Learning materials",
@@ -46,6 +55,6 @@ export const menuItems: MenuItem[] = [
     title: "Setting",
     submenu: true,
     icon: AiOutlineSetting,
-    submenuItems: [{ title: "Calendar" }],
+    submenuItems: [{ title: "Calendar", path: "" }],
   },
 ];

@@ -1,9 +1,16 @@
 import React, { FC } from "react";
+import { ReactNode } from "react";
 
-export const Button: FC<string> = (title) => {
+type ButtonProps = {
+  title: string;
+  icon?: ReactNode;
+};
+
+export const Button: FC<ButtonProps> = ({ title, icon }) => {
   return (
     <div>
-      <button className="w-20 h-8 text-white bg-main px-6 py-2 font-bold text-sm rounded-xl">
+      <button className="flex items-center min-w-20 h-8 text-white bg-primary-color px-6 py-2 font-bold text-sm rounded-xl">
+        {icon && <div className="mr-2">{icon}</div>}
         {title}
       </button>
     </div>

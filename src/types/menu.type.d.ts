@@ -1,5 +1,6 @@
 export type SubmenuItem = {
   title: string;
+  path: Url;
 };
 
 export type MenuItem = {
