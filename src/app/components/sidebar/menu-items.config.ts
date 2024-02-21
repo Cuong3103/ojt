@@ -11,6 +11,7 @@ export const menuItems: MenuItem[] = [
   {
     title: "Home",
     icon: LiaHomeSolid,
+    path: "/dashboard",
   },
   {
     title: "Syllabus",

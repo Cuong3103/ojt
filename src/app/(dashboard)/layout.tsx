@@ -2,22 +2,30 @@ import { FC, ReactNode } from "react";
 import Sidebar from "../components/sidebar";
 import { Footer } from "../components/footer/footer";
 import { Header } from "../components/header/header";
+import { getSession } from "@/utils/authenticationHelper";
+import { redirect } from "next/navigation";
 
 type DashboardLayoutProps = {
   children: ReactNode;
 };
 
-const DashboardLayout: FC<DashboardLayoutProps> = (props) => {
-  return (
-    <div className="">
-      <Header />
-      <div className="flex m-auto h-screen justify-start">
-        <Sidebar />
-        {props.children}
+const DashboardLayout: FC<DashboardLayoutProps> = async (props) => {
+  const session = await getSession();
+
+  if (!session) {
+    return redirect("/login");
+  } else {
+    return (
+      <div className="">
+        <Header />
+        <div className="flex m-auto h-screen justify-start">
+          <Sidebar />
+          {props.children}
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
-  );
+    );
+  }
 };
 
 export default DashboardLayout;

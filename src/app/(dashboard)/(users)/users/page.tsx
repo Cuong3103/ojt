@@ -75,7 +75,7 @@ const UserListPage: FC = () => {
         removeBadge="HaNTT2"
       ></Chip>
       <Table data={users} columns={columns} icon={<BsFilterLeft />} />
-      <Pagination page={20} />
+      <Pagination page={20} pageCount={10} />
     </div>
   );
 };

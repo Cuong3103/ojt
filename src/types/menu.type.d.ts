@@ -8,4 +8,5 @@ export type MenuItem = {
   icon?: IconType;
   submenu?: boolean;
   submenuItems?: SubmenuItem[];
+  path?: string;
 };
