@@ -1,17 +1,13 @@
-"use client";
-
-import { signOut, useSession } from "next-auth/react";
+"use server";
+import { getSession } from "@/utils/authenticationHelper";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import React, { FC } from "react";
+import { LogoutButton } from "../button/logout-button";
 
-export const Header: FC = (props) => {
-  const { data: session } = useSession();
-
-  const handleLogout = () => {
-    if (session && session.user) {
-      signOut();
-    }
-  };
+export const Header: FC = async (props) => {
+  const session = await getSession();
 
   return (
     <div className="navbar bg-primary-color">
@@ -25,7 +21,7 @@ export const Header: FC = (props) => {
         />
       </div>
       <div className="flex-none">
-        <div className="unigate w-28 h-8 bg-deep-primary-color mx-4 px-4 py-1.5 rounded-3xl">
+        <div className="unigate w-28 h-8 bg-deep-primary-color mx-4 px-4 py-1.5 rounded-3l">
           <div className="w-20 h-5 flex gap-2 items-center">
             <div>
               <Image
@@ -57,12 +53,7 @@ export const Header: FC = (props) => {
             <p className="text-white text-base w-max max-h-5 font-bold ">
               {session?.user.username}
             </p>
-            <a
-              className="text-white text-base max-h-5 font-normal"
-              onClick={() => handleLogout()}
-            >
-              Log out
-            </a>
+            <LogoutButton/>
           </div>
         </div>
       </div>

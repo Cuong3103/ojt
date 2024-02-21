@@ -4,7 +4,6 @@ import { FC, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import "../../styles/sidebar.css";
-import { useSession } from "next-auth/react";
 import { MenuList } from "./menu-list";
 
 const Sidebar: FC<any> = (props) => {
@@ -12,7 +11,7 @@ const Sidebar: FC<any> = (props) => {
 
   const renderSidebar = () => (
     <article
-      className={`sidebar flex  absolute ${
+      className={`sidebar flex flex-0  absolute ${
         openSidebar ? "w-72" : "w-20"
       } duration-100 relative justify-center items-start`}
     >
