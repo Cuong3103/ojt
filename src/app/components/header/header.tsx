@@ -53,7 +53,7 @@ export const Header: FC = async (props) => {
             <p className="text-white text-base w-max max-h-5 font-bold ">
               {session?.user.username}
             </p>
-            <LogoutButton/>
+            <LogoutButton />
           </div>
         </div>
       </div>

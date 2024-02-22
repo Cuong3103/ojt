@@ -1,4 +1,4 @@
 export enum UsersFlag {
-  LOGIN = 'usersLoginEnabled',
-  GET_ALL = 'usersGetAllEnabled'
+  LOGIN = "usersLoginEnabled",
+  GET_ALL = "usersGetAllEnabled",
 }

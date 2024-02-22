@@ -1,21 +1,22 @@
-import type { Config } from 'jest'
-import nextJest from 'next/jest.js'
+import type { Config } from "jest";
+import nextJest from "next/jest";
 
 const createJestConfig = nextJest({
-  dir: './',
-})
+  dir: "./",
+});
 
 const config: Config = {
-  coverageProvider: 'babel',
-  coverageReporters: ['html', 'text', 'text-summary', 'cobertura'],
-  collectCoverageFrom: ["**/*/*.ts", "!**/node_modules/**"],
-  testMatch: ['**/*.test.ts'],
+  coverageProvider: "babel",
+  coverageReporters: ["html", "text", "text-summary", "cobertura"],
+  collectCoverage: true,
+  collectCoverageFrom: ["**/*/*.tsx", "!**/node_modules/**"],
+  testMatch: ["**/*.test.tsx"],
   clearMocks: true,
-  testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  testEnvironment: "jsdom",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/(*.)/$1'
-  }
-}
+    "^@/(.*)$": "<rootDir>/(*.)/$1",
+  },
+};
 
 export default createJestConfig(config);
