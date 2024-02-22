@@ -14,15 +14,14 @@ export class MockResponse {
   async create(): Promise<AxiosResponse> {
     return {
       status: this.statusCode,
-      statusText: 'OK',
+      statusText: "OK",
       data: {
         statusCode: this.statusCode,
-
       },
       headers: AxiosHeaders.from({}),
       config: {
         decompress: true,
-        headers: AxiosHeaders.from({}) 
+        headers: AxiosHeaders.from({}),
       },
     };
   }
