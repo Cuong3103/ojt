@@ -36,21 +36,12 @@ export const Chip: FC<ChipProps> = ({
           >
             <div className="p-1">{removeBadge}</div>
             <button>
-              <svg
-                className="w-2 h-2 "
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
+              <svg viewBox="0 0 14 14" width="14px" height="14px" className="css-149xqrd">
+                <path d="M9.85 4.15c.2.2.2.5 0 .7L7.71 7l2.14 2.15a.5.5 0 0 1-.7.7L7 7.71 4.85 9.85a.5.5 0 0 1-.7-.7L6.29 7 4.15 4.85a.5.5 0 1 1 .7-.7L7 6.29l2.15-2.14c.2-.2.5-.2.7 0Z">
+                </path>
+                <path fill-rule="evenodd" d="M7 14A7 7 0 1 0 7 0a7 7 0 0 0 0 14Zm0-1A6 6 0 1 0 7 1a6 6 0 0 0 0 12Z"
+                >
+                </path></svg>
             </button>
             <span className="sr-only">{removeBadge}</span>
           </span>
