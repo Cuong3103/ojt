@@ -2,7 +2,7 @@
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC, FormEvent, useRef } from "react";
+import React, { FC, FormEvent, useEffect, useRef } from "react";
 
 type LoginFormProps = {
   error?: string;
