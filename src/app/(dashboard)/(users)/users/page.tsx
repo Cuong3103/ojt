@@ -1,61 +1,82 @@
-import { FC } from "react";
+"use client";
+
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
 import { BsFilterLeft } from "react-icons/bs";
-import { users } from "./user.config";
 import { IoIosAddCircleOutline } from "react-icons/io";
-
 import { Button } from "@/app/components/button/button";
 import { Table } from "@/app/components/table/table";
 import Pagination from "@/app/components/pagination/index";
-import { Chip } from "@/app/components/chip/chip";
 import { SearchInput } from "@/app/components/input-box/search-input";
+import { userColumns } from "@/utils/tableColumnHelper";
+import { MockDataService } from "@/app/services/mock-response.service";
+import { User } from "@/types/models/user.model.type";
+import { userGenerator } from "@/utils/mockHelper";
+import { UsersFlag } from "@/lib/feature-flags/feature-flags.constant";
+import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
+import axiosInstance from "@/lib/axios";
+import { API_LIST, getRoute } from "@/utils/constants";
+import { totalPage } from "@/utils/paginationHelper";
 
-const columns = [
-  {
-    id: "id",
-    label: "ID",
-    minWidth: 150,
-    maxWidth: 250,
-  },
-  {
-    id: "fullName",
-    label: "Full name",
-    minWidth: 150,
-    maxWidth: 250,
-  },
-  {
-    id: "email",
-    label: "Email",
-    minWidth: 150,
-    maxWidth: 250,
-  },
-  {
-    id: "DOB",
-    label: "Date of birth",
-    minWidth: 150,
-    maxWidth: 250,
-  },
-  {
-    id: "gender",
-    label: "Gender",
-    minWidth: 150,
-    maxWidth: 250,
-  },
-  {
-    id: "type",
-    label: "Type",
-    minWidth: 150,
-    maxWidth: 250,
-  },
-  {
-    id: "moreButton",
-    label: "",
-    minWidth: 150,
-    maxWidth: 250,
-  },
-];
+// type UserListResponse = {
+//   data: {
+//     statusCode: number,
+//     message: string,
+//     data: User[],
+//     metadata: MetadataResponse
+//   },
+// }
 
 const UserListPage: FC = () => {
+  const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [data, setData] = useState([]);
+  const [metadata, setMetadata] = useState({
+    hasNextPage: false,
+    hasPrevPage: false,
+    limit: 1,
+    total: 1,
+  });
+  const [limit, setLimit] = useState(10);
+
+  const userService = new MockDataService<User>(
+    userGenerator,
+    100,
+    limit,
+    currentPage
+  );
+  const successUsersMock = userService.getMockResponse();
+
+  const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
+    setCurrentPage(0);
+    setLimit(Number(e.target.value));
+  };
+
+  const getUsers = async () => {
+    let response: any;
+    const isEnabled = await isFlagEnabled(UsersFlag.GET_ALL);
+    if (!isEnabled) {
+      response = successUsersMock;
+    } else {
+      const res = await axiosInstance.get(getRoute(API_LIST.USER_LIST), {
+        params: {
+          page: currentPage,
+          limit,
+        },
+      });
+
+      response = await res.data.data;
+    }
+
+    const { data, metadata } = response;
+    setData(data);
+    setMetadata(metadata);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, [currentPage, limit]);
+
   return (
     <div>
       <div className="font-bold text-xl tracking-wide mb-4 m-3">
@@ -66,16 +87,36 @@ const UserListPage: FC = () => {
         <Button title="Filter" icon={<IoFilterSharp />} />
         <Button title="Add User" icon={<IoIosAddCircleOutline />} />
       </div>
-      <Chip
+      {/* <Chip
         style={{ backgroundColor: "#474747", fontStyle: "italic" }}
         removeBadge="foundation"
       ></Chip>
       <Chip
         style={{ backgroundColor: "#474747", fontStyle: "italic" }}
         removeBadge="HaNTT2"
-      ></Chip>
-      <Table data={users} columns={columns} icon={<BsFilterLeft />} />
-      <Pagination page={20} pageCount={10} />
+      ></Chip> */}
+      <Table data={data} columns={userColumns} icon={<BsFilterLeft />} />
+      <div className="flex">
+        <Pagination
+          page={totalPage(metadata)}
+          pageCount={metadata.limit}
+          setCurrentPage={setCurrentPage}
+        />
+        <div className="flex -ml-48 z-50 items-center gap-4 mr-10">
+          <p>Rows per page</p>
+          <select
+            className="select select-ghost "
+            onChange={(e) => handleLimitSelection(e)}
+          >
+            <option selected value={10}>
+              10
+            </option>
+            <option value={20}>20</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+          </select>
+        </div>
+      </div>
     </div>
   );
 };

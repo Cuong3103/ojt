@@ -4,6 +4,7 @@ export const BASE_API_URL = "http://localhost:300/api/v1";
 export enum API_LIST {
   LOGIN = "/login",
   REFRESH_TOKEN = "/refresh",
+  USER_LIST = "/users",
 }
 
 export const getRoute = (route: API_LIST) => BASE_API_URL + route;
