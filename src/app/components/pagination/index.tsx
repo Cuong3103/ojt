@@ -10,7 +10,7 @@ type PaginationProps = {
 };
 
 const Pagination: React.FC<PaginationProps & ReactPaginateProps> = (props) => {
-  const handleSearch = (event) => {
+  const handleSearch = (event: any) => {
     props.setCurrentPage(event.selected);
   };
 
