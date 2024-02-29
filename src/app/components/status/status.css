@@ -1,3 +1,7 @@
+:root {
+  --light: rgba(239, 229, 229, 0.86);
+}
+
 .status {
   display: flex;
   gap: 30px;
@@ -23,12 +27,11 @@
   color: #d45b13;
 }
 
-.chip.p-10 {
+.chip {
   display: flex;
-  gap: 30px;
+  gap: 10px;
   padding-left: 20px;
   padding-right: 50px;
-  grid: 10px;
   font-size: 12px;
 }
 
@@ -57,13 +60,29 @@
 }
 
 #badge-dismiss-dark {
-  height: 28px;
+  width: auto;
+  height: 27px;
   color: #fff;
   font-size: 12px;
   background-color: #2d3748;
   border-radius: 16px;
-  gap: 0;
-  margin: 0;
-  padding-left: 15px;
+  gap: 5px;
+  padding-right: 10px;
   display: flex;
+}
+
+svg {
+  border-radius: 14px;
+  stroke: #ffffffe5;
+}
+
+svg:hover {
+  width: 14px;
+  height: 14px;
+  background-color: hsla(0, 0%, 100%, 0.514);
+  border-radius: 10px;
+}
+
+svg:hover path {
+  stroke: #fff;
 }
