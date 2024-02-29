@@ -24,14 +24,14 @@ build-app:
     - npm ci
     - npm run build
 
-dockerize:
-  stage: build
-  only:
-    - main
-  script:
-    - docker login -u $DOCKERHUB_USERNAME -p $DOCKER_PASSWORD
-    - docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
-    - docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$IMAGE_TAG
+# dockerize:
+#   stage: build
+#   only:
+#     - main
+#   script:
+#     - docker login -u $DOCKERHUB_USERNAME -p $DOCKER_PASSWORD
+#     - docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
+#     - docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$IMAGE_TAG
 
 lint:
   stage: misc
