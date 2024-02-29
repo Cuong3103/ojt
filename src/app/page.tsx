@@ -1,6 +1,6 @@
 "use client";
 import { redirect } from "next/navigation";
 
-export default function Home(props: any) {
+export default function Home() {
   redirect("/dashboard");
 }

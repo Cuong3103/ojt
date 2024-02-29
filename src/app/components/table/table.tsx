@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react";
 
 import { Chip } from "../chip/chip";
+import { ColumnType } from "@/types/column.type";
 
 export type Column = {
   id: string;
@@ -12,21 +13,19 @@ export type Column = {
 
 type TableProps = {
   data: any[];
-  columns: Column[];
+  columns: ColumnType[];
   icon?: ReactNode;
 };
 
 export const Table: FC<TableProps> = ({ data, columns, icon }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-auto m-4">
-      <table className="w-full table-fixed">
-        <thead className="bg-primary-color text-white">
+    <div className="bg-white shadow-md overflow-x-auto rounded-lg h-3/5 m-4 w-full">
+      <table className="table-fixed">
+        <thead className="bg-primary-color text-white sticky top-0">
           <tr>
             {columns.map((column) => (
               <th
-                className={`px-6 py-3 text-left text-xs  uppercase tracking-wider ${
-                  column.align ? `text-${column.align}` : "text-left"
-                }`}
+                className={`px-6 py-3 text-left text-xs  uppercase tracking-wider`}
                 key={column.id}
               >
                 <span className="flex items-center">
@@ -39,9 +38,9 @@ export const Table: FC<TableProps> = ({ data, columns, icon }) => {
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-black">
+        <tbody className="divide-y divide-black w-full overflow-y-scroll">
           {data.map((row, index) => (
-            <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : ""}>
+            <tr key={index} className="hover w-1/4">
               {columns.map((column) => (
                 <td
                   className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"

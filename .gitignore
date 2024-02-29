@@ -39,3 +39,5 @@ next-env.d.ts
 /blob-report/
 /playwright/.cache/
 /.vscode
+/.vercel
+/.storybook-static
