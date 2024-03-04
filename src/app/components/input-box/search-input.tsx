@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-export const SearchInput: FC = (props) => {
+export const SearchInput: FC = () => {
   return (
-    <label className="relative w-full h-full">
+    <label className="relative w-full h-full p-0">
       <input
         type="text"
         className="border border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md  placeholder-gray-500 text-gray-900 focus:outline-none italic input-sm p-5"

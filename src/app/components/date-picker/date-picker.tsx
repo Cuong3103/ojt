@@ -1,16 +1,24 @@
 "use client";
 import React, { ChangeEvent, FC, useState } from "react";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-
 import cn, { generateDate, months, days } from "../../../helpers/calendar";
 
-export const DatePicker: FC = () => {
+type DatePickerProps = {
+  onDateSelect: (date: Dayjs) => void;
+  selectDate: Dayjs;
+};
+
+export const DatePicker: FC<DatePickerProps> = ({
+  onDateSelect,
+  selectDate,
+}) => {
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);
-  const [selectDate, setSelectDate] = useState(currentDate);
   const [selectedMonth, setSelectedMonth] = useState(dayjs().month());
   const [selectedYear, setSelectedYear] = useState(dayjs().year());
+
+  const [internalSelectDate, setInternalSelectDate] = useState(selectDate);
 
   const handleMonthChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = parseInt(event.target.value, 10);
@@ -24,6 +32,11 @@ export const DatePicker: FC = () => {
     setToday(today.year(selectedValue));
   };
 
+  const handleDayClick = (date: Dayjs) => {
+    setInternalSelectDate(date);
+    onDateSelect(date);
+  };
+
   const renderDaysInCalendar = () => {
     return generateDate(today.month(), today.year()).map(
       ({ date, currentMonth, today }, index) => (
@@ -35,14 +48,16 @@ export const DatePicker: FC = () => {
             className={cn(
               today ? "underline" : "",
               currentMonth ? "" : "text-gray-400",
-              selectDate.toDate().toDateString() ===
-                date.toDate().toDateString()
+              internalSelectDate &&
+                date &&
+                internalSelectDate.toDate().toDateString() ===
+                  date.toDate().toDateString()
                 ? "bg-black text-white"
                 : "",
               "h-6 w-6 text-[#2D3748] rounded-full grid place-content-center hover:bg-black hover:text-white transition-all cursor-pointer select-none"
             )}
             onClick={() => {
-              setSelectDate(date);
+              handleDayClick(date);
             }}
           >
             {date.date()}
@@ -54,7 +69,7 @@ export const DatePicker: FC = () => {
 
   return (
     <>
-      <div className="inline-flex  flex-col items-start gap-4 p-4 bg-white shadow-xl border border-10 rounded">
+      <div className="inline-flex flex-col items-start gap-4 p-4 bg-white shadow-xl border border-10 rounded">
         <div className="flex px-30 justify-center items-center gap-102 self-stretch">
           <GrFormPrevious
             className="w-5 h-5 cursor-pointer hover:scale-105 transition-all"
@@ -81,7 +96,7 @@ export const DatePicker: FC = () => {
             <select
               value={selectedYear}
               onChange={handleYearChange}
-              className="text-center font-bold text-blueGray-700 text-lg leading-6 cursor-pointer select select-ghost w-full max-w-xs"
+              className="text-center font-inter font-bold text-blueGray-700 text-lg leading-6 cursor-pointer"
             >
               {Array.from(
                 { length: 10 },

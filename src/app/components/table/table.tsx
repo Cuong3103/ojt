@@ -71,7 +71,7 @@ export const Table: FC<TableProps> = ({ data, columns, icon }) => {
                     </button>
                   ) : column.id === "gender" ? (
                     <span>
-                      {row[column.id] === "Male" ? (
+                      {row[column.id] === "male" ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -113,9 +113,9 @@ export const Table: FC<TableProps> = ({ data, columns, icon }) => {
                         </svg>
                       )}
                     </span>
-                  ) : column.id === "type" ? (
+                  ) : column.id === "role" ? (
                     <span>
-                      {row[column.id] === "Admin" ? (
+                      {row[column.id] === "admin" ? (
                         <Chip
                           active="Admin"
                           style={{ backgroundColor: "#4db848" }}

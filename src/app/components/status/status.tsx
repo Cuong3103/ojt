@@ -4,7 +4,7 @@ import "./status.css";
 
 export const Status: FC = () => {
   return (
-    <div className="status p-10">
+    <div className="status">
       <div className="badge badge-neutral">Offline</div>
       <div className="badge badge-secondary badge-outline">Online</div>
       <input

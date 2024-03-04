@@ -17,6 +17,7 @@ import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
 import axiosInstance from "@/lib/axios";
 import { API_LIST, getRoute } from "@/utils/constants";
 import { totalPage } from "@/utils/paginationHelper";
+import { AddUserModal } from "@/app/components/add-user-modal/add-user-modal";
 
 // type UserListResponse = {
 //   data: {
@@ -29,6 +30,7 @@ import { totalPage } from "@/utils/paginationHelper";
 
 const UserListPage: FC = () => {
   const [query, setQuery] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState([]);
   const [metadata, setMetadata] = useState({
@@ -38,7 +40,6 @@ const UserListPage: FC = () => {
     total: 1,
   });
   const [limit, setLimit] = useState(10);
-
   const userService = new MockDataService<User>(
     userGenerator,
     100,
@@ -85,7 +86,11 @@ const UserListPage: FC = () => {
       <SearchInput />
       <div className="flex justify-between items-center m-4">
         <Button title="Filter" icon={<IoFilterSharp />} />
-        <Button title="Add User" icon={<IoIosAddCircleOutline />} />
+        <Button
+          handleClick={() => setShowModal(true)}
+          title="Add User"
+          icon={<IoIosAddCircleOutline />}
+        />
       </div>
       {/* <Chip
         style={{ backgroundColor: "#474747", fontStyle: "italic" }}
@@ -105,18 +110,23 @@ const UserListPage: FC = () => {
         <div className="flex -ml-48 z-50 items-center gap-4 mr-10">
           <p>Rows per page</p>
           <select
-            className="select select-ghost "
+            className="select select-ghost"
+            value={limit}
             onChange={(e) => handleLimitSelection(e)}
           >
-            <option selected value={10}>
-              10
-            </option>
+            <option value={10}>10</option>
             <option value={20}>20</option>
             <option value={25}>25</option>
             <option value={50}>50</option>
           </select>
         </div>
       </div>
+      {showModal && (
+        <AddUserModal
+          showModal={() => setShowModal(false)}
+          setUsers={setData}
+        />
+      )}
     </div>
   );
 };

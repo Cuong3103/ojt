@@ -19,13 +19,13 @@ export const Default: Story = (args: DropdownProps) => {
 };
 
 Default.args = {
-  value: '',
-  options: [ 
-    { value: '1', label: 'Option 1' },
-    { value: '2', label: 'Option 2' },
-    { value: '3', label: 'Option 3' },
+  value: "",
+  options: [
+    { value: "1", label: "Option 1" },
+    { value: "2", label: "Option 2" },
+    { value: "3", label: "Option 3" },
   ],
-  placeholder: 'Select an option',
+  placeholder: "Select an option",
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => {
     console.log("Selected value:", event.target.value);
   },
