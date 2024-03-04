@@ -59,7 +59,7 @@ describe("AddUserModal", () => {
     fireEvent.change(emailInput, { target: { value: "test@gmail.com" } });
     fireEvent.change(phoneNumberInput, { target: { value: "1234567899" } });
     fireEvent.click(dateInput);
-    fireEvent.click(await screen.findByText("25"));
+    fireEvent.click(await screen.findByText("10"));
     fireEvent.click(statusInput);
     fireEvent.click(submitBtn);
   });
