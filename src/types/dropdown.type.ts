@@ -6,8 +6,10 @@ export type Option = {
 };
 
 export type DropdownProps = {
+  id: string;
   value: string;
   options: Option[];
+  error?: string;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
   placeholder?: string;
 };

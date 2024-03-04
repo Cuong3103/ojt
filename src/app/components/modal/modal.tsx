@@ -1,68 +1,51 @@
-"use client";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { InputBox } from "../input-box/input-box";
-import { SearchInput } from "../input-box/search-input";
 import { Cancel } from "../button/cancel";
 import { Button } from "../button/button";
-import { Dropdown } from "../dropdown/dropdown";
 
 type ModalType = {
   title: string;
+  fields: { id: string; label: string; component: JSX.Element }[];
+  buttonTitle: string;
+  showModal?: () => void;
+  handleSubmit?: () => void;
 };
 
-const options = [
-  { value: "option1", label: "Option 1" },
-  { value: "option2", label: "Option 2" },
-  { value: "option3", label: "Option 3" },
-];
-
-export const Modal: FC<ModalType> = ({ title }) => {
-  const [selectedOption, setSelectedOption] = useState("");
-
-  const handleDropdownChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSelectedOption(event.target.value);
-  };
+export const Modal: FC<ModalType> = ({
+  title,
+  fields,
+  buttonTitle,
+  showModal,
+  handleSubmit,
+}) => {
   return (
-    <div className="bg-gray-100 rounded-lg max-w-md max-h-[50vh] ">
-      <h2 className="flex items-center justify-between text-xl bg-[#2D3748] text-white p-2 rounded-t">
-        {title}
-        <IoMdCloseCircleOutline />
-      </h2>
+    <>
+      <div
+        className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-40"
+        onClick={showModal}
+      />
+      <div className="bg-gray-100 rounded-lg max-w-md fixed items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white z-50 shadow-lg">
+        <h2 className="flex items-center justify-between text-xl bg-[#2D3748] text-white p-2 rounded-t">
+          {title}
+          <button onClick={showModal}>
+            <IoMdCloseCircleOutline />
+          </button>
+        </h2>
 
-      <div className="p-4">
-        <div className="grid grid-cols-2 gap-4 pb-5 ">
-          <div className="flex items-center">Name</div>
-          <InputBox label="Name of content..." />
-        </div>
-        <div className="grid grid-cols-2 gap-4 pb-5 ">
-          <div className="items-center">Output standard</div>
-          <SearchInput />
-        </div>
-        <div className="grid grid-cols-2 gap-4 pb-5">
-          <div className="items-center">Training time</div>
-          <InputBox label="Minutes" />
-        </div>
-        <div className="grid grid-cols-2 gap-4 pb-5">
-          <div className="items-center">Method</div>
-          {/* <Toggle /> */}
-        </div>
-        <div className="grid grid-cols-2 gap-4 pb-5">
-          <div className="items-center">Delivery type</div>
-          <Dropdown
-            value={selectedOption}
-            options={options}
-            onChange={handleDropdownChange}
-            placeholder="Select an option"
-          />
-        </div>
-        <div className="flex justify-center space-x-4">
-          <Button title="Create" />
-          <Cancel />
+        <div className="p-6">
+          {fields.map((field) => (
+            <div key={field.id} className="grid grid-cols-2 gap-4 pb-5">
+              <div className="items-center">{field.label}</div>
+              {field.component}
+            </div>
+          ))}
+
+          <div className="flex justify-center space-x-4">
+            <Button title={buttonTitle} handleClick={handleSubmit} />
+            <Cancel onClick={showModal} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

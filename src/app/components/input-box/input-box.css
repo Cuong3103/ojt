@@ -24,8 +24,9 @@
 }
 
 .inputbox__form .form-alert {
-  display: none;
   color: #e74a3b;
+  font-size: 0.7em;
+  font-style: italic;
 }
 
 /*# sourceMappingURL=searchbox.css.map */

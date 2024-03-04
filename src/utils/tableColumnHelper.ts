@@ -7,13 +7,8 @@ export const userColumns: ColumnType[] = [
     options: {},
   },
   {
-    id: "firstName",
-    label: "First name",
-    options: {},
-  },
-  {
-    id: "lastName",
-    label: "Last name",
+    id: "fullName",
+    label: "Full name",
     options: {},
   },
   {
@@ -32,7 +27,7 @@ export const userColumns: ColumnType[] = [
     options: {},
   },
   {
-    id: "type",
+    id: "role",
     label: "Type",
     options: {},
   },

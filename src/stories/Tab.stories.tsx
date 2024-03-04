@@ -7,5 +7,5 @@ export default meta;
 type Story = StoryObj<typeof Tab>;
 
 export const Default: Story = {
-    args: {},
+  args: {},
 };
