@@ -41,3 +41,5 @@ next-env.d.ts
 /.vscode
 /.vercel
 /.storybook-static
+# Sentry Config File
+.sentryclirc
