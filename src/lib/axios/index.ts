@@ -4,7 +4,7 @@ import axios from "axios";
 const axiosInstance = axios.create({
   baseURL: process.env.BASE_API_URL,
   headers: {
-    "x-api-key": process.env.API_KEY,
+    "X-API-KEY": process.env.API_KEY || undefined,
     "Content-Type": "application/json",
   },
 });
@@ -19,15 +19,14 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
+
   (error) => {
     if (error.response) {
-      console.warn("Response error", error.response);
-      toast.error(error.response.statusText);
-      return Promise.reject(error.response);
+      return Promise.resolve(error);
     } else {
-      console.warn(error.message);
-      toast.error(error.message);
       return Promise.reject(error);
     }
   }

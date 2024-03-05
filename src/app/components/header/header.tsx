@@ -41,7 +41,7 @@ export const Header: FC = async (props) => {
               className="rounded-full  border-white border-solid border-2 "
               alt="Tailwind CSS Navbar component"
               src={
-                session?.user.avatarUrl
+                session?.user?.avatarUrl
                   ? session.user.avatarUrl
                   : "https://robohash.org/fe9d699531c5b7c3eb9b1eaa8f2ef319?set=set4&bgset=bg2&size=400x400"
               }
@@ -51,7 +51,7 @@ export const Header: FC = async (props) => {
           </div>
           <div className="flex flex-col w-24 h-11">
             <p className="text-white text-base w-max max-h-5 font-bold ">
-              {session?.user.username}
+              {session?.user?.username || "savage"}
             </p>
             <LogoutButton />
           </div>

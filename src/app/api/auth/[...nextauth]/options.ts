@@ -2,11 +2,18 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
 
-import { API_LIST, getRoute, minutesToMiliseconds } from "@/utils/constants";
+import {
+  API_LIST,
+  SUCCESS_HTTP_CODES,
+  getRoute,
+  minutesToMiliseconds,
+} from "@/utils/constants";
 import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
 import { MockResponse } from "@/app/services/mock-response.service";
 import { UsersFlag } from "@/lib/feature-flags/feature-flags.constant";
 import axiosInstance from "@/lib/axios";
+import { toast } from "react-toastify";
+import { HttpStatusCode } from "axios";
 
 const loginMock = new MockResponse(200, {
   id: 1,
@@ -28,18 +35,13 @@ const refreshMock = new MockResponse(200, {
 
 async function refreshToken(token: JWT): Promise<JWT> {
   let response;
-  const isEnabled = await isFlagEnabled(UsersFlag.LOGIN);
 
   try {
-    if (isEnabled) {
-      response = refreshMock;
-    } else {
-      const res = await axiosInstance.post(getRoute(API_LIST.REFRESH_TOKEN), {
-        refreshToken: token.refreshToken,
-      });
+    const res = await axiosInstance.post(getRoute(API_LIST.REFRESH_TOKEN), {
+      token: token.refreshToken,
+    });
 
-      response = await res.data.data;
-    }
+    response = await res.data.data;
 
     return {
       ...token,
@@ -54,15 +56,25 @@ async function refreshToken(token: JWT): Promise<JWT> {
   }
 }
 
+const handleSignin = async (email: string, password: string) => {
+  return await axiosInstance.post(
+    getRoute(API_LIST.LOGIN),
+    JSON.stringify({
+      email: email,
+      password: password,
+    })
+  );
+};
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: {
-          label: "Username",
-          type: "text",
-          placeholder: "Enter username",
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "Enter email",
         },
         password: {
           label: "Password",
@@ -73,25 +85,21 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials) {
         let response = null;
-        if (!credentials?.username || !credentials?.password) return null;
+        if (!credentials?.email || !credentials?.password) return null;
 
         const isEnabled = await isFlagEnabled(UsersFlag.LOGIN);
         if (!isEnabled) {
           response = loginMock;
         } else {
-          try {
-            const res = await axiosInstance.post(
-              getRoute(API_LIST.LOGIN),
-              JSON.stringify({
-                username: credentials.username,
-                password: credentials.password,
-              })
-            );
-
-            if (res.data.accessToken && res.status !== 401) {
-              response = res.data;
-            }
-          } catch (error) {}
+          const res = await handleSignin(
+            credentials.email,
+            credentials.password
+          );
+          if (res?.data && SUCCESS_HTTP_CODES.includes(res.status)) {
+            response = res?.data.content;
+          } else {
+            response = undefined;
+          }
         }
 
         return response;
@@ -110,10 +118,10 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }: { token: JWT; user: any }) {
       if (user) {
-        token.user = user.data;
-        token.accessToken = user.data.accessToken;
+        // token.user = user.data; FIXME: after the backend update the response of login
+        token.accessToken = user.token;
         token.accessTokenExpiry = minutesToMiliseconds(1);
-        token.refreshToken = user.data.refreshToken;
+        token.refreshToken = user.refreshToken;
       }
 
       const refreshTime = Math.round(
