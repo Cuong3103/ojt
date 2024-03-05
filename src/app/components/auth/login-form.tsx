@@ -3,6 +3,7 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { FC, FormEvent, useRef } from "react";
+import { toast } from "react-toastify";
 
 type LoginFormProps = {
   error?: string;
@@ -10,20 +11,24 @@ type LoginFormProps = {
 };
 
 export const LoginForm: FC<LoginFormProps> = (props) => {
-  const username = useRef("");
+  const email = useRef("");
   const password = useRef("");
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    await signIn("credentials", {
-      username: username.current,
+    const result = await signIn("credentials", {
+      email: email.current,
       password: password.current,
       redirect: true,
       callbackUrl: props.callbackUrl
         ? props.callbackUrl
         : "http://localhost:3000",
     });
+
+    if (!result) toast.error("Failed to login");
+
+    return result;
   };
 
   return (
@@ -42,18 +47,18 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
 
         <div className="">
           <input
-            type="text"
-            placeholder="Username"
+            type="email"
+            placeholder="Email"
             required
             className="input input-bordered w-full my-2"
-            onChange={(e) => (username.current = e.target.value)}
+            onChange={(e: any) => (email.current = e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
             required
             className="input input-bordered w-full "
-            onChange={(e) => (password.current = e.target.value)}
+            onChange={(e: any) => (password.current = e.target.value)}
           />
         </div>
         <div className="flex justify-start items-center mx-auto my-3">
