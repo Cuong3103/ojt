@@ -20,9 +20,9 @@ build-app:
     - main
     - merge_requests
   script:
-    - npm --version
-    - npm ci
-    - npm run build
+    - yarn --version
+    - yarn
+    - yarn build
 
 # dockerize:
 #   stage: build
@@ -40,8 +40,8 @@ lint:
     - main
     - merge_requests
   script:
-    - npm ci
-    - npm run lint
+    - yarn
+    - yarn lint
 
 test:
   stage: misc
@@ -52,8 +52,8 @@ test:
     - main
     - merge_requests
   script:
-    - npm ci
-    - npm run test:ci
+    - yarn
+    - yarn test:ci
 
 deploy-staging:
   stage: deploy
@@ -61,8 +61,8 @@ deploy-staging:
   only:
     - merge_requests
   script:
-    - npm ci
-    - npm install --global vercel
+    - yarn
+    - yarn global add vercel
     - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
     - vercel --token=$VERCEL_TOKEN
 
@@ -73,7 +73,7 @@ deploy-uat:
     - main
   script:
     - export HUSKY_SKIP_INSTALL=1
-    - npm ci
-    - npm install --global vercel
+    - yarn
+    - yarn global add vercel
     - vercel pull --yes --token=$VERCEL_TOKEN
     - vercel --prod --token=$VERCEL_TOKEN
