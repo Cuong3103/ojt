@@ -17,7 +17,7 @@
     "commit": "node ./scripts/commit-msg.mjs",
     "docker:prepare:db": "docker pull doanvinhphu321/postgres",
     "docker:prepare:backend": "docker pull doanvinhphu321/nhom_2-fams",
-    "docker:start:db": "docker run -d --name spring-app-container -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-container:5432/fams -e SPRING_DATASOURCE_USERNAME=postgres -e SPRING_DATASOURCE_PASSWORD=sa -p 8080:8080 doanvinhphu321/nhom_2-fams:latest",
+    "docker:start:db": "docker run -d --name postgres-container -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=sa -e POSTGRES_DB=fams -p 5432:5432 doanvinhphu321/postgres:latest",
     "docker:start:backend": "docker run -d --name spring-app-container --link postgres-container -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-container:5432/fams -e SPRING_DATASOURCE_USERNAME=postgres -e SPRING_DATASOURCE_PASSWORD=sa -p 8080:8080 doanvinhphu321/nhom_2-fams:latest"
   },
   "dependencies": {
