@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FAMS Dashboard (UI)
 
-## Getting Started
+The Fresher Academy Management System (FAMS) is a comprehensive software solution designed to efficiently manage and streamline the operations of a fresher academy of FPT. FAMS encompasses a range of features including user management, syllabus management, and training program and class management.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Installation](#installation)
+- [Usage](#usage)
+- [Support](#support)
+- [Contributing](#contributing)
+
+## Installation
+
+Clone this project to your local directory
+
+```sh
+git clone http://git.fa.edu.vn/hcm24_cpl_react_03/nhom-2.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To run this project, at least node version 20 is required and `yarn` is setup also
+You could run this project by 2 approachs:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `yarn`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```sh
+## Install all the libraries and dependencies
+yarn
 
-## Learn More
+## This should prepare the server environment
+yarn docker:prepare:db
+yarn docker:prepare:backend
 
-To learn more about Next.js, take a look at the following resources:
+## Start the server
+yarn docker:start:db
+yarn docker:start:backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Run the UI
+yarn dev
+```
