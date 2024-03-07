@@ -1,6 +1,6 @@
 import React, { CSSProperties, FC } from "react";
 
-export const ProgressBar: FC<String> = (text) => {
+export const ProgressBar: FC<{ text: string }> = ({ text }) => {
   let status: string | undefined;
 
   if (text === "General") {
@@ -18,10 +18,10 @@ export const ProgressBar: FC<String> = (text) => {
       text === "General"
         ? "12.5%"
         : text === "Outline"
-        ? "37.5%"
-        : text === "Other"
-        ? "62.5%"
-        : "100%",
+          ? "37.5%"
+          : text === "Other"
+            ? "62.5%"
+            : "100%",
   };
 
   const getProgressBarClass = (status: string | undefined): string => {

@@ -28,14 +28,12 @@ export const Toggle: FC<ToggleProps> = ({ on, off, value, name, onChange }) => {
           value={value}
         />
         <span
-          className={`slider mr-3 flex h-[24px] w-[50px] items-center rounded-full p-1 duration-200 ${
-            isChecked ? "bg-orange-600" : "bg-gray-700"
-          }`}
+          className={`slider mr-3 flex h-[24px] w-[50px] items-center rounded-full p-1 duration-200 ${isChecked ? "bg-orange-600" : "bg-gray-700"
+            }`}
         >
           <span
-            className={`dot h-[18px] w-[18px] rounded-full duration-200 ${
-              isChecked ? "bg-gray-700 translate-x-6" : "bg-orange-600"
-            }`}
+            className={`dot h-[18px] w-[18px] rounded-full duration-200 ${isChecked ? "bg-gray-700 translate-x-6" : "bg-orange-600"
+              }`}
           ></span>
         </span>
         <span className="label flex items-center text-sm font-medium text-black">

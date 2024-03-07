@@ -7,6 +7,7 @@ export const LogoutButton = (props: any) => {
     <a
       className="text-white text-base max-h-5 font-normal hover:text-secondary-color"
       onClick={() => signOut()}
+      role="button"
     >
       Log out
     </a>

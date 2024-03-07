@@ -12,11 +12,10 @@ export const Tab: FC = () => {
   return (
     <div role="tablist" className="tabs tabs-lifted w-831 h-34 ">
       <label
-        className={`tab ${
-          selectTab === "General"
+        className={`tab ${selectTab === "General"
             ? "bg-black text-white"
             : "bg-gray-500 text-white"
-        }`}
+          }`}
       >
         <input
           className="appearance-none"
@@ -31,11 +30,10 @@ export const Tab: FC = () => {
       </label>
 
       <label
-        className={`tab ${
-          selectTab === "Outline"
+        className={`tab ${selectTab === "Outline"
             ? "bg-black text-white"
             : "bg-gray-500 text-white"
-        }`}
+          }`}
       >
         <input
           className="appearance-none"
@@ -50,11 +48,10 @@ export const Tab: FC = () => {
       </label>
 
       <label
-        className={`tab ${
-          selectTab === "Training material"
+        className={`tab ${selectTab === "Training material"
             ? "bg-black text-white"
             : "bg-gray-500 text-white"
-        }`}
+          }`}
       >
         <input
           className="appearance-none"

@@ -14,6 +14,7 @@ const config: Config = {
   clearMocks: true,
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  modulePathIgnorePatterns: ["<rootDir>/src/stories"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
