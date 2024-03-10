@@ -19,7 +19,7 @@ const selectMsgType = () => {
   const questions = [
     {
       type: "list",
-      name: "msg_type",
+      name: "msgType",
       message: "What is the commit message type?",
       choices: [
         "🧹 chore",
@@ -29,15 +29,20 @@ const selectMsgType = () => {
         "💄 style",
         "👀 test",
       ],
-      filter: function (val) {
+      filter: function(val) {
         return val.split(" ")[1];
       },
     },
     {
       type: "input",
-      name: "msg_content",
+      name: "msgContent",
       message: "What is your message?",
     },
+    {
+      type: "confirm",
+      name: "allowedToPush",
+      message: "Do you want to push the commit?"
+    }
   ];
 
   return inquirer.prompt(questions);
@@ -46,8 +51,13 @@ const selectMsgType = () => {
 const run = async () => {
   initHeaders();
   const answer = await selectMsgType();
-  const finalCommitMsg = [answer.msg_type, answer.msg_content].join(": ");
+  const finalCommitMsg = [answer.msgType, answer.msgContent].join(": ");
   shell.exec(`git commit -m "${finalCommitMsg}"`);
+
+  if (answer.allowedToPush) {
+    const currentBranch = shell.exec("git branch --show-current").stdout
+    shell.exec(`git push ${currentBranch}`)
+  }
 };
 
 run();
