@@ -76,4 +76,4 @@ deploy-uat:
     - yarn
     - yarn global add vercel
     - vercel pull --yes --token=$VERCEL_TOKEN
-    - vercel --prod --token=$VERCEL_TOKEN
+    - vercel redeploy dpl_9wKsNqsS8mZjgEqHhcvVoRGY7M5q --token=$VERCEL_TOKEN
