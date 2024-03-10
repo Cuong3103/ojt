@@ -56,7 +56,7 @@ const run = async () => {
 
   if (answer.allowedToPush) {
     const currentBranch = shell.exec("git branch --show-current").stdout
-    shell.exec(`git push ${currentBranch}`)
+    shell.exec(`git push -u origin ${currentBranch}`)
   }
 };
 
