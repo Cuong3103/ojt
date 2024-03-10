@@ -66,14 +66,14 @@ deploy-staging:
     - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
     - vercel --token=$VERCEL_TOKEN
 
-deploy-uat:
-  stage: deploy
-  image: node:20-alpine
-  only:
-    - main
-  script:
-    - export HUSKY_SKIP_INSTALL=1
-    - yarn
-    - yarn global add vercel
-    - vercel pull --yes --token=$VERCEL_TOKEN
-    - vercel redeploy dpl_9wKsNqsS8mZjgEqHhcvVoRGY7M5q --token=$VERCEL_TOKEN
+# deploy-uat:
+#   stage: deploy
+#   image: node:20-alpine
+#   only:
+#     - main
+#   script:
+#     - export HUSKY_SKIP_INSTALL=1
+#     - yarn
+#     - yarn global add vercel
+#     - vercel pull --yes --token=$VERCEL_TOKEN
+#     - vercel redeploy dpl_9wKsNqsS8mZjgEqHhcvVoRGY7M5q --token=$VERCEL_TOKEN
