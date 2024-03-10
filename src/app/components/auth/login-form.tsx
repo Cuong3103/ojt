@@ -2,7 +2,7 @@
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC, FormEvent, useRef } from "react";
+import React, { FC, FormEvent, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 
 type LoginFormProps = {
@@ -14,10 +14,16 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
   const email = useRef("");
   const password = useRef("");
 
+  useEffect(() => {
+    if (props.error) {
+      toast.error('Failed to login')
+    }
+  }, [props.error])
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const result = await signIn("credentials", {
+    await signIn("credentials", {
       email: email.current,
       password: password.current,
       redirect: true,
@@ -25,10 +31,6 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
         ? props.callbackUrl
         : "http://localhost:3000",
     });
-
-    if (!result) toast.error("Failed to login");
-
-    return result;
   };
 
   return (

@@ -1,18 +1,18 @@
-import React, { Dispatch, FC, SetStateAction, useState } from "react";
-import { Modal } from "@/app/components/modal/modal";
-import { InputBox } from "@/app/components/input-box/input-box";
 import { RadioButton } from "@/app/components/button/radio-button";
+import { InputBox } from "@/app/components/input-box/input-box";
+import { Modal } from "@/app/components/modal/modal";
 import { Toggle } from "@/app/components/toggle/toggle";
-import { DateInput } from "../input-box/date-input";
-import { Dayjs } from "dayjs";
-import { Dropdown } from "../dropdown/dropdown";
+import { MockResponse } from "@/app/services/mock-response.service";
 import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
 import { UsersFlag } from "@/lib/feature-flags/feature-flags.constant";
-import { MockResponse } from "@/app/services/mock-response.service";
-import { toast } from "react-toastify";
 import { User } from "@/types/models/user.model.type";
 import { SUCCESS_HTTP_CODES } from "@/utils/constants";
 import { validateUserFields } from "@/utils/validateUserUtils";
+import { Dayjs } from "dayjs";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
+import { toast } from "react-toastify";
+import { Dropdown } from "../dropdown/dropdown";
+import { DateInput } from "../input-box/date-input";
 
 type AddUserModalProps = {
   showModal: () => void;
@@ -51,13 +51,15 @@ export const AddUserModal: FC<AddUserModalProps> = ({
       phone,
       role,
     });
+
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       return;
     }
+
     const createUser = async () => {
       let response: any;
-      const isEnabled = await isFlagEnabled(UsersFlag.GET_ALL);
+      const isEnabled = await isFlagEnabled(UsersFlag.CREATE_USER);
       if (!isEnabled) {
         const id = 10;
         const dob = birthDay?.format("YYYY-MM-DD");
@@ -70,6 +72,7 @@ export const AddUserModal: FC<AddUserModalProps> = ({
         toast.success("Create successful");
       }
     };
+
     showModal();
     createUser();
   };

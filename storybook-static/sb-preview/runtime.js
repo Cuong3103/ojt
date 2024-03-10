@@ -8853,8 +8853,8 @@ var checkGlobals = (parameters) => {
   },
   checkSubcomponents = (meta) => {
     meta.subcomponents &&
-      deprecate(esm_default`The \`subcomponents\` annotation is deprecated. 
-    
+      deprecate(esm_default`The \`subcomponents\` annotation is deprecated.
+
       Please refer to the migration guide: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#argstable-block'
     `);
   };
@@ -9887,7 +9887,7 @@ var userOrAutoTitleFromSpecifier = (fileName, entry, userTitle) => {
     Error sorting stories with sort parameter ${storySortParameter}:
 
     > ${err.message}
-    
+
     Are you using a V6-style sort function in V7 mode?
 
     More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#v7-style-story-sort
@@ -9974,9 +9974,9 @@ var import_synchronous_promise2 = __toESM(require_synchronous_promise(), 1),
           Error sorting stories with sort parameter ${storySortParameter}:
 
           > ${err.message}
-          
+
           Are you using a V7-style sort function in V6 compatibility mode?
-          
+
           More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#v7-style-story-sort
         `)
           : err;
@@ -10008,7 +10008,7 @@ var import_synchronous_promise2 = __toESM(require_synchronous_promise(), 1),
         The legacy story store does not support new-style \`.mdx\` files. If the file above
         is not intended to be indexed (i.e. displayed as an entry in the sidebar), either
         exclude it from your \`stories\` glob, or add <Meta isTemplate /> to it.
-        
+
         If you wanted to index the file, you'll need to name it \`stories.mdx\` and stick to the
         legacy (6.x) MDX API, or use the new store.`);
       if (this.csfExports[fileName] === fileExports) return;

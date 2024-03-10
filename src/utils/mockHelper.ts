@@ -1,16 +1,14 @@
 import { User } from "@/types/models/user.model.type";
 import { faker } from "@faker-js/faker";
+import { USER_ROLE } from "./constants";
 
 export const userGenerator = (index: number): User => ({
   id: index + 1,
   firstName: faker.person.firstName(),
   lastName: faker.person.lastName(),
   fullName: faker.person.fullName(),
-  dob: faker.date
-    .between({ from: "now", to: "2025/02/02" })
-    .toISOString()
-    .slice(0, 10),
+  dob: 1000000,
   email: faker.internet.email(),
   gender: "male",
-  role: "admin",
+  role: USER_ROLE.ADMIN,
 });

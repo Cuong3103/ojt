@@ -1,80 +1,80 @@
 :root {
-  --light: rgba(239, 229, 229, 0.86);
+    --light: rgba(239, 229, 229, 0.86);
 }
 
 .status {
-  display: flex;
-  gap: 30px;
-  padding-left: 20px;
-  padding-right: 50px;
+    display: flex;
+    gap: 30px;
+    padding-left: 20px;
+    padding-right: 50px;
 }
 
 .badge.badge-neutral {
-  width: 60px;
-  height: 28px;
-  font-size: 12px;
+    width: 60px;
+    height: 28px;
+    font-size: 12px;
 }
 
 .badge.badge-secondary.badge-outline {
-  color: #d45b13;
-  width: 60px;
-  height: 28px;
-  font-size: 12px;
+    color: #d45b13;
+    width: 60px;
+    height: 28px;
+    font-size: 12px;
 }
 
 .toggle {
-  color: #d45b13;
+    color: #d45b13;
 }
 
 .chip {
-  display: flex;
-  gap: 10px;
-  padding-left: 20px;
-  padding-right: 50px;
-  font-size: 12px;
+    display: flex;
+    gap: 10px;
+    padding-left: 20px;
+    padding-right: 50px;
+    font-size: 12px;
 }
 
 .badge.badge-neutrall {
-  width: 72px;
-  height: 27px;
-  color: #fff;
-  font-size: 12px;
-  background-color: #2d3748;
+    width: 72px;
+    height: 27px;
+    color: #fff;
+    font-size: 12px;
+    background-color: #2d3748;
 }
 
 .badge.badge-ghost {
-  width: 72px;
-  height: 27px;
-  background-color: #2d3748;
-  color: #fff;
-  font-size: 12px;
+    width: 72px;
+    height: 27px;
+    background-color: #2d3748;
+    color: #fff;
+    font-size: 12px;
 }
 
 .badge.badge-info {
-  width: 72px;
-  height: 27px;
-  background-color: #285d9a;
-  color: #fff;
-  font-size: 12px;
+    width: 72px;
+    height: 27px;
+    background-color: #285d9a;
+    color: #fff;
+    font-size: 12px;
 }
 
 #badge-dismiss-dark {
-  width: auto;
-  height: 27px;
-  color: #fff;
-  font-size: 12px;
-  background-color: #2d3748;
-  border-radius: 16px;
-  gap: 5px;
-  padding-right: 10px;
-  display: flex;
+    width: auto;
+    height: 27px;
+    color: #fff;
+    font-size: 12px;
+    background-color: #2d3748;
+    border-radius: 16px;
+    gap: 5px;
+    padding-right: 10px;
+    display: flex;
 }
 
 svg {
-  stroke: #ffffffe5;
+    stroke: #ffffffe5;
 }
 
-svg:hover {
+/* svg:hover {
   width: 14px;
   height: 14px;
   background-color: hsla(0, 0%, 100%, 0.514);
@@ -83,4 +83,4 @@ svg:hover {
 
 svg:hover path {
   stroke: #fff;
-}
+} */

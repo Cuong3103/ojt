@@ -8,7 +8,7 @@ export const userColumns: ColumnType[] = [
   },
   {
     id: "fullName",
-    label: "Full name",
+    label: "full name",
     options: {},
   },
   {

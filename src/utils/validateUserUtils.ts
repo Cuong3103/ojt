@@ -1,24 +1,21 @@
-export const validateUserFields = (fields: {
-  [key: string]: any;
-}): { [key: string]: any } => {
+export const validateUserFields = (fields: Record<string, any>): Record<string, string> => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^[0-9]{10,}$/;
-  const errors: { [key: string]: any } = {};
+  const errors: Record<string, string> = {};
 
-  if (!fields.fullName) {
-    errors["required"] = "This field is required";
+  const requiredFields = ['fullName', 'birthDay', 'role'];
+
+  requiredFields.forEach(field => {
+    if (!fields[field]) {
+      errors[field] = `${field} is required`;
+    }
+  });
+
+  if (fields.email && !emailRegex.test(fields.email)) {
+    errors.email = "Please enter a valid email address";
   }
-  if (!fields.birthDay) {
-    errors["dob"] = "Day of birth is required";
-  }
-  if (!fields.role) {
-    errors["role"] = "Role is required";
-  }
-  if (!emailRegex.test(fields.email)) {
-    errors["email"] = "Please enter a valid email address";
-  }
-  if (!phoneRegex.test(fields.phone)) {
-    errors["phone"] = "Please enter a valid phone number";
+  if (fields.phone && !phoneRegex.test(fields.phone)) {
+    errors.phone = "Please enter a valid phone number";
   }
 
   return errors;

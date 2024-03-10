@@ -3556,7 +3556,7 @@ var require_react_dom_development = __commonJS({
                     error(
                       `lazy: Expected the result of a dynamic import() call. Instead received: %s
 
-Your code should look like: 
+Your code should look like:
   const MyComponent = lazy(() => import('./MyComponent'))`,
                       moduleObject
                     ),
@@ -21015,7 +21015,7 @@ This ensures that you're testing the behavior the user would see in the browser.
           Scheduler.unstable_flushAllWithoutAsserting === void 0 &&
           (fiber.mode & BlockingMode || fiber.mode & ConcurrentMode) &&
           ((didWarnAboutUnmockedScheduler = !0),
-          error(`In Concurrent or Sync modes, the "scheduler" module needs to be mocked to guarantee consistent behaviour across tests and browsers. For example, with jest: 
+          error(`In Concurrent or Sync modes, the "scheduler" module needs to be mocked to guarantee consistent behaviour across tests and browsers. For example, with jest:
 jest.mock('scheduler', () => require('scheduler/unstable_mock'));
 
 For more info, visit https://fb.me/react-mock-scheduler`));

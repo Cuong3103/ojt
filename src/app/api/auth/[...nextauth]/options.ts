@@ -1,19 +1,18 @@
 import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { JWT } from "next-auth/jwt";
+import CredentialsProvider from "next-auth/providers/credentials";
 
+import { MockResponse } from "@/app/services/mock-response.service";
+import axiosInstance from "@/lib/axios";
+import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
+import { UsersFlag } from "@/lib/feature-flags/feature-flags.constant";
+import { getExpiryFromToken } from "@/utils/authenticationHelper";
 import {
   API_LIST,
   SUCCESS_HTTP_CODES,
   getRoute,
   minutesToMiliseconds,
 } from "@/utils/constants";
-import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
-import { MockResponse } from "@/app/services/mock-response.service";
-import { UsersFlag } from "@/lib/feature-flags/feature-flags.constant";
-import axiosInstance from "@/lib/axios";
-import { toast } from "react-toastify";
-import { HttpStatusCode } from "axios";
 
 const loginMock = new MockResponse(200, {
   id: 1,
@@ -118,14 +117,15 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }: { token: JWT; user: any }) {
       if (user) {
-        // token.user = user.data; FIXME: after the backend update the response of login
+        token.user = user.userDTO;
         token.accessToken = user.token;
-        token.accessTokenExpiry = minutesToMiliseconds(1);
+
+        token.accessTokenExpiry = getExpiryFromToken(token.accessToken) || minutesToMiliseconds(1);
         token.refreshToken = user.refreshToken;
       }
 
       const refreshTime = Math.round(
-        token.accessTokenExpiry - minutesToMiliseconds(1) - Date.now()
+        Date.now() - token.accessTokenExpiry
       );
 
       if (refreshTime > 0) {
@@ -136,7 +136,7 @@ export const authOptions: NextAuthOptions = {
       return Promise.resolve(token);
     },
 
-    async session({ token, session }) {
+    async session({ session, token }) {
       session.user = token.user;
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;

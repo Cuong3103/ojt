@@ -1,9 +1,9 @@
-import { FC, ReactNode } from "react";
-import Sidebar from "../components/sidebar";
-import { Footer } from "../components/footer/footer";
-import { Header } from "../components/header/header";
 import { getSession } from "@/utils/authenticationHelper";
 import { redirect } from "next/navigation";
+import { FC, ReactNode } from "react";
+import { Footer } from "../components/footer/footer";
+import { Header } from "../components/header/header";
+import Sidebar from "../components/sidebar";
 
 type DashboardLayoutProps = {
   children: ReactNode;
