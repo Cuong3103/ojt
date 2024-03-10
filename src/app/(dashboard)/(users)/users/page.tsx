@@ -1,23 +1,26 @@
 "use client";
 
+import { AddUserModal } from "@/app/components/add-user-modal/add-user-modal";
+import { Button } from "@/app/components/button/button";
+import { Chip } from "@/app/components/chip/chip";
+import { SearchInput } from "@/app/components/input-box/search-input";
+import Pagination from "@/app/components/pagination/index";
+import { Table } from "@/app/components/table/table";
+import { MockDataService } from "@/app/services/mock-response.service";
+import axiosInstance from "@/lib/axios";
+import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
+import { UsersFlag } from "@/lib/feature-flags/feature-flags.constant";
+import { fetchUserList } from "@/services/users";
+import { User } from "@/types/models/user.model.type";
+import { API_LIST, getRoute } from "@/utils/constants";
+import { fromTimestampToDateString } from "@/utils/formatUtils";
+import { userGenerator } from "@/utils/mockHelper";
+import { totalPage } from "@/utils/paginationHelper";
+import { userColumns } from "@/utils/tableColumnHelper";
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { IoFilterSharp } from "react-icons/io5";
 import { BsFilterLeft } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { Button } from "@/app/components/button/button";
-import { Table } from "@/app/components/table/table";
-import Pagination from "@/app/components/pagination/index";
-import { SearchInput } from "@/app/components/input-box/search-input";
-import { userColumns } from "@/utils/tableColumnHelper";
-import { MockDataService } from "@/app/services/mock-response.service";
-import { User } from "@/types/models/user.model.type";
-import { userGenerator } from "@/utils/mockHelper";
-import { UsersFlag } from "@/lib/feature-flags/feature-flags.constant";
-import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
-import axiosInstance from "@/lib/axios";
-import { API_LIST, getRoute } from "@/utils/constants";
-import { totalPage } from "@/utils/paginationHelper";
-import { AddUserModal } from "@/app/components/add-user-modal/add-user-modal";
+import { IoFilterSharp } from "react-icons/io5";
 
 // type UserListResponse = {
 //   data: {
@@ -32,7 +35,7 @@ const UserListPage: FC = () => {
   const [query, setQuery] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<User[]>([]);
   const [metadata, setMetadata] = useState({
     hasNextPage: false,
     hasPrevPage: false,
@@ -53,25 +56,21 @@ const UserListPage: FC = () => {
     setLimit(Number(e.target.value));
   };
 
-  const getUsers = async () => {
-    let response: any;
-    const isEnabled = await isFlagEnabled(UsersFlag.GET_ALL);
-    if (!isEnabled) {
-      response = successUsersMock;
-    } else {
-      const res = await axiosInstance.get(getRoute(API_LIST.USER_LIST), {
-        params: {
-          page: currentPage,
-          limit,
-        },
-      });
-
-      response = await res.data.data;
+  const formatUserList = (users: User[]) => users.map((user) => (
+    {
+      ...user,
+      fullName: [user.firstName, user.lastName].join(', '),
+      dob: fromTimestampToDateString(user.dob),
+      gender: user.gender ? "male" : "female"
     }
+  ));
 
-    const { data, metadata } = response;
-    setData(data);
-    setMetadata(metadata);
+  const getUsers = async () => {
+    const isEnabled = await isFlagEnabled(UsersFlag.GET_ALL);
+    const response = isEnabled ? await fetchUserList(currentPage + 1, limit) : successUsersMock;
+
+    setData(formatUserList(response.content) as any);
+    setMetadata(response.meatadataDTO);
   };
 
   useEffect(() => {
@@ -92,14 +91,10 @@ const UserListPage: FC = () => {
           icon={<IoIosAddCircleOutline />}
         />
       </div>
-      {/* <Chip
-        style={{ backgroundColor: "#474747", fontStyle: "italic" }}
-        removeBadge="foundation"
-      ></Chip>
       <Chip
         style={{ backgroundColor: "#474747", fontStyle: "italic" }}
         removeBadge="HaNTT2"
-      ></Chip> */}
+      ></Chip>
       <Table data={data} columns={userColumns} icon={<BsFilterLeft />} />
       <div className="flex">
         <Pagination

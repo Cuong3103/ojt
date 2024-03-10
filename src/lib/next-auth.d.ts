@@ -1,12 +1,12 @@
-import { User } from "./../../node_modules/next-auth/core/types.d";
 import NextAuth from "next-auth";
 import { JWT } from "next-auth/jwt";
+import { User } from "./../../node_modules/next-auth/core/types.d";
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: number;
-      username: string;
+      email: string;
       role: string;
       avatarUrl: string;
     };
@@ -20,7 +20,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     user: {
       id: number;
-      username: string;
+      email: string;
       role: string;
       avatarUrl: string;
     };

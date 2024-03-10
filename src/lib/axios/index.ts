@@ -1,19 +1,25 @@
-import { toast } from "react-toastify";
+import { getSession } from "@/utils/authenticationHelper";
 import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL: process.env.BASE_API_URL,
   headers: {
-    "X-API-KEY": process.env.API_KEY || undefined,
+    "X-API-KEY": "RkFNU19CQUNLRU5EX0FQSV9LRVk=",
     "Content-Type": "application/json",
   },
+  withCredentials: false
 });
 
-axiosInstance.interceptors.request.use((config) => {
-  // const token = localStorage.getItem("token"); //FIXME: Modify localStorage.getItem after NextAuth implemented
-  // if (token) {
-  //   config.headers.Authorization = `Bearer ${token}`;
-  // }
+axiosInstance.interceptors.request.use(async (config) => {
+  const bypassEndpoints = ['refresh', 'signin'];
+  if (config.url && bypassEndpoints.some(endpoint => config.url?.includes(endpoint))) {
+    return config;
+  }
+
+  const session = await getSession();
+  if (session?.accessToken) {
+    config.headers['Authorization'] = `Bearer ${session?.accessToken}`;
+  }
 
   return config;
 });

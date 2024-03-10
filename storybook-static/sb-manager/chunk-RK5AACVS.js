@@ -15145,7 +15145,7 @@ var TITLE_PATH_SEPARATOR = /\s*\/\s*/,
             if (parent === id)
               throw new Error(dedent2`
           Invalid part '${name2}', leading to id === parentId ('${id}'), inside title '${title}'
-          
+
           Did you create a path that uses the separator char accidentally, such as 'Vue <docs/>' where '/' is a separator char? See https://github.com/storybookjs/storybook/issues/6128
           `);
             return list.push(id), list;
