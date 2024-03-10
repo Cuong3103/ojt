@@ -9,6 +9,10 @@ import { LogoutButton } from "../button/logout-button";
 export const Header: FC = async (props) => {
   const session = await getSession();
 
+  const renderUsernameFromEmail = (email?: string) => {
+    return email?.split("@")[0];
+  }
+
   return (
     <div className="navbar bg-primary-color">
       <div className="flex-1">
@@ -51,7 +55,7 @@ export const Header: FC = async (props) => {
           </div>
           <div className="flex flex-col w-24 h-11">
             <p className="text-white text-base w-max max-h-5 font-bold ">
-              {session?.user?.username || "savage"}
+              {renderUsernameFromEmail(session?.user.email) || "user"}
             </p>
             <LogoutButton />
           </div>

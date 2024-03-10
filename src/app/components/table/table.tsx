@@ -1,7 +1,8 @@
 import { FC, ReactNode } from "react";
 
-import { Chip } from "../chip/chip";
 import { ColumnType } from "@/types/column.type";
+import { USER_ROLE } from "@/utils/constants";
+import { Chip } from "../chip/chip";
 
 export type Column = {
   id: string;
@@ -115,7 +116,7 @@ export const Table: FC<TableProps> = ({ data, columns, icon }) => {
                     </span>
                   ) : column.id === "role" ? (
                     <span>
-                      {row[column.id] === "admin" ? (
+                      {row[column.id] === USER_ROLE.ADMIN ? (
                         <Chip
                           active="Admin"
                           style={{ backgroundColor: "#4db848" }}
