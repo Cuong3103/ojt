@@ -1,8 +1,9 @@
 import { getSession } from "@/utils/authenticationHelper";
+import { BASE_API_URL } from "@/utils/constants";
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.BASE_API_URL,
+  baseURL: BASE_API_URL,
   headers: {
     "X-API-KEY": "RkFNU19CQUNLRU5EX0FQSV9LRVk=",
     "Content-Type": "application/json",

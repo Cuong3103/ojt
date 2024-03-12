@@ -1,24 +1,34 @@
-ARG BASE_IMAGE=node:20-alpine
-
-FROM ${BASE_IMAGE} as builder
-
-ENV NODE_ENV=test
-ENV NEXT_TELEMETRY_DISABLED=1
-
+FROM node:20-alpine AS development
 WORKDIR /app
-COPY ./package*.json ./
 
-RUN CI=true npm ci
-RUN NODE_ENV=production npm run build
+ENV HOST=0.0.0.0
+ENV PORT=3000
+ENV NODE_ENV=development
+EXPOSE 3000
+CMD [ "yarn", "dev" ]
 
-FROM ${BASE_IMAGE}
-
-WORKDIR /app
-COPY --from=builder /app ./
+FROM node:20-alpine AS dependencies
 ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+WORKDIR /app
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
+FROM node:20-alpine AS builder
+ENV NODE_ENV=development
+WORKDIR /app
+COPY . .
+RUN yarn install --frozen-lockfile && NODE_ENV=production yarn build
+
+FROM node:20-alpine AS production
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --chown=node --from=builder /app/next.config.mjs ./
+COPY --chown=node --from=builder /app/public ./public
+COPY --chown=node --from=builder /app/.next ./.next
+COPY --chown=node --from=builder /app/yarn.lock /app/package.json ./
+COPY --chown=node --from=dependencies /app/node_modules ./node_modules
+USER node
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
-
+ENV NEXT_TELEMETRY_DISABLED 1
+CMD [ "yarn", "start" ]
