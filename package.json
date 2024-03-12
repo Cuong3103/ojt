@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -15,6 +15,7 @@
     "build-storybook": "storybook build",
     "prepare": "husky",
     "commit": "node ./scripts/commit-msg.mjs",
+    "build:image": "node ./scripts/build-image.mjs",
     "docker:prepare:db": "docker pull doanvinhphu321/postgres_be",
     "docker:prepare:be": "docker pull doanvinhphu321/fams_be",
     "docker:prepare": "yarn docker:prepare:db && yarn docker:prepare:be",

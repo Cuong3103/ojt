@@ -23,13 +23,15 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const callbackUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "http://34.129.36.76"
+
     await signIn("credentials", {
       email: email.current,
       password: password.current,
       redirect: true,
       callbackUrl: props.callbackUrl
         ? props.callbackUrl
-        : "http://localhost:3000",
+        : callbackUrl,
     });
   };
 

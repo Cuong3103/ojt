@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nextjs-ingress
+  annotations:
+    networking.gke.io/managed-certificates: nextjs-cert
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+  - host: famschickenreact.fun
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        backend:
+          service:
+            name: nextjs-service
+            port:
+              number: 80
