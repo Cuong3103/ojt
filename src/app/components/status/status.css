@@ -69,18 +69,3 @@
     padding-right: 10px;
     display: flex;
 }
-
-svg {
-    stroke: #ffffffe5;
-}
-
-/* svg:hover {
-  width: 14px;
-  height: 14px;
-  background-color: hsla(0, 0%, 100%, 0.514);
-  border-radius: 10px;
-}
-
-svg:hover path {
-  stroke: #fff;
-} */

@@ -1,14 +1,14 @@
 export const LOGIN_FLAG = "login";
 
 export const BASE_API_URL =
-  process.env.NODE_ENV === "development" ? "http://localhost:8080/api/v1" : "http://34.129.36.76/api/v1";
+  process.env.NODE_ENV === "development" ? "http://localhost:8080/api/v1" : "http://34.101.243.11:8081/api/v1";
 
 export enum API_LIST {
   LOGIN = "/auth/signin",
   REFRESH_TOKEN = "/auth/refresh",
-  ADMIN_USER_LIST = "/admin/user/all",
-  ADMIN_MODIFY_USER = "/admin/user",
-  CREATE_CLASS = "admin/class"
+  ADMIN_USER_LIST = "/user/hidden",
+  ADMIN_MODIFY_USER = "/user",
+  CREATE_CLASS = "/class"
 }
 
 export enum USER_ROLE {
