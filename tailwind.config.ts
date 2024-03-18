@@ -22,6 +22,11 @@ const config: Config = {
         "primary-sidebar": "",
         "primary-color": "#2D3748",
         "deep-primary-color": "#0B2136",
+        main: "#2D3748",
+        "blue-main": "#285D9A",
+        "orange-main": "#D45B13",
+        "green-main": "#2F903F",
+        "grey-main": "#CCCCCC",
       },
       textColor: {
         "primary-color": "#2D3748",

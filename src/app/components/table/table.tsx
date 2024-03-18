@@ -1,5 +1,4 @@
 import { FC, ReactNode } from "react";
-
 import { ColumnType } from "@/types/column.type";
 import { USER_ROLE } from "@/utils/constants";
 import { Chip } from "../chip/chip";
@@ -123,6 +122,29 @@ export const Table: FC<TableProps> = ({ data, columns, icon }) => {
                         />
                       ) : (
                         <Chip active="Trainer" />
+                      )}
+                    </span>
+                  ) : column.id === "outputStandard" ? (
+                    <span>
+                      {Array.isArray(row[column.id]) &&
+                      row[column.id].length > 0 ? (
+                        row[column.id].map((output: string, index: number) => (
+                          <Chip key={index} active={output} />
+                        ))
+                      ) : (
+                        <Chip active="H4SD" />
+                      )}
+                    </span>
+                  ) : column.id === "status" ? (
+                    <span>
+                      {row[column.id] === "active" ? (
+                        <Chip active="active" />
+                      ) : row[column.id] === "Inactive" ? (
+                        <Chip inactive="Inactive" />
+                      ) : row[column.id] === "draft" ? (
+                        <Chip draft="draft" />
+                      ) : (
+                        <Chip active="active" />
                       )}
                     </span>
                   ) : (

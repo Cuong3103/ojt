@@ -56,18 +56,19 @@ const UserListPage: FC = () => {
     setLimit(Number(e.target.value));
   };
 
-  const formatUserList = (users: User[]) => users.map((user) => (
-    {
+  const formatUserList = (users: User[]) =>
+    users.map((user) => ({
       ...user,
-      fullName: [user.firstName, user.lastName].join(', '),
+      fullName: [user.firstName, user.lastName].join(", "),
       dob: fromTimestampToDateString(user.dob),
-      gender: user.gender ? "male" : "female"
-    }
-  ));
+      gender: user.gender ? "male" : "female",
+    }));
 
   const getUsers = async () => {
     const isEnabled = await isFlagEnabled(UsersFlag.GET_ALL);
-    const response = isEnabled ? await fetchUserList(currentPage + 1, limit) : successUsersMock;
+    const response = isEnabled
+      ? await fetchUserList(currentPage + 1, limit)
+      : successUsersMock;
 
     setData(formatUserList(response.content) as any);
     setMetadata(response.meatadataDTO);

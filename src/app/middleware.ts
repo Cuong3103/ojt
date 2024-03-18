@@ -7,7 +7,7 @@ export const middleware = async () => {
   const session = await getServerSession();
 
   if (session && session?.user) {
-    return redirect("/dashbaord");
+    return redirect("/dashboard");
   } else {
     return redirect("/login");
   }

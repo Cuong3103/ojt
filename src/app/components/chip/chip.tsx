@@ -1,4 +1,5 @@
 import { CSSProperties, FC } from "react";
+import { IoClose } from "react-icons/io5";
 import "../status/status.css";
 
 type ChipProps = {
@@ -6,6 +7,7 @@ type ChipProps = {
   inactive?: string;
   draft?: string;
   removeBadge?: string;
+  type?: string;
   style?: CSSProperties;
 };
 
@@ -14,6 +16,7 @@ export const Chip: FC<ChipProps> = ({
   inactive,
   draft,
   removeBadge,
+  type,
   style,
 }) => {
   return (
@@ -51,6 +54,15 @@ export const Chip: FC<ChipProps> = ({
             </button>
             <span className="sr-only">{removeBadge}</span>
           </span>
+        </div>
+      )}
+      {type && (
+        <div className="badge badge-type" style={style}>
+          {type}
+          <div>
+            {" "}
+            <IoClose />
+          </div>
         </div>
       )}
       {inactive && <div className="badge badge-ghost">{inactive}</div>}
