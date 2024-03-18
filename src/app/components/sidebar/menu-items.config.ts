@@ -1,11 +1,11 @@
-import { RiMicroscopeLine } from "react-icons/ri";
-import { LiaHomeSolid } from "react-icons/lia";
+import { MenuItem } from "@/types/menu.type";
+import { AiOutlineSetting } from "react-icons/ai";
+import { FaRegCalendar, FaRegFolderOpen } from "react-icons/fa";
 import { FiBookOpen } from "react-icons/fi";
 import { GoMortarBoard } from "react-icons/go";
-import { FaRegCalendar, FaRegFolderOpen } from "react-icons/fa";
+import { LiaHomeSolid } from "react-icons/lia";
 import { LuUsers } from "react-icons/lu";
-import { AiOutlineSetting } from "react-icons/ai";
-import { MenuItem } from "@/types/menu.type";
+import { RiMicroscopeLine } from "react-icons/ri";
 
 export const menuItems: MenuItem[] = [
   {
@@ -25,6 +25,17 @@ export const menuItems: MenuItem[] = [
   {
     title: "Training program",
     icon: RiMicroscopeLine,
+    submenu: true,
+    submenuItems: [
+      {
+        title: "View training program",
+        path: ""
+      },
+      {
+        title: "Create training program",
+        path: ""
+      }
+    ]
   },
   {
     title: "Class",
@@ -56,6 +67,9 @@ export const menuItems: MenuItem[] = [
     title: "Setting",
     submenu: true,
     icon: AiOutlineSetting,
-    submenuItems: [{ title: "Calendar", path: "" }],
+    submenuItems: [
+      { title: "Edit profile", path: "/profile" },
+      { title: "Calendar", path: "" }
+    ],
   },
 ];

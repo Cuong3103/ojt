@@ -8,18 +8,25 @@ const axiosInstance = axios.create({
     "X-API-KEY": "RkFNU19CQUNLRU5EX0FQSV9LRVk=",
     "Content-Type": "application/json",
   },
-  withCredentials: false
+  withCredentials: false,
 });
 
 axiosInstance.interceptors.request.use(async (config) => {
-  const bypassEndpoints = ['refresh', 'signin'];
-  if (config.url && bypassEndpoints.some(endpoint => config.url?.includes(endpoint))) {
+  const bypassEndpoints = ["refresh", "signin"];
+  if (
+    config.url &&
+    bypassEndpoints.some((endpoint) => config.url?.includes(endpoint))
+  ) {
     return config;
+  }
+
+  if (config.url?.match(/updateImage/)) {
+    config.headers["Content-Type"] = "multipart/form-data";
   }
 
   const session = await getSession();
   if (session?.accessToken) {
-    config.headers['Authorization'] = `Bearer ${session?.accessToken}`;
+    config.headers["Authorization"] = `Bearer ${session?.accessToken}`;
   }
 
   return config;

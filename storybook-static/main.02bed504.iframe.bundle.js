@@ -32,7 +32,7 @@
     ) => {
       "use strict";
       var external_STORYBOOK_MODULE_GLOBAL_ =
-          __webpack_require__("@storybook/global"),
+        __webpack_require__("@storybook/global"),
         external_STORYBOOK_MODULE_PREVIEW_API_ = __webpack_require__(
           "@storybook/preview-api"
         ),
@@ -66,13 +66,13 @@
         },
       ];
       const channel = (0,
-      external_STORYBOOK_MODULE_CHANNELS_.createBrowserChannel)({
-        page: "preview",
-      });
+        external_STORYBOOK_MODULE_CHANNELS_.createBrowserChannel)({
+          page: "preview",
+        });
       external_STORYBOOK_MODULE_PREVIEW_API_.addons.setChannel(channel),
         "DEVELOPMENT" ===
-          external_STORYBOOK_MODULE_GLOBAL_.global.CONFIG_TYPE &&
-          (window.__STORYBOOK_SERVER_CHANNEL__ = channel);
+        external_STORYBOOK_MODULE_GLOBAL_.global.CONFIG_TYPE &&
+        (window.__STORYBOOK_SERVER_CHANNEL__ = channel);
       const preview = new external_STORYBOOK_MODULE_PREVIEW_API_.PreviewWeb();
       (window.__STORYBOOK_PREVIEW__ = preview),
         (window.__STORYBOOK_STORY_STORE__ = preview.storyStore),
@@ -139,8 +139,8 @@
           default: () => _storybook_preview,
         });
       var injectStylesIntoStyleTag = __webpack_require__(
-          "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js"
-        ),
+        "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js"
+      ),
         injectStylesIntoStyleTag_default = __webpack_require__.n(
           injectStylesIntoStyleTag
         ),
@@ -193,9 +193,9 @@
           A: () => __WEBPACK_DEFAULT_EXPORT__,
         });
         var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ =
-            __webpack_require__(
-              "./node_modules/css-loader/dist/runtime/sourceMaps.js"
-            ),
+          __webpack_require__(
+            "./node_modules/css-loader/dist/runtime/sourceMaps.js"
+          ),
           _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default =
             __webpack_require__.n(
               _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__
