@@ -11,7 +11,7 @@ export const Header: FC = async (props) => {
 
   const renderUsernameFromEmail = (email?: string) => {
     return email?.split("@")[0];
-  }
+  };
 
   return (
     <div className="navbar bg-primary-color">
@@ -40,7 +40,7 @@ export const Header: FC = async (props) => {
         </div>
 
         <div className="flex gap-x-3 mx-4">
-          <div className="w-11 h-11">
+          <div className="avatar w-11 h-11">
             <Image
               className="rounded-full  border-white border-solid border-2 "
               alt="Tailwind CSS Navbar component"
@@ -50,7 +50,7 @@ export const Header: FC = async (props) => {
                   : "https://robohash.org/fe9d699531c5b7c3eb9b1eaa8f2ef319?set=set4&bgset=bg2&size=400x400"
               }
               width={200}
-              height={11}
+              height={200}
             />
           </div>
           <div className="flex flex-col w-24 h-11">

@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { Cancel } from "../button/cancel";
 import { Button } from "../button/button";
+import { Cancel } from "../button/cancel";
 
 type ModalType = {
   title: string;
-  fields: { id: string; label: string; component: JSX.Element }[];
+  fields: { id: string; label?: string; component: JSX.Element }[];
   buttonTitle: string;
   showModal?: () => void;
   handleSubmit?: () => void;
@@ -35,7 +35,7 @@ export const Modal: FC<ModalType> = ({
         <div className="p-6">
           {fields.map((field) => (
             <div key={field.id} className="grid grid-cols-2 gap-4 pb-5">
-              <div className="items-center">{field.label}</div>
+              {field.label && <div className="items-center">{field.label}</div>}
               {field.component}
             </div>
           ))}

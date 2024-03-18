@@ -40,11 +40,11 @@ async function refreshToken(token: JWT): Promise<JWT> {
       token: token.refreshToken,
     });
 
-    response = await res.data.data;
+    response = await res.data.content;
 
     return {
       ...token,
-      accessToken: response.accessToken,
+      accessToken: response.token,
       refreshToken: response.refreshToken,
     };
   } catch (error) {
@@ -120,13 +120,12 @@ export const authOptions: NextAuthOptions = {
         token.user = user.userDTO;
         token.accessToken = user.token;
 
-        token.accessTokenExpiry = getExpiryFromToken(token.accessToken) || minutesToMiliseconds(1);
+        token.accessTokenExpiry =
+          getExpiryFromToken(token.accessToken) || minutesToMiliseconds(1);
         token.refreshToken = user.refreshToken;
       }
 
-      const refreshTime = Math.round(
-        Date.now() - token.accessTokenExpiry
-      );
+      const refreshTime = Math.round(Date.now() - token.accessTokenExpiry);
 
       if (refreshTime > 0) {
         return Promise.resolve(token);
@@ -137,9 +136,17 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token }) {
-      session.user = token.user;
-      session.accessToken = token.accessToken;
-      session.refreshToken = token.refreshToken;
+      if (token && token.accessTokenExpiry > Date.now()) {
+        session.user = token.user;
+        session.accessToken = token.accessToken;
+        session.refreshToken = token.refreshToken;
+      } else {
+        const newToken = await refreshToken(token);
+
+        session.user = newToken.user;
+        session.accessToken = newToken.accessToken;
+        session.refreshToken = newToken.refreshToken;
+      }
 
       return Promise.resolve(session);
     },

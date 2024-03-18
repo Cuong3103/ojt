@@ -1,79 +1,80 @@
-variables:
-  IMAGE_NAME: fams-ui
-  IMAGE_TAG: latest
-  DOCKERHUB_USERNAME: niinkoi
+# FIXME: CURRENTLY THE GITLAB DENINED ANY REQUEST FROM OUTSIDERS SO THAT WE NEED TO COMMENT ALL THE CI/CD PROCESS TO SKIP ALL THE VALIDATION
+# variables:
+#   IMAGE_NAME: fams-ui
+#   IMAGE_TAG: latest
+#   DOCKERHUB_USERNAME: niinkoi
 
-stages:
-  - build
-  - misc
-  - analyze
-  - deploy
+# stages:
+#   - build
+#   - misc
+#   - analyze
+#   - deploy
 
-cache:
-  paths:
-    - node_modules/
+# cache:
+#   paths:
+#     - node_modules/
 
-build-app:
-  stage: build
-  image: node:20-alpine
-  only:
-    - main
-    - merge_requests
-  script:
-    - yarn --version
-    - yarn
-    - yarn build
-
-# dockerize:
+# build-app:
 #   stage: build
-#   only:
-#     - main
-#   script:
-#     - docker login -u $DOCKERHUB_USERNAME -p $DOCKER_PASSWORD
-#     - docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
-#     - docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$IMAGE_TAG
-
-lint:
-  stage: misc
-  image: node:20-alpine
-  only:
-    - main
-    - merge_requests
-  script:
-    - yarn
-    - yarn lint
-
-test:
-  stage: misc
-  image: node:20-alpine
-  needs:
-    - lint
-  only:
-    - main
-    - merge_requests
-  script:
-    - yarn
-    - yarn test:ci
-
-deploy-staging:
-  stage: deploy
-  image: node:20-alpine
-  only:
-    - merge_requests
-  script:
-    - yarn
-    - yarn global add vercel
-    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
-    - vercel --token=$VERCEL_TOKEN
-
-# deploy-uat:
-#   stage: deploy
 #   image: node:20-alpine
 #   only:
 #     - main
+#     - merge_requests
 #   script:
-#     - export HUSKY_SKIP_INSTALL=1
+#     - yarn --version
+#     - yarn
+#     - yarn build
+
+# # dockerize:
+# #   stage: build
+# #   only:
+# #     - main
+# #   script:
+# #     - docker login -u $DOCKERHUB_USERNAME -p $DOCKER_PASSWORD
+# #     - docker build -t $DOCKERHUB_USERNAME/$IMAGE_NAME:$IMAGE_TAG .
+# #     - docker push $DOCKERHUB_USERNAME/$IMAGE_NAME:$IMAGE_TAG
+
+# lint:
+#   stage: misc
+#   image: node:20-alpine
+#   only:
+#     - main
+#     - merge_requests
+#   script:
+#     - yarn
+#     - yarn lint
+
+# test:
+#   stage: misc
+#   image: node:20-alpine
+#   needs:
+#     - lint
+#   only:
+#     - main
+#     - merge_requests
+#   script:
+#     - yarn
+#     - yarn test:ci
+
+# deploy-staging:
+#   stage: deploy
+#   image: node:20-alpine
+#   only:
+#     - merge_requests
+#   script:
 #     - yarn
 #     - yarn global add vercel
-#     - vercel pull --yes --token=$VERCEL_TOKEN
-#     - vercel redeploy dpl_9wKsNqsS8mZjgEqHhcvVoRGY7M5q --token=$VERCEL_TOKEN
+#     - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+#     - vercel --token=$VERCEL_TOKEN
+
+# # deploy-uat:
+# #   stage: deploy
+# #   image: node:20-alpine
+# #   only:
+# #     - main
+# #   script:
+# #     - export HUSKY_SKIP_INSTALL=1
+# #     - yarn
+# #     - yarn global add vercel
+# #     - vercel pull --yes --token=$VERCEL_TOKEN
+# #     - vercel redeploy dpl_9wKsNqsS8mZjgEqHhcvVoRGY7M5q --token=$VERCEL_TOKEN

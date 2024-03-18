@@ -17,22 +17,22 @@ var require_markdown = __commonJS({
       (markdown.displayName = "markdown"),
       (markdown.aliases = ["md"]);
     function markdown(Prism) {
-      (function (Prism2) {
+      (function(Prism2) {
         var inner = /(?:\\.|[^\\\n\r]|(?:\n|\r\n?)(?![\r\n]))/.source;
         function createInline(pattern) {
           return (
-            (pattern = pattern.replace(/<inner>/g, function () {
+            (pattern = pattern.replace(/<inner>/g, function() {
               return inner;
             })),
             RegExp(/((?:^|[^\\])(?:\\{2})*)/.source + "(?:" + pattern + ")")
           );
         }
         var tableCell =
-            /(?:\\.|``(?:[^`\r\n]|`(?!`))+``|`[^`\r\n]+`|[^\\|\r\n`])+/.source,
+          /(?:\\.|``(?:[^`\r\n]|`(?!`))+``|`[^`\r\n]+`|[^\\|\r\n`])+/.source,
           tableRow =
             /\|?__(?:\|__)+\|?(?:(?:\n|\r\n?)|(?![\s\S]))/.source.replace(
               /__/g,
-              function () {
+              function() {
                 return tableCell;
               }
             ),
@@ -225,9 +225,9 @@ var require_markdown = __commonJS({
               },
             },
           }),
-          ["url", "bold", "italic", "strike"].forEach(function (token) {
+          ["url", "bold", "italic", "strike"].forEach(function(token) {
             ["url", "bold", "italic", "strike", "code-snippet"].forEach(
-              function (inside) {
+              function(inside) {
                 token !== inside &&
                   (Prism2.languages.markdown[token].inside.content.inside[
                     inside
@@ -235,7 +235,7 @@ var require_markdown = __commonJS({
               }
             );
           }),
-          Prism2.hooks.add("after-tokenize", function (env) {
+          Prism2.hooks.add("after-tokenize", function(env) {
             if (env.language !== "markdown" && env.language !== "md") return;
             function walkTokens(tokens) {
               if (!(!tokens || typeof tokens == "string"))
@@ -269,7 +269,7 @@ var require_markdown = __commonJS({
             }
             walkTokens(env.tokens);
           }),
-          Prism2.hooks.add("wrap", function (env) {
+          Prism2.hooks.add("wrap", function(env) {
             if (env.type === "code-block") {
               for (
                 var codeLang = "", i = 0, l = env.classes.length;
@@ -303,7 +303,7 @@ var require_markdown = __commonJS({
                 (env.attributes.id = id),
                   Prism2.plugins.autoloader.loadLanguages(
                     codeLang,
-                    function () {
+                    function() {
                       var ele = document.getElementById(id);
                       ele &&
                         (ele.innerHTML = Prism2.highlight(
@@ -317,9 +317,9 @@ var require_markdown = __commonJS({
             }
           });
         var tagPattern = RegExp(
-            Prism2.languages.markup.tag.pattern.source,
-            "gi"
-          ),
+          Prism2.languages.markup.tag.pattern.source,
+          "gi"
+        ),
           KNOWN_ENTITY_NAMES = { amp: "&", lt: "<", gt: ">", quot: '"' },
           fromCodePoint = String.fromCodePoint || String.fromCharCode;
         function textContent(html) {
@@ -327,7 +327,7 @@ var require_markdown = __commonJS({
           return (
             (text = text.replace(
               /&(\w{1,8}|#x?[\da-f]{1,8});/gi,
-              function (m, code) {
+              function(m, code) {
                 if (((code = code.toLowerCase()), code[0] === "#")) {
                   var value;
                   return (
@@ -356,7 +356,7 @@ var require_yaml = __commonJS({
       (yaml.displayName = "yaml"),
       (yaml.aliases = ["yml"]);
     function yaml(Prism) {
-      (function (Prism2) {
+      (function(Prism2) {
         var anchorOrAlias = /[*&][^\s[\]{},]+/,
           tag =
             /!(?:<[\w\-%#;/?:@&=+$,.!~*'()[\]]+>|(?:[a-zA-Z\d-]*!)?[\w\-%#;/?:@&=+$.~*'()]+)?/,
@@ -373,7 +373,7 @@ var require_yaml = __commonJS({
           plainKey =
             /(?:[^\s\x00-\x08\x0e-\x1f!"#%&'*,\-:>?@[\]`{|}\x7f-\x84\x86-\x9f\ud800-\udfff\ufffe\uffff]|[?:-]<PLAIN>)(?:[ \t]*(?:(?![#:])<PLAIN>|:<PLAIN>))*/.source.replace(
               /<PLAIN>/g,
-              function () {
+              function() {
                 return /[^\s\x00-\x08\x0e-\x1f,[\]{}\x7f-\x84\x86-\x9f\ud800-\udfff\ufffe\uffff]/
                   .source;
               }
@@ -383,10 +383,10 @@ var require_yaml = __commonJS({
           flags = (flags || "").replace(/m/g, "") + "m";
           var pattern =
             /([:\-,[{]\s*(?:\s<<prop>>[ \t]+)?)(?:<<value>>)(?=[ \t]*(?:$|,|\]|\}|(?:[\r\n]\s*)?#))/.source
-              .replace(/<<prop>>/g, function () {
+              .replace(/<<prop>>/g, function() {
                 return properties;
               })
-              .replace(/<<value>>/g, function () {
+              .replace(/<<value>>/g, function() {
                 return value;
               });
           return RegExp(pattern, flags);
@@ -396,7 +396,7 @@ var require_yaml = __commonJS({
             pattern: RegExp(
               /([\-:]\s*(?:\s<<prop>>[ \t]+)?[|>])[ \t]*(?:((?:\r?\n|\r)[ \t]+)\S[^\r\n]*(?:\2[^\r\n]+)*)/.source.replace(
                 /<<prop>>/g,
-                function () {
+                function() {
                   return properties;
                 }
               )
@@ -408,10 +408,10 @@ var require_yaml = __commonJS({
           key: {
             pattern: RegExp(
               /((?:^|[:\-,[{\r\n?])[ \t]*(?:<<prop>>[ \t]+)?)<<key>>(?=\s*:\s)/.source
-                .replace(/<<prop>>/g, function () {
+                .replace(/<<prop>>/g, function() {
                   return properties;
                 })
-                .replace(/<<key>>/g, function () {
+                .replace(/<<key>>/g, function() {
                   return "(?:" + plainKey + "|" + string + ")";
                 })
             ),
@@ -470,7 +470,7 @@ var require_typescript = __commonJS({
       (typescript.displayName = "typescript"),
       (typescript.aliases = ["ts"]);
     function typescript(Prism) {
-      (function (Prism2) {
+      (function(Prism2) {
         (Prism2.languages.typescript = Prism2.languages.extend("javascript", {
           "class-name": {
             pattern:
@@ -524,7 +524,7 @@ var require_jsx = __commonJS({
   "../../node_modules/refractor/lang/jsx.js"(exports, module) {
     (module.exports = jsx), (jsx.displayName = "jsx"), (jsx.aliases = []);
     function jsx(Prism) {
-      (function (Prism2) {
+      (function(Prism2) {
         var javascript = Prism2.util.clone(Prism2.languages.javascript),
           space = /(?:\s|\/\/.*(?!.)|\/\*(?:[^*]|\*(?!\/))\*\/)/.source,
           braces = /(?:\{(?:\{(?:\{[^{}]*\}|[^{}])*\}|[^{}])*\})/.source,
@@ -532,13 +532,13 @@ var require_jsx = __commonJS({
         function re(source, flags) {
           return (
             (source = source
-              .replace(/<S>/g, function () {
+              .replace(/<S>/g, function() {
                 return space;
               })
-              .replace(/<BRACES>/g, function () {
+              .replace(/<BRACES>/g, function() {
                 return braces;
               })
-              .replace(/<SPREAD>/g, function () {
+              .replace(/<SPREAD>/g, function() {
                 return spread;
               })),
             RegExp(source, flags)
@@ -588,46 +588,46 @@ var require_jsx = __commonJS({
             },
             Prism2.languages.jsx.tag
           );
-        var stringifyToken = function (token) {
-            return token
-              ? typeof token == "string"
-                ? token
-                : typeof token.content == "string"
+        var stringifyToken = function(token) {
+          return token
+            ? typeof token == "string"
+              ? token
+              : typeof token.content == "string"
                 ? token.content
                 : token.content.map(stringifyToken).join("")
-              : "";
-          },
-          walkTokens = function (tokens) {
+            : "";
+        },
+          walkTokens = function(tokens) {
             for (var openedTags = [], i = 0; i < tokens.length; i++) {
               var token = tokens[i],
                 notTagNorBrace = !1;
               if (
                 (typeof token != "string" &&
                   (token.type === "tag" &&
-                  token.content[0] &&
-                  token.content[0].type === "tag"
+                    token.content[0] &&
+                    token.content[0].type === "tag"
                     ? token.content[0].content[0].content === "</"
                       ? openedTags.length > 0 &&
-                        openedTags[openedTags.length - 1].tagName ===
-                          stringifyToken(token.content[0].content[1]) &&
-                        openedTags.pop()
+                      openedTags[openedTags.length - 1].tagName ===
+                      stringifyToken(token.content[0].content[1]) &&
+                      openedTags.pop()
                       : token.content[token.content.length - 1].content ===
-                          "/>" ||
-                        openedTags.push({
-                          tagName: stringifyToken(token.content[0].content[1]),
-                          openedBraces: 0,
-                        })
+                      "/>" ||
+                      openedTags.push({
+                        tagName: stringifyToken(token.content[0].content[1]),
+                        openedBraces: 0,
+                      })
                     : openedTags.length > 0 &&
                       token.type === "punctuation" &&
                       token.content === "{"
-                    ? openedTags[openedTags.length - 1].openedBraces++
-                    : openedTags.length > 0 &&
-                      openedTags[openedTags.length - 1].openedBraces > 0 &&
-                      token.type === "punctuation" &&
-                      token.content === "}"
-                    ? openedTags[openedTags.length - 1].openedBraces--
-                    : (notTagNorBrace = !0)),
-                (notTagNorBrace || typeof token == "string") &&
+                      ? openedTags[openedTags.length - 1].openedBraces++
+                      : openedTags.length > 0 &&
+                        openedTags[openedTags.length - 1].openedBraces > 0 &&
+                        token.type === "punctuation" &&
+                        token.content === "}"
+                        ? openedTags[openedTags.length - 1].openedBraces--
+                        : (notTagNorBrace = !0)),
+                  (notTagNorBrace || typeof token == "string") &&
                   openedTags.length > 0 &&
                   openedTags[openedTags.length - 1].openedBraces === 0)
               ) {
@@ -636,11 +636,11 @@ var require_jsx = __commonJS({
                   (typeof tokens[i + 1] == "string" ||
                     tokens[i + 1].type === "plain-text") &&
                   ((plainText += stringifyToken(tokens[i + 1])),
-                  tokens.splice(i + 1, 1)),
+                    tokens.splice(i + 1, 1)),
                   i > 0 &&
-                    (typeof tokens[i - 1] == "string" ||
-                      tokens[i - 1].type === "plain-text") &&
-                    ((plainText = stringifyToken(tokens[i - 1]) + plainText),
+                  (typeof tokens[i - 1] == "string" ||
+                    tokens[i - 1].type === "plain-text") &&
+                  ((plainText = stringifyToken(tokens[i - 1]) + plainText),
                     tokens.splice(i - 1, 1),
                     i--),
                   (tokens[i] = new Prism2.Token(
@@ -655,7 +655,7 @@ var require_jsx = __commonJS({
                 walkTokens(token.content);
             }
           };
-        Prism2.hooks.add("after-tokenize", function (env) {
+        Prism2.hooks.add("after-tokenize", function(env) {
           (env.language !== "jsx" && env.language !== "tsx") ||
             walkTokens(env.tokens);
         });
@@ -671,7 +671,7 @@ var require_tsx = __commonJS({
     function tsx(Prism) {
       Prism.register(refractorJsx),
         Prism.register(refractorTypescript),
-        (function (Prism2) {
+        (function(Prism2) {
           var typescript = Prism2.util.clone(Prism2.languages.typescript);
           (Prism2.languages.tsx = Prism2.languages.extend("jsx", typescript)),
             delete Prism2.languages.tsx.parameter,
@@ -750,21 +750,21 @@ var require_javascript = __commonJS({
         number: {
           pattern: RegExp(
             /(^|[^\w$])/.source +
-              "(?:" +
-              (/NaN|Infinity/.source +
-                "|" +
-                /0[bB][01]+(?:_[01]+)*n?/.source +
-                "|" +
-                /0[oO][0-7]+(?:_[0-7]+)*n?/.source +
-                "|" +
-                /0[xX][\dA-Fa-f]+(?:_[\dA-Fa-f]+)*n?/.source +
-                "|" +
-                /\d+(?:_\d+)*n/.source +
-                "|" +
-                /(?:\d+(?:_\d+)*(?:\.(?:\d+(?:_\d+)*)?)?|\.\d+(?:_\d+)*)(?:[Ee][+-]?\d+(?:_\d+)*)?/
-                  .source) +
-              ")" +
-              /(?![\w$])/.source
+            "(?:" +
+            (/NaN|Infinity/.source +
+              "|" +
+              /0[bB][01]+(?:_[01]+)*n?/.source +
+              "|" +
+              /0[oO][0-7]+(?:_[0-7]+)*n?/.source +
+              "|" +
+              /0[xX][\dA-Fa-f]+(?:_[\dA-Fa-f]+)*n?/.source +
+              "|" +
+              /\d+(?:_\d+)*n/.source +
+              "|" +
+              /(?:\d+(?:_\d+)*(?:\.(?:\d+(?:_\d+)*)?)?|\.\d+(?:_\d+)*)(?:[Ee][+-]?\d+(?:_\d+)*)?/
+                .source) +
+            ")" +
+            /(?![\w$])/.source
           ),
           lookbehind: !0,
         },
@@ -863,7 +863,7 @@ var require_javascript = __commonJS({
           },
         }),
         Prism.languages.markup &&
-          (Prism.languages.markup.tag.addInlined("script", "javascript"),
+        (Prism.languages.markup.tag.addInlined("script", "javascript"),
           Prism.languages.markup.tag.addAttribute(
             /on(?:abort|blur|change|click|composition(?:end|start|update)|dblclick|error|focus(?:in|out)?|key(?:down|up)|load|mouse(?:down|enter|leave|move|out|over|up)|reset|resize|scroll|select|slotchange|submit|unload|wheel)/
               .source,
@@ -877,7 +877,7 @@ var require_css = __commonJS({
   "../../node_modules/refractor/lang/css.js"(exports, module) {
     (module.exports = css), (css.displayName = "css"), (css.aliases = []);
     function css(Prism) {
-      (function (Prism2) {
+      (function(Prism2) {
         var string =
           /(?:"(?:\\(?:\r\n|[\s\S])|[^"\\\r\n])*"|'(?:\\(?:\r\n|[\s\S])|[^'\\\r\n])*')/;
         (Prism2.languages.css = {
@@ -901,10 +901,10 @@ var require_css = __commonJS({
           url: {
             pattern: RegExp(
               "\\burl\\((?:" +
-                string.source +
-                "|" +
-                /(?:[^\\\r\n()"']|\\[\s\S])*/.source +
-                ")\\)",
+              string.source +
+              "|" +
+              /(?:[^\\\r\n()"']|\\[\s\S])*/.source +
+              ")\\)",
               "i"
             ),
             greedy: !0,
@@ -920,8 +920,8 @@ var require_css = __commonJS({
           selector: {
             pattern: RegExp(
               `(^|[{}\\s])[^{}\\s](?:[^{};"'\\s]|\\s+(?![\\s{])|` +
-                string.source +
-                ")*(?=\\s*\\{)"
+              string.source +
+              ")*(?=\\s*\\{)"
             ),
             lookbehind: !0,
           },
@@ -942,7 +942,7 @@ var require_css = __commonJS({
         var markup = Prism2.languages.markup;
         markup &&
           (markup.tag.addInlined("style", "css"),
-          markup.tag.addAttribute("style", "css"));
+            markup.tag.addAttribute("style", "css"));
       })(Prism);
     }
   },
@@ -1014,12 +1014,12 @@ var require_markup = __commonJS({
           Prism.languages.markup.entity),
         (Prism.languages.markup.doctype.inside["internal-subset"].inside =
           Prism.languages.markup),
-        Prism.hooks.add("wrap", function (env) {
+        Prism.hooks.add("wrap", function(env) {
           env.type === "entity" &&
             (env.attributes.title = env.content.value.replace(/&amp;/, "&"));
         }),
         Object.defineProperty(Prism.languages.markup.tag, "addInlined", {
-          value: function (tagName, lang) {
+          value: function(tagName, lang) {
             var includedCdataInside = {};
             (includedCdataInside["language-" + lang] = {
               pattern: /(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i,
@@ -1042,7 +1042,7 @@ var require_markup = __commonJS({
               pattern: RegExp(
                 /(<__[^>]*>)(?:<!\[CDATA\[(?:[^\]]|\](?!\]>))*\]\]>|(?!<!\[CDATA\[)[\s\S])*?(?=<\/__>)/.source.replace(
                   /__/g,
-                  function () {
+                  function() {
                     return tagName;
                   }
                 ),
@@ -1056,14 +1056,14 @@ var require_markup = __commonJS({
           },
         }),
         Object.defineProperty(Prism.languages.markup.tag, "addAttribute", {
-          value: function (attrName, lang) {
+          value: function(attrName, lang) {
             Prism.languages.markup.tag.inside["special-attr"].push({
               pattern: RegExp(
                 /(^|["'\s])/.source +
-                  "(?:" +
-                  attrName +
-                  ")" +
-                  /\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))/.source,
+                "(?:" +
+                attrName +
+                ")" +
+                /\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))/.source,
                 "i"
               ),
               lookbehind: !0,
@@ -1099,19 +1099,19 @@ var require_markup = __commonJS({
   },
 });
 var require_immutable = __commonJS({
-    "../../node_modules/xtend/immutable.js"(exports, module) {
-      module.exports = extend;
-      var hasOwnProperty = Object.prototype.hasOwnProperty;
-      function extend() {
-        for (var target = {}, i = 0; i < arguments.length; i++) {
-          var source = arguments[i];
-          for (var key in source)
-            hasOwnProperty.call(source, key) && (target[key] = source[key]);
-        }
-        return target;
+  "../../node_modules/xtend/immutable.js"(exports, module) {
+    module.exports = extend;
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
+    function extend() {
+      for (var target = {}, i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source)
+          hasOwnProperty.call(source, key) && (target[key] = source[key]);
       }
-    },
-  }),
+      return target;
+    }
+  },
+}),
   require_schema = __commonJS({
     "../../node_modules/property-information/lib/util/schema.js"(
       exports,
@@ -1138,11 +1138,11 @@ var require_immutable = __commonJS({
       function merge(definitions) {
         for (
           var length = definitions.length,
-            property = [],
-            normal = [],
-            index = -1,
-            info,
-            space;
+          property = [],
+          normal = [],
+          index = -1,
+          info,
+          space;
           ++index < length;
 
         )
@@ -1216,14 +1216,14 @@ var require_immutable = __commonJS({
         (DefinedInfo.prototype = new Info()),
         (DefinedInfo.prototype.defined = !0);
       var checks = [
-          "boolean",
-          "booleanish",
-          "overloadedBoolean",
-          "number",
-          "commaSeparated",
-          "spaceSeparated",
-          "commaOrSpaceSeparated",
-        ],
+        "boolean",
+        "booleanish",
+        "overloadedBoolean",
+        "number",
+        "commaSeparated",
+        "spaceSeparated",
+        "commaOrSpaceSeparated",
+      ],
         checksLength = checks.length;
       function DefinedInfo(property, attribute, mask, space) {
         var index = -1,
@@ -1741,11 +1741,11 @@ var require_immutable = __commonJS({
         return normal in schema.normal
           ? schema.property[schema.normal[normal]]
           : (normal.length > 4 &&
-              normal.slice(0, 4) === data &&
-              valid.test(value) &&
-              (value.charAt(4) === "-"
-                ? (prop = datasetToProperty(value))
-                : (value = datasetToAttribute(value)),
+            normal.slice(0, 4) === data &&
+            valid.test(value) &&
+            (value.charAt(4) === "-"
+              ? (prop = datasetToProperty(value))
+              : (value = datasetToAttribute(value)),
               (Type = DefinedInfo)),
             new Type(prop, value));
       }
@@ -1776,12 +1776,12 @@ var require_immutable = __commonJS({
       function parse(selector, defaultTagName) {
         for (
           var value = selector || "",
-            name = defaultTagName || "div",
-            props = {},
-            start = 0,
-            subvalue,
-            previous,
-            match;
+          name = defaultTagName || "div",
+          props = {},
+          start = 0,
+          subvalue,
+          previous,
+          match;
           start < value.length;
 
         )
@@ -1789,13 +1789,13 @@ var require_immutable = __commonJS({
             (match = search.exec(value)),
             (subvalue = value.slice(start, match ? match.index : value.length)),
             subvalue &&
-              (previous
-                ? previous === "#"
-                  ? (props.id = subvalue)
-                  : props.className
+            (previous
+              ? previous === "#"
+                ? (props.id = subvalue)
+                : props.className
                   ? props.className.push(subvalue)
                   : (props.className = [subvalue])
-                : (name = subvalue),
+              : (name = subvalue),
               (start += subvalue.length)),
             match && ((previous = match[0]), start++);
         return {
@@ -1831,11 +1831,11 @@ var require_immutable = __commonJS({
       function parse(value) {
         for (
           var values = [],
-            input = String(value || empty),
-            index = input.indexOf(comma),
-            lastIndex = 0,
-            end = !1,
-            val;
+          input = String(value || empty),
+          index = input.indexOf(comma),
+          lastIndex = 0,
+          end = !1,
+          val;
           !end;
 
         )
@@ -1852,7 +1852,7 @@ var require_immutable = __commonJS({
           right = settings.padRight ? space : empty;
         return (
           values[values.length - 1] === empty &&
-            (values = values.concat(empty)),
+          (values = values.concat(empty)),
           values.join(right + comma + left).trim()
         );
       }
@@ -1878,17 +1878,17 @@ var require_immutable = __commonJS({
           if (
             ((node.tagName =
               adjust && own.call(adjust, name) ? adjust[name] : name),
-            properties &&
+              properties &&
               isChildren(properties, node) &&
               (children.unshift(properties), (properties = null)),
-            properties)
+              properties)
           )
             for (property in properties)
               addProperty(node.properties, property, properties[property]);
           return (
             addChild(node.children, children),
             node.tagName === "template" &&
-              ((node.content = { type: "root", children: node.children }),
+            ((node.content = { type: "root", children: node.children }),
               (node.children = [])),
             node
           );
@@ -1898,22 +1898,22 @@ var require_immutable = __commonJS({
           value == null ||
             value !== value ||
             ((info = find(schema, key)),
-            (property = info.property),
-            (result = value),
-            typeof result == "string" &&
+              (property = info.property),
+              (result = value),
+              typeof result == "string" &&
               (info.spaceSeparated
                 ? (result = spaces(result))
                 : info.commaSeparated
-                ? (result = commas(result))
-                : info.commaOrSpaceSeparated &&
+                  ? (result = commas(result))
+                  : info.commaOrSpaceSeparated &&
                   (result = spaces(commas(result).join(" ")))),
-            property === "style" &&
+              property === "style" &&
               typeof value != "string" &&
               (result = style(result)),
-            property === "className" &&
+              property === "className" &&
               properties.className &&
               (result = properties.className.concat(result)),
-            (properties[property] = parsePrimitives(info, property, result)));
+              (properties[property] = parsePrimitives(info, property, result)));
         }
       }
       function isChildren(value, node) {
@@ -1928,14 +1928,14 @@ var require_immutable = __commonJS({
         return tagName === "input" || !type || typeof type != "string"
           ? !1
           : typeof value.children == "object" && "length" in value.children
-          ? !0
-          : ((type = type.toLowerCase()),
-            tagName === "button"
-              ? type !== "menu" &&
+            ? !0
+            : ((type = type.toLowerCase()),
+              tagName === "button"
+                ? type !== "menu" &&
                 type !== "submit" &&
                 type !== "reset" &&
                 type !== "button"
-              : "value" in value);
+                : "value" in value);
       }
       function addChild(nodes, value) {
         var index, length;
@@ -1944,7 +1944,7 @@ var require_immutable = __commonJS({
           return;
         }
         if (typeof value == "object" && "length" in value) {
-          for (index = -1, length = value.length; ++index < length; )
+          for (index = -1, length = value.length; ++index < length;)
             addChild(nodes, value[index]);
           return;
         }
@@ -1958,7 +1958,7 @@ var require_immutable = __commonJS({
         var index, length, result;
         if (typeof value != "object" || !("length" in value))
           return parsePrimitive(info, name, value);
-        for (length = value.length, index = -1, result = []; ++index < length; )
+        for (length = value.length, index = -1, result = []; ++index < length;)
           result[index] = parsePrimitive(info, name, value[index]);
         return result;
       }
@@ -1968,9 +1968,9 @@ var require_immutable = __commonJS({
           info.number || info.positiveNumber
             ? !isNaN(result) && result !== "" && (result = Number(result))
             : (info.boolean || info.overloadedBoolean) &&
-              typeof result == "string" &&
-              (result === "" || normalize(value) === normalize(name)) &&
-              (result = !0),
+            typeof result == "string" &&
+            (result === "" || normalize(value) === normalize(name)) &&
+            (result = !0),
           result
         );
       }
@@ -4518,7 +4518,7 @@ var require_immutable = __commonJS({
           (option = options[key]), (settings[key] = option ?? defaults[key]);
         return (
           (settings.position.indent || settings.position.start) &&
-            ((settings.indent = settings.position.indent || []),
+          ((settings.indent = settings.position.indent || []),
             (settings.position = settings.position.start)),
           parse(value, settings)
         );
@@ -4562,22 +4562,22 @@ var require_immutable = __commonJS({
           end;
         for (
           typeof additional == "string" &&
-            (additional = additional.charCodeAt(0)),
-            prev = now(),
-            warning = handleWarning ? parseError : noop,
-            index--,
-            length++;
+          (additional = additional.charCodeAt(0)),
+          prev = now(),
+          warning = handleWarning ? parseError : noop,
+          index--,
+          length++;
           ++index < length;
 
         )
           if (
             (character === lineFeed && (column = indent[lines] || 1),
-            (character = value.charCodeAt(index)),
-            character === ampersand)
+              (character = value.charCodeAt(index)),
+              character === ampersand)
           ) {
             if (
               ((following = value.charCodeAt(index + 1)),
-              following === tab ||
+                following === tab ||
                 following === lineFeed ||
                 following === formFeed ||
                 following === space ||
@@ -4591,77 +4591,77 @@ var require_immutable = __commonJS({
             }
             for (
               start = index + 1,
-                begin = start,
-                end = start,
-                following === numberSign
-                  ? ((end = ++begin),
-                    (following = value.charCodeAt(end)),
-                    following === uppercaseX || following === lowercaseX
-                      ? ((type = hexa), (end = ++begin))
-                      : (type = deci))
-                  : (type = name),
-                entityCharacters = "",
-                entity = "",
-                characters = "",
-                test = tests[type],
-                end--;
+              begin = start,
+              end = start,
+              following === numberSign
+                ? ((end = ++begin),
+                  (following = value.charCodeAt(end)),
+                  following === uppercaseX || following === lowercaseX
+                    ? ((type = hexa), (end = ++begin))
+                    : (type = deci))
+                : (type = name),
+              entityCharacters = "",
+              entity = "",
+              characters = "",
+              test = tests[type],
+              end--;
               ++end < length &&
               ((following = value.charCodeAt(end)), !!test(following));
 
             )
               (characters += fromCharCode(following)),
                 type === name &&
-                  own.call(legacy, characters) &&
-                  ((entityCharacters = characters),
+                own.call(legacy, characters) &&
+                ((entityCharacters = characters),
                   (entity = legacy[characters]));
             (terminated = value.charCodeAt(end) === semicolon),
               terminated &&
-                (end++,
+              (end++,
                 (namedEntity = type === name ? decodeEntity(characters) : !1),
                 namedEntity &&
-                  ((entityCharacters = characters), (entity = namedEntity))),
+                ((entityCharacters = characters), (entity = namedEntity))),
               (diff = 1 + end - start),
               (!terminated && !nonTerminated) ||
-                (characters
-                  ? type === name
-                    ? (terminated && !entity
-                        ? warning(namedUnknown, 1)
-                        : (entityCharacters !== characters &&
-                            ((end = begin + entityCharacters.length),
-                            (diff = 1 + end - begin),
-                            (terminated = !1)),
-                          terminated ||
-                            ((reason = entityCharacters
-                              ? namedNotTerminated
-                              : namedEmpty),
-                            settings.attribute
-                              ? ((following = value.charCodeAt(end)),
-                                following === equalsTo
-                                  ? (warning(reason, diff), (entity = null))
-                                  : alphanumerical(following)
-                                  ? (entity = null)
-                                  : warning(reason, diff))
-                              : warning(reason, diff))),
-                      (reference = entity))
-                    : (terminated || warning(numericNotTerminated, diff),
-                      (reference = parseInt(characters, bases[type])),
-                      prohibited(reference)
-                        ? (warning(numericProhibited, diff),
-                          (reference = fromCharCode(replacementCharacter)))
-                        : reference in invalid
+              (characters
+                ? type === name
+                  ? (terminated && !entity
+                    ? warning(namedUnknown, 1)
+                    : (entityCharacters !== characters &&
+                      ((end = begin + entityCharacters.length),
+                        (diff = 1 + end - begin),
+                        (terminated = !1)),
+                      terminated ||
+                      ((reason = entityCharacters
+                        ? namedNotTerminated
+                        : namedEmpty),
+                        settings.attribute
+                          ? ((following = value.charCodeAt(end)),
+                            following === equalsTo
+                              ? (warning(reason, diff), (entity = null))
+                              : alphanumerical(following)
+                                ? (entity = null)
+                                : warning(reason, diff))
+                          : warning(reason, diff))),
+                    (reference = entity))
+                  : (terminated || warning(numericNotTerminated, diff),
+                    (reference = parseInt(characters, bases[type])),
+                    prohibited(reference)
+                      ? (warning(numericProhibited, diff),
+                        (reference = fromCharCode(replacementCharacter)))
+                      : reference in invalid
                         ? (warning(numericDisallowed, diff),
                           (reference = invalid[reference]))
                         : ((output = ""),
                           disallowed(reference) &&
-                            warning(numericDisallowed, diff),
+                          warning(numericDisallowed, diff),
                           reference > 65535 &&
-                            ((reference -= 65536),
+                          ((reference -= 65536),
                             (output += fromCharCode(
                               (reference >>> 10) | 55296
                             )),
                             (reference = 56320 | (reference & 1023))),
                           (reference = output + fromCharCode(reference))))
-                  : type !== name && warning(numericEmpty, diff)),
+                : type !== name && warning(numericEmpty, diff)),
               reference
                 ? (flush(),
                   (prev = now()),
@@ -4671,12 +4671,12 @@ var require_immutable = __commonJS({
                   (next = now()),
                   next.offset++,
                   handleReference &&
-                    handleReference.call(
-                      referenceContext,
-                      reference,
-                      { start: prev, end: next },
-                      value.slice(start - 1, end)
-                    ),
+                  handleReference.call(
+                    referenceContext,
+                    reference,
+                    { start: prev, end: next },
+                    value.slice(start - 1, end)
+                  ),
                   (prev = next))
                 : ((characters = value.slice(start - 1, end)),
                   (queue += characters),
@@ -4700,9 +4700,9 @@ var require_immutable = __commonJS({
         function flush() {
           queue &&
             (result.push(queue),
-            handleText &&
+              handleText &&
               handleText.call(textContext, queue, { start: prev, end: now() }),
-            (queue = ""));
+              (queue = ""));
         }
       }
       function prohibited(code) {
@@ -4727,13 +4727,13 @@ var require_immutable = __commonJS({
       module
     ) {
       var _self =
-          typeof window < "u"
-            ? window
-            : typeof WorkerGlobalScope < "u" &&
-              self instanceof WorkerGlobalScope
+        typeof window < "u"
+          ? window
+          : typeof WorkerGlobalScope < "u" &&
+            self instanceof WorkerGlobalScope
             ? self
             : {},
-        Prism = (function (_self2) {
+        Prism = (function(_self2) {
           var lang = /(?:^|\s)lang(?:uage)?-([\w-]+)(?=\s|$)/i,
             uniqueId = 0,
             plainTextGrammar = {},
@@ -4745,24 +4745,24 @@ var require_immutable = __commonJS({
                 encode: function encode(tokens) {
                   return tokens instanceof Token
                     ? new Token(
-                        tokens.type,
-                        encode(tokens.content),
-                        tokens.alias
-                      )
+                      tokens.type,
+                      encode(tokens.content),
+                      tokens.alias
+                    )
                     : Array.isArray(tokens)
-                    ? tokens.map(encode)
-                    : tokens
+                      ? tokens.map(encode)
+                      : tokens
                         .replace(/&/g, "&amp;")
                         .replace(/</g, "&lt;")
                         .replace(/\u00a0/g, " ");
                 },
-                type: function (o) {
+                type: function(o) {
                   return Object.prototype.toString.call(o).slice(8, -1);
                 },
-                objId: function (obj) {
+                objId: function(obj) {
                   return (
                     obj.__id ||
-                      Object.defineProperty(obj, "__id", { value: ++uniqueId }),
+                    Object.defineProperty(obj, "__id", { value: ++uniqueId }),
                     obj.__id
                   );
                 },
@@ -4785,7 +4785,7 @@ var require_immutable = __commonJS({
                           ? visited[id]
                           : ((clone = []),
                             (visited[id] = clone),
-                            o.forEach(function (v, i) {
+                            o.forEach(function(v, i) {
                               clone[i] = deepClone(v, visited);
                             }),
                             clone)
@@ -4794,22 +4794,22 @@ var require_immutable = __commonJS({
                       return o;
                   }
                 },
-                getLanguage: function (element) {
-                  for (; element; ) {
+                getLanguage: function(element) {
+                  for (; element;) {
                     var m = lang.exec(element.className);
                     if (m) return m[1].toLowerCase();
                     element = element.parentElement;
                   }
                   return "none";
                 },
-                setLanguage: function (element, language) {
+                setLanguage: function(element, language) {
                   (element.className = element.className.replace(
                     RegExp(lang, "gi"),
                     ""
                   )),
                     element.classList.add("language-" + language);
                 },
-                currentScript: function () {
+                currentScript: function() {
                   if (typeof document > "u") return null;
                   if ("currentScript" in document && 1 < 2)
                     return document.currentScript;
@@ -4827,8 +4827,8 @@ var require_immutable = __commonJS({
                     return null;
                   }
                 },
-                isActive: function (element, className, defaultActivation) {
-                  for (var no = "no-" + className; element; ) {
+                isActive: function(element, className, defaultActivation) {
+                  for (var no = "no-" + className; element;) {
                     var classList = element.classList;
                     if (classList.contains(className)) return !0;
                     if (classList.contains(no)) return !1;
@@ -4842,12 +4842,12 @@ var require_immutable = __commonJS({
                 plaintext: plainTextGrammar,
                 text: plainTextGrammar,
                 txt: plainTextGrammar,
-                extend: function (id, redef) {
+                extend: function(id, redef) {
                   var lang2 = _.util.clone(_.languages[id]);
                   for (var key in redef) lang2[key] = redef[key];
                   return lang2;
                 },
-                insertBefore: function (inside, before, insert, root) {
+                insertBefore: function(inside, before, insert, root) {
                   root = root || _.languages;
                   var grammar = root[inside],
                     ret = {};
@@ -4863,7 +4863,7 @@ var require_immutable = __commonJS({
                   var old = root[inside];
                   return (
                     (root[inside] = ret),
-                    _.languages.DFS(_.languages, function (key, value) {
+                    _.languages.DFS(_.languages, function(key, value) {
                       value === old && key != inside && (this[key] = ret);
                     }),
                     ret
@@ -4881,17 +4881,17 @@ var require_immutable = __commonJS({
                         ? ((visited[objId(property)] = !0),
                           DFS(property, callback, null, visited))
                         : propertyType === "Array" &&
-                          !visited[objId(property)] &&
-                          ((visited[objId(property)] = !0),
+                        !visited[objId(property)] &&
+                        ((visited[objId(property)] = !0),
                           DFS(property, callback, i, visited));
                     }
                 },
               },
               plugins: {},
-              highlightAll: function (async, callback) {
+              highlightAll: function(async, callback) {
                 _.highlightAllUnder(document, async, callback);
               },
-              highlightAllUnder: function (container, async, callback) {
+              highlightAllUnder: function(container, async, callback) {
                 var env = {
                   callback,
                   container,
@@ -4903,10 +4903,10 @@ var require_immutable = __commonJS({
                     env.container.querySelectorAll(env.selector)
                   )),
                   _.hooks.run("before-all-elements-highlight", env);
-                for (var i = 0, element; (element = env.elements[i++]); )
+                for (var i = 0, element; (element = env.elements[i++]);)
                   _.highlightElement(element, async === !0, env.callback);
               },
-              highlightElement: function (element, async, callback) {
+              highlightElement: function(element, async, callback) {
                 var language = _.util.getLanguage(element),
                   grammar = _.languages[language];
                 _.util.setLanguage(element, language);
@@ -4926,12 +4926,12 @@ var require_immutable = __commonJS({
                 }
                 if (
                   (_.hooks.run("before-sanity-check", env),
-                  (parent = env.element.parentElement),
-                  parent &&
+                    (parent = env.element.parentElement),
+                    parent &&
                     parent.nodeName.toLowerCase() === "pre" &&
                     !parent.hasAttribute("tabindex") &&
                     parent.setAttribute("tabindex", "0"),
-                  !env.code)
+                    !env.code)
                 ) {
                   _.hooks.run("complete", env),
                     callback && callback.call(env.element);
@@ -4943,7 +4943,7 @@ var require_immutable = __commonJS({
                 }
                 if (async && _self2.Worker) {
                   var worker = new Worker(_.filename);
-                  (worker.onmessage = function (evt) {
+                  (worker.onmessage = function(evt) {
                     insertHighlightedCode(evt.data);
                   }),
                     worker.postMessage(
@@ -4958,7 +4958,7 @@ var require_immutable = __commonJS({
                     _.highlight(env.code, env.grammar, env.language)
                   );
               },
-              highlight: function (text, grammar, language) {
+              highlight: function(text, grammar, language) {
                 var env = { code: text, grammar, language };
                 if ((_.hooks.run("before-tokenize", env), !env.grammar))
                   throw new Error(
@@ -4970,7 +4970,7 @@ var require_immutable = __commonJS({
                   Token.stringify(_.util.encode(env.tokens), env.language)
                 );
               },
-              tokenize: function (text, grammar) {
+              tokenize: function(text, grammar) {
                 var rest = grammar.rest;
                 if (rest) {
                   for (var token in rest) grammar[token] = rest[token];
@@ -4985,14 +4985,14 @@ var require_immutable = __commonJS({
               },
               hooks: {
                 all: {},
-                add: function (name, callback) {
+                add: function(name, callback) {
                   var hooks = _.hooks.all;
                   (hooks[name] = hooks[name] || []), hooks[name].push(callback);
                 },
-                run: function (name, env) {
+                run: function(name, env) {
                   var callbacks = _.hooks.all[name];
                   if (!(!callbacks || !callbacks.length))
-                    for (var i = 0, callback; (callback = callbacks[i++]); )
+                    for (var i = 0, callback; (callback = callbacks[i++]);)
                       callback(env);
                 },
               },
@@ -5010,20 +5010,20 @@ var require_immutable = __commonJS({
             if (Array.isArray(o)) {
               var s = "";
               return (
-                o.forEach(function (e) {
+                o.forEach(function(e) {
                   s += stringify(e, language);
                 }),
                 s
               );
             }
             var env = {
-                type: o.type,
-                content: stringify(o.content, language),
-                tag: "span",
-                classes: ["token", o.type],
-                attributes: {},
-                language,
-              },
+              type: o.type,
+              content: stringify(o.content, language),
+              tag: "span",
+              classes: ["token", o.type],
+              attributes: {},
+              language,
+            },
               aliases = o.alias;
             aliases &&
               (Array.isArray(aliases)
@@ -5092,12 +5092,12 @@ var require_immutable = __commonJS({
                   }
                   for (
                     var pattern = patternObj.pattern || patternObj,
-                      currentNode = startNode.next,
-                      pos = startPos;
+                    currentNode = startNode.next,
+                    pos = startPos;
                     currentNode !== tokenList.tail &&
                     !(rematch && pos >= rematch.reach);
                     pos += currentNode.value.length,
-                      currentNode = currentNode.next
+                    currentNode = currentNode.next
                   ) {
                     var str = currentNode.value;
                     if (tokenList.length > text.length) return;
@@ -5112,19 +5112,19 @@ var require_immutable = __commonJS({
                             text,
                             lookbehind
                           )),
-                          !match || match.index >= text.length)
+                            !match || match.index >= text.length)
                         )
                           break;
                         var from = match.index,
                           to = match.index + match[0].length,
                           p = pos;
-                        for (p += currentNode.value.length; from >= p; )
+                        for (p += currentNode.value.length; from >= p;)
                           (currentNode = currentNode.next),
                             (p += currentNode.value.length);
                         if (
                           ((p -= currentNode.value.length),
-                          (pos = p),
-                          currentNode.value instanceof Token)
+                            (pos = p),
+                            currentNode.value instanceof Token)
                         )
                           continue;
                         for (
@@ -5139,7 +5139,7 @@ var require_immutable = __commonJS({
                           (match.index -= pos);
                       } else if (
                         ((match = matchPattern(pattern, 0, str, lookbehind)),
-                        !match)
+                          !match)
                       )
                         continue;
                       var from = match.index,
@@ -5153,7 +5153,7 @@ var require_immutable = __commonJS({
                       var removeFrom = currentNode.prev;
                       before &&
                         ((removeFrom = addAfter(tokenList, removeFrom, before)),
-                        (pos += before.length)),
+                          (pos += before.length)),
                         removeRange(tokenList, removeFrom, removeCount);
                       var wrapped = new Token(
                         token,
@@ -5167,8 +5167,8 @@ var require_immutable = __commonJS({
                           removeFrom,
                           wrapped
                         )),
-                        after && addAfter(tokenList, currentNode, after),
-                        removeCount > 1)
+                          after && addAfter(tokenList, currentNode, after),
+                          removeCount > 1)
                       ) {
                         var nestedRematch = { cause: token + "," + j, reach };
                         matchGrammar(
@@ -5180,8 +5180,8 @@ var require_immutable = __commonJS({
                           nestedRematch
                         ),
                           rematch &&
-                            nestedRematch.reach > rematch.reach &&
-                            (rematch.reach = nestedRematch.reach);
+                          nestedRematch.reach > rematch.reach &&
+                          (rematch.reach = nestedRematch.reach);
                       }
                     }
                   }
@@ -5216,48 +5216,48 @@ var require_immutable = __commonJS({
             (node.next = next), (next.prev = node), (list.length -= i);
           }
           function toArray(list) {
-            for (var array = [], node = list.head.next; node !== list.tail; )
+            for (var array = [], node = list.head.next; node !== list.tail;)
               array.push(node.value), (node = node.next);
             return array;
           }
           if (!_self2.document)
             return (
               _self2.addEventListener &&
-                (_.disableWorkerMessageHandler ||
-                  _self2.addEventListener(
-                    "message",
-                    function (evt) {
-                      var message = JSON.parse(evt.data),
-                        lang2 = message.language,
-                        code = message.code,
-                        immediateClose = message.immediateClose;
-                      _self2.postMessage(
-                        _.highlight(code, _.languages[lang2], lang2)
-                      ),
-                        immediateClose && _self2.close();
-                    },
-                    !1
-                  )),
+              (_.disableWorkerMessageHandler ||
+                _self2.addEventListener(
+                  "message",
+                  function(evt) {
+                    var message = JSON.parse(evt.data),
+                      lang2 = message.language,
+                      code = message.code,
+                      immediateClose = message.immediateClose;
+                    _self2.postMessage(
+                      _.highlight(code, _.languages[lang2], lang2)
+                    ),
+                      immediateClose && _self2.close();
+                  },
+                  !1
+                )),
               _
             );
           var script = _.util.currentScript();
           script &&
             ((_.filename = script.src),
-            script.hasAttribute("data-manual") && (_.manual = !0));
+              script.hasAttribute("data-manual") && (_.manual = !0));
           function highlightAutomaticallyCallback() {
             _.manual || _.highlightAll();
           }
           if (!_.manual) {
             var readyState = document.readyState;
             readyState === "loading" ||
-            (readyState === "interactive" && script && script.defer)
+              (readyState === "interactive" && script && script.defer)
               ? document.addEventListener(
-                  "DOMContentLoaded",
-                  highlightAutomaticallyCallback
-                )
+                "DOMContentLoaded",
+                highlightAutomaticallyCallback
+              )
               : window.requestAnimationFrame
-              ? window.requestAnimationFrame(highlightAutomaticallyCallback)
-              : window.setTimeout(highlightAutomaticallyCallback, 16);
+                ? window.requestAnimationFrame(highlightAutomaticallyCallback)
+                : window.setTimeout(highlightAutomaticallyCallback, 16);
           }
           return _;
         })(_self);
@@ -5268,15 +5268,15 @@ var require_immutable = __commonJS({
   require_core = __commonJS({
     "../../node_modules/refractor/core.js"(exports, module) {
       var ctx =
-          typeof globalThis == "object"
-            ? globalThis
-            : typeof self == "object"
+        typeof globalThis == "object"
+          ? globalThis
+          : typeof self == "object"
             ? self
             : typeof window == "object"
-            ? window
-            : typeof global == "object"
-            ? global
-            : {},
+              ? window
+              : typeof global == "object"
+                ? global
+                : {},
         restore = capture();
       ctx.Prism = { manual: !0, disableWorkerMessageHandler: !0 };
       var h = require_hastscript(),
@@ -5288,7 +5288,7 @@ var require_immutable = __commonJS({
         js = require_javascript();
       restore();
       var own = {}.hasOwnProperty;
-      function Refractor() {}
+      function Refractor() { }
       Refractor.prototype = Prism;
       var refract = new Refractor();
       (module.exports = refract),
@@ -5321,9 +5321,9 @@ var require_immutable = __commonJS({
         for (key in map)
           for (
             list = map[key],
-              list = typeof list == "string" ? [list] : list,
-              length = list.length,
-              index = -1;
+            list = typeof list == "string" ? [list] : list,
+            length = list.length,
+            index = -1;
             ++index < length;
 
           )
@@ -5370,8 +5370,8 @@ var require_immutable = __commonJS({
         return typeof value == "string"
           ? { type: "text", value }
           : refract.util.type(value) === "Array"
-          ? stringifyAll(value, language)
-          : ((env = {
+            ? stringifyAll(value, language)
+            : ((env = {
               type: value.type,
               content: refract.Token.stringify(value.content, language, parent),
               tag: "span",
@@ -5380,13 +5380,13 @@ var require_immutable = __commonJS({
               language,
               parent,
             }),
-            value.alias && (env.classes = env.classes.concat(value.alias)),
-            refract.hooks.run("wrap", env),
-            h(
-              env.tag + "." + env.classes.join("."),
-              attributes(env.attributes),
-              env.content
-            ));
+              value.alias && (env.classes = env.classes.concat(value.alias)),
+              refract.hooks.run("wrap", env),
+              h(
+                env.tag + "." + env.classes.join("."),
+                attributes(env.attributes),
+                env.content
+              ));
       }
       function stringifyAll(values, language) {
         for (
@@ -5396,10 +5396,10 @@ var require_immutable = __commonJS({
         )
           (value = values[index]),
             value !== "" &&
-              value !== null &&
-              value !== void 0 &&
-              result.push(value);
-        for (index = -1, length = result.length; ++index < length; )
+            value !== null &&
+            value !== void 0 &&
+            result.push(value);
+        for (index = -1, length = result.length; ++index < length;)
           (value = result[index]),
             (result[index] = refract.Token.stringify(value, language, result));
         return result;
@@ -5430,9 +5430,9 @@ var require_bash = __commonJS({
       (bash.displayName = "bash"),
       (bash.aliases = ["shell"]);
     function bash(Prism) {
-      (function (Prism2) {
+      (function(Prism2) {
         var envVars =
-            "\\b(?:BASH|BASHOPTS|BASH_ALIASES|BASH_ARGC|BASH_ARGV|BASH_CMDS|BASH_COMPLETION_COMPAT_DIR|BASH_LINENO|BASH_REMATCH|BASH_SOURCE|BASH_VERSINFO|BASH_VERSION|COLORTERM|COLUMNS|COMP_WORDBREAKS|DBUS_SESSION_BUS_ADDRESS|DEFAULTS_PATH|DESKTOP_SESSION|DIRSTACK|DISPLAY|EUID|GDMSESSION|GDM_LANG|GNOME_KEYRING_CONTROL|GNOME_KEYRING_PID|GPG_AGENT_INFO|GROUPS|HISTCONTROL|HISTFILE|HISTFILESIZE|HISTSIZE|HOME|HOSTNAME|HOSTTYPE|IFS|INSTANCE|JOB|LANG|LANGUAGE|LC_ADDRESS|LC_ALL|LC_IDENTIFICATION|LC_MEASUREMENT|LC_MONETARY|LC_NAME|LC_NUMERIC|LC_PAPER|LC_TELEPHONE|LC_TIME|LESSCLOSE|LESSOPEN|LINES|LOGNAME|LS_COLORS|MACHTYPE|MAILCHECK|MANDATORY_PATH|NO_AT_BRIDGE|OLDPWD|OPTERR|OPTIND|ORBIT_SOCKETDIR|OSTYPE|PAPERSIZE|PATH|PIPESTATUS|PPID|PS1|PS2|PS3|PS4|PWD|RANDOM|REPLY|SECONDS|SELINUX_INIT|SESSION|SESSIONTYPE|SESSION_MANAGER|SHELL|SHELLOPTS|SHLVL|SSH_AUTH_SOCK|TERM|UID|UPSTART_EVENTS|UPSTART_INSTANCE|UPSTART_JOB|UPSTART_SESSION|USER|WINDOWID|XAUTHORITY|XDG_CONFIG_DIRS|XDG_CURRENT_DESKTOP|XDG_DATA_DIRS|XDG_GREETER_DATA_DIR|XDG_MENU_PREFIX|XDG_RUNTIME_DIR|XDG_SEAT|XDG_SEAT_PATH|XDG_SESSION_DESKTOP|XDG_SESSION_ID|XDG_SESSION_PATH|XDG_SESSION_TYPE|XDG_VTNR|XMODIFIERS)\\b",
+          "\\b(?:BASH|BASHOPTS|BASH_ALIASES|BASH_ARGC|BASH_ARGV|BASH_CMDS|BASH_COMPLETION_COMPAT_DIR|BASH_LINENO|BASH_REMATCH|BASH_SOURCE|BASH_VERSINFO|BASH_VERSION|COLORTERM|COLUMNS|COMP_WORDBREAKS|DBUS_SESSION_BUS_ADDRESS|DEFAULTS_PATH|DESKTOP_SESSION|DIRSTACK|DISPLAY|EUID|GDMSESSION|GDM_LANG|GNOME_KEYRING_CONTROL|GNOME_KEYRING_PID|GPG_AGENT_INFO|GROUPS|HISTCONTROL|HISTFILE|HISTFILESIZE|HISTSIZE|HOME|HOSTNAME|HOSTTYPE|IFS|INSTANCE|JOB|LANG|LANGUAGE|LC_ADDRESS|LC_ALL|LC_IDENTIFICATION|LC_MEASUREMENT|LC_MONETARY|LC_NAME|LC_NUMERIC|LC_PAPER|LC_TELEPHONE|LC_TIME|LESSCLOSE|LESSOPEN|LINES|LOGNAME|LS_COLORS|MACHTYPE|MAILCHECK|MANDATORY_PATH|NO_AT_BRIDGE|OLDPWD|OPTERR|OPTIND|ORBIT_SOCKETDIR|OSTYPE|PAPERSIZE|PATH|PIPESTATUS|PPID|PS1|PS2|PS3|PS4|PWD|RANDOM|REPLY|SECONDS|SELINUX_INIT|SESSION|SESSIONTYPE|SESSION_MANAGER|SHELL|SHELLOPTS|SHLVL|SSH_AUTH_SOCK|TERM|UID|UPSTART_EVENTS|UPSTART_INSTANCE|UPSTART_JOB|UPSTART_SESSION|USER|WINDOWID|XAUTHORITY|XDG_CONFIG_DIRS|XDG_CURRENT_DESKTOP|XDG_DATA_DIRS|XDG_GREETER_DATA_DIR|XDG_MENU_PREFIX|XDG_RUNTIME_DIR|XDG_SEAT|XDG_SEAT_PATH|XDG_SESSION_DESKTOP|XDG_SESSION_ID|XDG_SESSION_PATH|XDG_SESSION_TYPE|XDG_VTNR|XMODIFIERS)\\b",
           commandAfterHeredoc = {
             pattern: /(^(["']?)\w+\2)[ \t]+\S.*/,
             lookbehind: !0,
@@ -5579,23 +5579,23 @@ var require_bash = __commonJS({
           (commandAfterHeredoc.inside = Prism2.languages.bash);
         for (
           var toBeCopied = [
-              "comment",
-              "function-name",
-              "for-or-select",
-              "assign-left",
-              "string",
-              "environment",
-              "function",
-              "keyword",
-              "builtin",
-              "boolean",
-              "file-descriptor",
-              "operator",
-              "punctuation",
-              "number",
-            ],
-            inside = insideString.variable[1].inside,
-            i = 0;
+            "comment",
+            "function-name",
+            "for-or-select",
+            "assign-left",
+            "string",
+            "environment",
+            "function",
+            "keyword",
+            "builtin",
+            "boolean",
+            "file-descriptor",
+            "operator",
+            "punctuation",
+            "number",
+          ],
+          inside = insideString.variable[1].inside,
+          i = 0;
           i < toBeCopied.length;
           i++
         )
@@ -5611,12 +5611,12 @@ var require_js_extras = __commonJS({
       (jsExtras.displayName = "jsExtras"),
       (jsExtras.aliases = []);
     function jsExtras(Prism) {
-      (function (Prism2) {
+      (function(Prism2) {
         Prism2.languages.insertBefore("javascript", "function-variable", {
           "method-variable": {
             pattern: RegExp(
               "(\\.\\s*)" +
-                Prism2.languages.javascript["function-variable"].pattern.source
+              Prism2.languages.javascript["function-variable"].pattern.source
             ),
             lookbehind: !0,
             alias: [
@@ -5648,7 +5648,7 @@ var require_js_extras = __commonJS({
           });
         function withId(source, flags) {
           return RegExp(
-            source.replace(/<ID>/g, function () {
+            source.replace(/<ID>/g, function() {
               return /(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*/
                 .source;
             }),
@@ -5708,13 +5708,13 @@ var require_js_extras = __commonJS({
           });
         for (
           var maybeClassNameTokens = [
-              "function",
-              "function-variable",
-              "method",
-              "method-variable",
-              "property-access",
-            ],
-            i = 0;
+            "function",
+            "function-variable",
+            "method",
+            "method-variable",
+            "property-access",
+          ],
+          i = 0;
           i < maybeClassNameTokens.length;
           i++
         ) {
@@ -5823,15 +5823,15 @@ var require_graphql = __commonJS({
         punctuation: /[!(){}\[\]:=,]/,
         property: /\w+/,
       }),
-        Prism.hooks.add("after-tokenize", function (env) {
+        Prism.hooks.add("after-tokenize", function(env) {
           if (env.language !== "graphql") return;
-          var validTokens = env.tokens.filter(function (token) {
-              return (
-                typeof token != "string" &&
-                token.type !== "comment" &&
-                token.type !== "scalar"
-              );
-            }),
+          var validTokens = env.tokens.filter(function(token) {
+            return (
+              typeof token != "string" &&
+              token.type !== "comment" &&
+              token.type !== "scalar"
+            );
+          }),
             currentIndex = 0;
           function getToken(offset) {
             return validTokens[currentIndex + offset];
@@ -5870,7 +5870,7 @@ var require_graphql = __commonJS({
               : (token.alias = aliases = []),
               aliases.push(alias);
           }
-          for (; currentIndex < validTokens.length; ) {
+          for (; currentIndex < validTokens.length;) {
             var startToken = validTokens[currentIndex++];
             if (
               startToken.type === "keyword" &&
@@ -5888,7 +5888,7 @@ var require_graphql = __commonJS({
                   var t = getToken(0);
                   t.type === "variable" &&
                     (addAlias(t, "variable-input"),
-                    inputVariables.push(t.content));
+                      inputVariables.push(t.content));
                 }
                 currentIndex = definitionEnd + 1;
               }
@@ -5896,8 +5896,8 @@ var require_graphql = __commonJS({
                 isTokenType(["punctuation", "property-query"]) &&
                 getToken(0).content === "{" &&
                 (currentIndex++,
-                addAlias(getToken(0), "property-mutation"),
-                inputVariables.length > 0)
+                  addAlias(getToken(0), "property-mutation"),
+                  inputVariables.length > 0)
               ) {
                 var mutationEnd = findClosingBracket(/^\{$/, /^\}$/);
                 if (mutationEnd === -1) continue;
@@ -5960,8 +5960,8 @@ function _objectWithoutProperties(source, excluded) {
     for (i = 0; i < sourceSymbolKeys.length; i++)
       (key = sourceSymbolKeys[i]),
         !(excluded.indexOf(key) >= 0) &&
-          Object.prototype.propertyIsEnumerable.call(source, key) &&
-          (target[key] = source[key]);
+        Object.prototype.propertyIsEnumerable.call(source, key) &&
+        (target[key] = source[key]);
   }
   return target;
 }
@@ -5986,7 +5986,7 @@ function _unsupportedIterableToArray(o, minLen) {
     var n = Object.prototype.toString.call(o).slice(8, -1);
     if (
       (n === "Object" && o.constructor && (n = o.constructor.name),
-      n === "Map" || n === "Set")
+        n === "Map" || n === "Set")
     )
       return Array.from(o);
     if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
@@ -6010,17 +6010,17 @@ function _typeof(o) {
   return (
     (_typeof =
       typeof Symbol == "function" && typeof Symbol.iterator == "symbol"
-        ? function (o2) {
-            return typeof o2;
-          }
-        : function (o2) {
-            return o2 &&
-              typeof Symbol == "function" &&
-              o2.constructor === Symbol &&
-              o2 !== Symbol.prototype
-              ? "symbol"
-              : typeof o2;
-          }),
+        ? function(o2) {
+          return typeof o2;
+        }
+        : function(o2) {
+          return o2 &&
+            typeof Symbol == "function" &&
+            o2.constructor === Symbol &&
+            o2 !== Symbol.prototype
+            ? "symbol"
+            : typeof o2;
+        }),
     _typeof(o)
   );
 }
@@ -6043,11 +6043,11 @@ function _defineProperty(obj, key, value) {
     (key = _toPropertyKey(key)),
     key in obj
       ? Object.defineProperty(obj, key, {
-          value,
-          enumerable: !0,
-          configurable: !0,
-          writable: !0,
-        })
+        value,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0,
+      })
       : (obj[key] = value),
     obj
   );
@@ -6056,15 +6056,15 @@ function _extends() {
   return (
     (_extends = Object.assign
       ? Object.assign.bind()
-      : function (target) {
-          for (var i = 1; i < arguments.length; i++) {
-            var source = arguments[i];
-            for (var key in source)
-              Object.prototype.hasOwnProperty.call(source, key) &&
-                (target[key] = source[key]);
-          }
-          return target;
-        }),
+      : function(target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source)
+            Object.prototype.hasOwnProperty.call(source, key) &&
+              (target[key] = source[key]);
+        }
+        return target;
+      }),
     _extends.apply(this, arguments)
   );
 }
@@ -6073,7 +6073,7 @@ function ownKeys(object, enumerableOnly) {
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
     enumerableOnly &&
-      (symbols = symbols.filter(function (sym) {
+      (symbols = symbols.filter(function(sym) {
         return Object.getOwnPropertyDescriptor(object, sym).enumerable;
       })),
       keys.push.apply(keys, symbols);
@@ -6084,15 +6084,15 @@ function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {};
     i % 2
-      ? ownKeys(Object(source), !0).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        })
+      ? ownKeys(Object(source), !0).forEach(function(key) {
+        _defineProperty(target, key, source[key]);
+      })
       : Object.getOwnPropertyDescriptors
-      ? Object.defineProperties(
+        ? Object.defineProperties(
           target,
           Object.getOwnPropertyDescriptors(source)
         )
-      : ownKeys(Object(source)).forEach(function (key) {
+        : ownKeys(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -6300,19 +6300,19 @@ function getClassNameCombinations(classNames) {
   var key = classNames.join(".");
   return (
     classNameCombinations[key] ||
-      (classNameCombinations[key] = powerSetPermutations(classNames)),
+    (classNameCombinations[key] = powerSetPermutations(classNames)),
     classNameCombinations[key]
   );
 }
 function createStyleObject(classNames) {
   var elementStyle =
-      arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {},
+    arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {},
     stylesheet = arguments.length > 2 ? arguments[2] : void 0,
-    nonTokenClassNames = classNames.filter(function (className) {
+    nonTokenClassNames = classNames.filter(function(className) {
       return className !== "token";
     }),
     classNamesCombinations = getClassNameCombinations(nonTokenClassNames);
-  return classNamesCombinations.reduce(function (styleObject, className) {
+  return classNamesCombinations.reduce(function(styleObject, className) {
     return _objectSpread(_objectSpread({}, styleObject), stylesheet[className]);
   }, elementStyle);
 }
@@ -6321,10 +6321,10 @@ function createClassNameString(classNames) {
 }
 function createChildren(stylesheet, useInlineStyles) {
   var childrenCount = 0;
-  return function (children) {
+  return function(children) {
     return (
       (childrenCount += 1),
-      children.map(function (child, i) {
+      children.map(function(child, i) {
         return createElement({
           node: child,
           stylesheet,
@@ -6357,17 +6357,17 @@ function createElement(_ref) {
         { className: createClassNameString(properties.className) }
       );
     else {
-      var allStylesheetSelectors = Object.keys(stylesheet).reduce(function (
-          classes,
-          selector
-        ) {
-          return (
-            selector.split(".").forEach(function (className2) {
-              classes.includes(className2) || classes.push(className2);
-            }),
-            classes
-          );
-        },
+      var allStylesheetSelectors = Object.keys(stylesheet).reduce(function(
+        classes,
+        selector
+      ) {
+        return (
+          selector.split(".").forEach(function(className2) {
+            classes.includes(className2) || classes.push(className2);
+          }),
+          classes
+        );
+      },
         []),
         startingClassName =
           properties.className && properties.className.includes("token")
@@ -6376,7 +6376,7 @@ function createElement(_ref) {
         className =
           properties.className &&
           startingClassName.concat(
-            properties.className.filter(function (className2) {
+            properties.className.filter(function(className2) {
               return !allStylesheetSelectors.includes(className2);
             })
           );
@@ -6401,10 +6401,10 @@ function createElement(_ref) {
     );
   }
 }
-var checkForListedLanguage_default = function (astGenerator, language) {
-    var langs = astGenerator.listLanguages();
-    return langs.indexOf(language) !== -1;
-  },
+var checkForListedLanguage_default = function(astGenerator, language) {
+  var langs = astGenerator.listLanguages();
+  return langs.indexOf(language) !== -1;
+},
   _excluded = [
     "language",
     "children",
@@ -6431,7 +6431,7 @@ function ownKeys2(object, enumerableOnly) {
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
     enumerableOnly &&
-      (symbols = symbols.filter(function (sym) {
+      (symbols = symbols.filter(function(sym) {
         return Object.getOwnPropertyDescriptor(object, sym).enumerable;
       })),
       keys.push.apply(keys, symbols);
@@ -6442,15 +6442,15 @@ function _objectSpread2(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = arguments[i] != null ? arguments[i] : {};
     i % 2
-      ? ownKeys2(Object(source), !0).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        })
+      ? ownKeys2(Object(source), !0).forEach(function(key) {
+        _defineProperty(target, key, source[key]);
+      })
       : Object.getOwnPropertyDescriptors
-      ? Object.defineProperties(
+        ? Object.defineProperties(
           target,
           Object.getOwnPropertyDescriptors(source)
         )
-      : ownKeys2(Object(source)).forEach(function (key) {
+        : ownKeys2(Object(source)).forEach(function(key) {
           Object.defineProperty(
             target,
             key,
@@ -6468,7 +6468,7 @@ function getAllLineNumbers(_ref) {
   var lines = _ref.lines,
     startingLineNumber = _ref.startingLineNumber,
     style = _ref.style;
-  return lines.map(function (_, i) {
+  return lines.map(function(_, i) {
     var number = i + startingLineNumber;
     return import_react.default.createElement(
       "span",
@@ -6532,12 +6532,12 @@ function assembleLineNumberStyles(
   largestLineNumber
 ) {
   var defaultLineNumberStyle = {
-      display: "inline-block",
-      minWidth: getEmWidthOfNumber(largestLineNumber),
-      paddingRight: "1em",
-      textAlign: "right",
-      userSelect: "none",
-    },
+    display: "inline-block",
+    minWidth: getEmWidthOfNumber(largestLineNumber),
+    paddingRight: "1em",
+    textAlign: "right",
+    userSelect: "none",
+  },
     customLineNumberStyle =
       typeof lineNumberStyle == "function"
         ? lineNumberStyle(lineNumber)
@@ -6574,21 +6574,21 @@ function createLineElement(_ref3) {
   }
   return (
     wrapLongLines & showLineNumbers &&
-      (properties.style = _objectSpread2(
-        _objectSpread2({}, properties.style),
-        {},
-        { display: "flex" }
-      )),
+    (properties.style = _objectSpread2(
+      _objectSpread2({}, properties.style),
+      {},
+      { display: "flex" }
+    )),
     { type: "element", tagName: "span", properties, children }
   );
 }
 function flattenCodeTree(tree) {
   for (
     var className =
-        arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : [],
-      newTree =
-        arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : [],
-      i = 0;
+      arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : [],
+    newTree =
+      arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : [],
+    i = 0;
     i < tree.length;
     i++
   ) {
@@ -6602,7 +6602,7 @@ function flattenCodeTree(tree) {
       );
     else if (node.children) {
       var classNames = className.concat(node.properties.className);
-      flattenCodeTree(node.children, classNames).forEach(function (i2) {
+      flattenCodeTree(node.children, classNames).forEach(function(i2) {
         return newTree.push(i2);
       });
     }
@@ -6661,16 +6661,16 @@ function processLines(
       : createUnwrappedLine(children2, lineNumber2);
   }
   for (
-    var _loop = function () {
+    var _loop = function() {
       var node = tree[index],
         value = node.children[0].value,
         newLines = getNewLines(value);
       if (newLines) {
         var splitValue = value.split(`
 `);
-        splitValue.forEach(function (text, i) {
+        splitValue.forEach(function(text, i) {
           var lineNumber2 =
-              showLineNumbers && newTree.length + startingLineNumber,
+            showLineNumbers && newTree.length + startingLineNumber,
             newChild = {
               type: "text",
               value: "".concat(
@@ -6681,18 +6681,18 @@ function processLines(
             };
           if (i === 0) {
             var _children = tree.slice(lastLineBreakIndex + 1, index).concat(
-                createLineElement({
-                  children: [newChild],
-                  className: node.properties.className,
-                })
-              ),
+              createLineElement({
+                children: [newChild],
+                className: node.properties.className,
+              })
+            ),
               _line = createLine(_children, lineNumber2);
             newTree.push(_line);
           } else if (i === splitValue.length - 1) {
             var stringChild =
-                tree[index + 1] &&
-                tree[index + 1].children &&
-                tree[index + 1].children[0],
+              tree[index + 1] &&
+              tree[index + 1].children &&
+              tree[index + 1].children[0],
               lastLineInPreviousSpan = { type: "text", value: "".concat(text) };
             if (stringChild) {
               var newElem = createLineElement({
@@ -6741,7 +6741,7 @@ function defaultRenderer(_ref5) {
   var rows = _ref5.rows,
     stylesheet = _ref5.stylesheet,
     useInlineStyles = _ref5.useInlineStyles;
-  return rows.map(function (node, i) {
+  return rows.map(function(node, i) {
     return createElement({
       node,
       stylesheet,
@@ -6763,8 +6763,8 @@ function getCodeTree(_ref6) {
     return language === "text"
       ? { value: defaultCodeValue, language: "text" }
       : hasLanguage
-      ? astGenerator.highlight(language, code)
-      : astGenerator.highlightAuto(code);
+        ? astGenerator.highlight(language, code)
+        : astGenerator.highlightAuto(code);
   }
   try {
     return language && language !== "text"
@@ -6775,7 +6775,7 @@ function getCodeTree(_ref6) {
   }
 }
 function highlight_default(defaultAstGenerator, defaultStyle) {
-  return function (_ref7) {
+  return function(_ref7) {
     var language = _ref7.language,
       children = _ref7.children,
       _ref7$style = _ref7.style,
@@ -6786,12 +6786,12 @@ function highlight_default(defaultAstGenerator, defaultStyle) {
       codeTagProps =
         _ref7$codeTagProps === void 0
           ? {
-              className: language ? "language-".concat(language) : void 0,
-              style: _objectSpread2(
-                _objectSpread2({}, style['code[class*="language-"]']),
-                style['code[class*="language-'.concat(language, '"]')]
-              ),
-            }
+            className: language ? "language-".concat(language) : void 0,
+            style: _objectSpread2(
+              _objectSpread2({}, style['code[class*="language-"]']),
+              style['code[class*="language-'.concat(language, '"]')]
+            ),
+          }
           : _ref7$codeTagProps,
       _ref7$useInlineStyles = _ref7.useInlineStyles,
       useInlineStyles =
@@ -6828,40 +6828,40 @@ function highlight_default(defaultAstGenerator, defaultStyle) {
       rest = _objectWithoutProperties(_ref7, _excluded);
     astGenerator = astGenerator || defaultAstGenerator;
     var allLineNumbers = showLineNumbers
-        ? import_react.default.createElement(AllLineNumbers, {
-            containerStyle: lineNumberContainerStyle,
-            codeStyle: codeTagProps.style || {},
-            numberStyle: lineNumberStyle,
-            startingLineNumber,
-            codeString: code,
-          })
-        : null,
+      ? import_react.default.createElement(AllLineNumbers, {
+        containerStyle: lineNumberContainerStyle,
+        codeStyle: codeTagProps.style || {},
+        numberStyle: lineNumberStyle,
+        startingLineNumber,
+        codeString: code,
+      })
+      : null,
       defaultPreStyle = style.hljs ||
         style['pre[class*="language-"]'] || { backgroundColor: "#fff" },
       generatorClassName = isHighlightJs(astGenerator) ? "hljs" : "prismjs",
       preProps = useInlineStyles
         ? Object.assign({}, rest, {
-            style: Object.assign({}, defaultPreStyle, customStyle),
-          })
+          style: Object.assign({}, defaultPreStyle, customStyle),
+        })
         : Object.assign({}, rest, {
-            className: rest.className
-              ? "".concat(generatorClassName, " ").concat(rest.className)
-              : generatorClassName,
-            style: Object.assign({}, customStyle),
-          });
+          className: rest.className
+            ? "".concat(generatorClassName, " ").concat(rest.className)
+            : generatorClassName,
+          style: Object.assign({}, customStyle),
+        });
     if (
       (wrapLongLines
         ? (codeTagProps.style = _objectSpread2(
-            _objectSpread2({}, codeTagProps.style),
-            {},
-            { whiteSpace: "pre-wrap" }
-          ))
+          _objectSpread2({}, codeTagProps.style),
+          {},
+          { whiteSpace: "pre-wrap" }
+        ))
         : (codeTagProps.style = _objectSpread2(
-            _objectSpread2({}, codeTagProps.style),
-            {},
-            { whiteSpace: "pre" }
-          )),
-      !astGenerator)
+          _objectSpread2({}, codeTagProps.style),
+          {},
+          { whiteSpace: "pre" }
+        )),
+        !astGenerator)
     )
       return import_react.default.createElement(
         PreTag,
@@ -6905,10 +6905,10 @@ function highlight_default(defaultAstGenerator, defaultStyle) {
 }
 var import_core = __toESM2(require_core()),
   SyntaxHighlighter = highlight_default(import_core.default, {});
-SyntaxHighlighter.registerLanguage = function (_, language) {
+SyntaxHighlighter.registerLanguage = function(_, language) {
   return import_core.default.register(language);
 };
-SyntaxHighlighter.alias = function (name, aliases) {
+SyntaxHighlighter.alias = function(name, aliases) {
   return import_core.default.alias(name, aliases);
 };
 var prism_light_default = SyntaxHighlighter,
@@ -6970,15 +6970,15 @@ function _extends2() {
   return (
     (_extends2 = Object.assign
       ? Object.assign.bind()
-      : function (target) {
-          for (var i = 1; i < arguments.length; i++) {
-            var source = arguments[i];
-            for (var key in source)
-              Object.prototype.hasOwnProperty.call(source, key) &&
-                (target[key] = source[key]);
-          }
-          return target;
-        }),
+      : function(target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source)
+            Object.prototype.hasOwnProperty.call(source, key) &&
+              (target[key] = source[key]);
+        }
+        return target;
+      }),
     _extends2.apply(this, arguments)
   );
 }
@@ -6986,15 +6986,15 @@ function _extends3() {
   return (
     (_extends3 = Object.assign
       ? Object.assign.bind()
-      : function (target) {
-          for (var i = 1; i < arguments.length; i++) {
-            var source = arguments[i];
-            for (var key in source)
-              Object.prototype.hasOwnProperty.call(source, key) &&
-                (target[key] = source[key]);
-          }
-          return target;
-        }),
+      : function(target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source)
+            Object.prototype.hasOwnProperty.call(source, key) &&
+              (target[key] = source[key]);
+        }
+        return target;
+      }),
     _extends3.apply(this, arguments)
   );
 }
@@ -7002,15 +7002,15 @@ function _extends4() {
   return (
     (_extends4 = Object.assign
       ? Object.assign.bind()
-      : function (target) {
-          for (var i = 1; i < arguments.length; i++) {
-            var source = arguments[i];
-            for (var key in source)
-              Object.prototype.hasOwnProperty.call(source, key) &&
-                (target[key] = source[key]);
-          }
-          return target;
-        }),
+      : function(target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source)
+            Object.prototype.hasOwnProperty.call(source, key) &&
+              (target[key] = source[key]);
+        }
+        return target;
+      }),
     _extends4.apply(this, arguments)
   );
 }
@@ -7039,8 +7039,8 @@ var $5e63c961fc1ce211$export$8c6ed5c666ac1360 = (0, import_react.forwardRef)(
             ? import_react.Children.count(newElement) > 1
               ? import_react.Children.only(null)
               : (0, import_react.isValidElement)(newElement)
-              ? newElement.props.children
-              : null
+                ? newElement.props.children
+                : null
             : child
         );
       return (0, import_react.createElement)(
@@ -7064,17 +7064,17 @@ var $5e63c961fc1ce211$var$SlotClone = (0, import_react.forwardRef)(
     let { children, ...slotProps } = props;
     return (0, import_react.isValidElement)(children)
       ? (0, import_react.cloneElement)(children, {
-          ...$5e63c961fc1ce211$var$mergeProps(slotProps, children.props),
-          ref: forwardedRef
-            ? $6ed0406888f73fc4$export$43e446d32b3d21af(
-                forwardedRef,
-                children.ref
-              )
-            : children.ref,
-        })
+        ...$5e63c961fc1ce211$var$mergeProps(slotProps, children.props),
+        ref: forwardedRef
+          ? $6ed0406888f73fc4$export$43e446d32b3d21af(
+            forwardedRef,
+            children.ref
+          )
+          : children.ref,
+      })
       : import_react.Children.count(children) > 1
-      ? import_react.Children.only(null)
-      : null;
+        ? import_react.Children.only(null)
+        : null;
   }
 );
 $5e63c961fc1ce211$var$SlotClone.displayName = "SlotClone";
@@ -7094,12 +7094,12 @@ function $5e63c961fc1ce211$var$mergeProps(slotProps, childProps) {
     /^on[A-Z]/.test(propName)
       ? slotPropValue && childPropValue
         ? (overrideProps[propName] = (...args) => {
-            childPropValue(...args), slotPropValue(...args);
-          })
+          childPropValue(...args), slotPropValue(...args);
+        })
         : slotPropValue && (overrideProps[propName] = slotPropValue)
       : propName === "style"
-      ? (overrideProps[propName] = { ...slotPropValue, ...childPropValue })
-      : propName === "className" &&
+        ? (overrideProps[propName] = { ...slotPropValue, ...childPropValue })
+        : propName === "className" &&
         (overrideProps[propName] = [slotPropValue, childPropValue]
           .filter(Boolean)
           .join(" "));
@@ -7107,23 +7107,23 @@ function $5e63c961fc1ce211$var$mergeProps(slotProps, childProps) {
   return { ...slotProps, ...overrideProps };
 }
 var $8927f6f2acc4f386$var$NODES = [
-    "a",
-    "button",
-    "div",
-    "form",
-    "h2",
-    "h3",
-    "img",
-    "input",
-    "label",
-    "li",
-    "nav",
-    "ol",
-    "p",
-    "span",
-    "svg",
-    "ul",
-  ],
+  "a",
+  "button",
+  "div",
+  "form",
+  "h2",
+  "h3",
+  "img",
+  "input",
+  "label",
+  "li",
+  "nav",
+  "ol",
+  "p",
+  "span",
+  "svg",
+  "ul",
+],
   $8927f6f2acc4f386$export$250ffa63cdc0d034 =
     $8927f6f2acc4f386$var$NODES.reduce((primitive, node) => {
       let Node = (0, import_react.forwardRef)((props, forwardedRef) => {
@@ -7145,7 +7145,7 @@ var $8927f6f2acc4f386$var$NODES = [
     }, {}),
   $9f79659886946c16$export$e5c5a5f917a5871c = globalThis?.document
     ? import_react.useLayoutEffect
-    : () => {};
+    : () => { };
 function $fe963b355347cc68$export$3e6543de14f8614f(initialState, machine) {
   return (0, import_react.useReducer)(
     (state, event) => machine[state][event] ?? state,
@@ -7193,8 +7193,8 @@ function $921a889cee6df7e8$var$usePresence(present) {
         present
           ? send("MOUNT")
           : currentAnimationName === "none" || styles?.display === "none"
-          ? send("UNMOUNT")
-          : send(
+            ? send("UNMOUNT")
+            : send(
               wasPresent && prevAnimationName !== currentAnimationName
                 ? "ANIMATION_OUT"
                 : "UNMOUNT"
@@ -7205,13 +7205,13 @@ function $921a889cee6df7e8$var$usePresence(present) {
     $9f79659886946c16$export$e5c5a5f917a5871c(() => {
       if (node1) {
         let handleAnimationEnd = (event) => {
-            let isCurrentAnimation = $921a889cee6df7e8$var$getAnimationName(
-              stylesRef.current
-            ).includes(event.animationName);
-            event.target === node1 &&
-              isCurrentAnimation &&
-              (0, import_react_dom.flushSync)(() => send("ANIMATION_END"));
-          },
+          let isCurrentAnimation = $921a889cee6df7e8$var$getAnimationName(
+            stylesRef.current
+          ).includes(event.animationName);
+          event.target === node1 &&
+            isCurrentAnimation &&
+            (0, import_react_dom.flushSync)(() => send("ANIMATION_END"));
+        },
           handleAnimationStart = (event) => {
             event.target === node1 &&
               (prevAnimationNameRef.current =
@@ -7283,7 +7283,7 @@ function $c512c27ab02ef895$export$50c7b4e9d9f19c1(
     let scopeContexts = defaultContexts.map((defaultContext) =>
       (0, import_react.createContext)(defaultContext)
     );
-    return function (scope2) {
+    return function(scope2) {
       let contexts = scope2?.[scopeName] || scopeContexts;
       return (0, import_react.useMemo)(
         () => ({
@@ -7312,7 +7312,7 @@ function $c512c27ab02ef895$var$composeContextScopes(...scopes) {
       useScope: createScope(),
       scopeName: createScope.scopeName,
     }));
-    return function (overrideScopes) {
+    return function(overrideScopes) {
       let nextScopes1 = scopeHooks.reduce(
         (nextScopes, { useScope, scopeName }) => {
           let currentScope = useScope(overrideScopes)[`__scope${scopeName}`];
@@ -7364,10 +7364,10 @@ function $e42e1063c40fb3ef$export$b9ecd428b558ff10(
   ourEventHandler,
   { checkForDefaultPrevented = !0 } = {}
 ) {
-  return function (event) {
+  return function(event) {
     if (
       (originalEventHandler?.(event),
-      checkForDefaultPrevented === !1 || !event.defaultPrevented)
+        checkForDefaultPrevented === !1 || !event.defaultPrevented)
     )
       return ourEventHandler?.(event);
   };
@@ -7394,12 +7394,12 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
   $57acba87d6e25586$export$ccf8d8d7bbf3c2cc = (0, import_react.forwardRef)(
     (props, forwardedRef) => {
       let {
-          __scopeScrollArea,
-          type = "hover",
-          dir,
-          scrollHideDelay = 600,
-          ...scrollAreaProps
-        } = props,
+        __scopeScrollArea,
+        type = "hover",
+        dir,
+        scrollHideDelay = 600,
+        ...scrollAreaProps
+      } = props,
         [scrollArea, setScrollArea] = (0, import_react.useState)(null),
         [viewport, setViewport] = (0, import_react.useState)(null),
         [content, setContent] = (0, import_react.useState)(null),
@@ -7527,25 +7527,25 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
         ),
         context.type === "hover"
           ? (0, import_react.createElement)(
-              $57acba87d6e25586$var$ScrollAreaScrollbarHover,
-              _extends2({}, scrollbarProps, { ref: forwardedRef, forceMount })
-            )
+            $57acba87d6e25586$var$ScrollAreaScrollbarHover,
+            _extends2({}, scrollbarProps, { ref: forwardedRef, forceMount })
+          )
           : context.type === "scroll"
-          ? (0, import_react.createElement)(
+            ? (0, import_react.createElement)(
               $57acba87d6e25586$var$ScrollAreaScrollbarScroll,
               _extends2({}, scrollbarProps, { ref: forwardedRef, forceMount })
             )
-          : context.type === "auto"
-          ? (0, import_react.createElement)(
-              $57acba87d6e25586$var$ScrollAreaScrollbarAuto,
-              _extends2({}, scrollbarProps, { ref: forwardedRef, forceMount })
-            )
-          : context.type === "always"
-          ? (0, import_react.createElement)(
-              $57acba87d6e25586$var$ScrollAreaScrollbarVisible,
-              _extends2({}, scrollbarProps, { ref: forwardedRef })
-            )
-          : null
+            : context.type === "auto"
+              ? (0, import_react.createElement)(
+                $57acba87d6e25586$var$ScrollAreaScrollbarAuto,
+                _extends2({}, scrollbarProps, { ref: forwardedRef, forceMount })
+              )
+              : context.type === "always"
+                ? (0, import_react.createElement)(
+                  $57acba87d6e25586$var$ScrollAreaScrollbarVisible,
+                  _extends2({}, scrollbarProps, { ref: forwardedRef })
+                )
+                : null
       );
     }
   ),
@@ -7563,8 +7563,8 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
             hideTimer = 0;
           if (scrollArea) {
             let handlePointerEnter = () => {
-                window.clearTimeout(hideTimer), setVisible(!0);
-              },
+              window.clearTimeout(hideTimer), setVisible(!0);
+            },
               handlePointerLeave = () => {
                 hideTimer = window.setTimeout(
                   () => setVisible(!1),
@@ -7604,91 +7604,91 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
     }
   ),
   $57acba87d6e25586$var$ScrollAreaScrollbarScroll = (0,
-  import_react.forwardRef)((props, forwardedRef) => {
-    let { forceMount, ...scrollbarProps } = props,
-      context = $57acba87d6e25586$var$useScrollAreaContext(
-        $57acba87d6e25586$var$SCROLLBAR_NAME,
-        props.__scopeScrollArea
-      ),
-      isHorizontal = props.orientation === "horizontal",
-      debounceScrollEnd = $57acba87d6e25586$var$useDebounceCallback(
-        () => send("SCROLL_END"),
-        100
-      ),
-      [state, send] = $6c2e24571c90391f$export$3e6543de14f8614f("hidden", {
-        hidden: { SCROLL: "scrolling" },
-        scrolling: { SCROLL_END: "idle", POINTER_ENTER: "interacting" },
-        interacting: { SCROLL: "interacting", POINTER_LEAVE: "idle" },
-        idle: {
-          HIDE: "hidden",
-          SCROLL: "scrolling",
-          POINTER_ENTER: "interacting",
-        },
-      });
-    return (
-      (0, import_react.useEffect)(() => {
-        if (state === "idle") {
-          let hideTimer = window.setTimeout(
-            () => send("HIDE"),
-            context.scrollHideDelay
-          );
-          return () => window.clearTimeout(hideTimer);
-        }
-      }, [state, context.scrollHideDelay, send]),
-      (0, import_react.useEffect)(() => {
-        let viewport = context.viewport,
-          scrollDirection = isHorizontal ? "scrollLeft" : "scrollTop";
-        if (viewport) {
-          let prevScrollPos = viewport[scrollDirection],
-            handleScroll = () => {
-              let scrollPos = viewport[scrollDirection];
-              prevScrollPos !== scrollPos &&
-                (send("SCROLL"), debounceScrollEnd()),
-                (prevScrollPos = scrollPos);
-            };
-          return (
-            viewport.addEventListener("scroll", handleScroll),
-            () => viewport.removeEventListener("scroll", handleScroll)
-          );
-        }
-      }, [context.viewport, isHorizontal, send, debounceScrollEnd]),
-      (0, import_react.createElement)(
-        $921a889cee6df7e8$export$99c2b779aa4e8b8b,
-        { present: forceMount || state !== "hidden" },
-        (0, import_react.createElement)(
-          $57acba87d6e25586$var$ScrollAreaScrollbarVisible,
-          _extends2(
-            { "data-state": state === "hidden" ? "hidden" : "visible" },
-            scrollbarProps,
-            {
-              ref: forwardedRef,
-              onPointerEnter: $e42e1063c40fb3ef$export$b9ecd428b558ff10(
-                props.onPointerEnter,
-                () => send("POINTER_ENTER")
-              ),
-              onPointerLeave: $e42e1063c40fb3ef$export$b9ecd428b558ff10(
-                props.onPointerLeave,
-                () => send("POINTER_LEAVE")
-              ),
-            }
-          )
-        )
-      )
-    );
-  }),
-  $57acba87d6e25586$var$ScrollAreaScrollbarAuto = (0, import_react.forwardRef)(
-    (props, forwardedRef) => {
-      let context = $57acba87d6e25586$var$useScrollAreaContext(
+    import_react.forwardRef)((props, forwardedRef) => {
+      let { forceMount, ...scrollbarProps } = props,
+        context = $57acba87d6e25586$var$useScrollAreaContext(
           $57acba87d6e25586$var$SCROLLBAR_NAME,
           props.__scopeScrollArea
         ),
+        isHorizontal = props.orientation === "horizontal",
+        debounceScrollEnd = $57acba87d6e25586$var$useDebounceCallback(
+          () => send("SCROLL_END"),
+          100
+        ),
+        [state, send] = $6c2e24571c90391f$export$3e6543de14f8614f("hidden", {
+          hidden: { SCROLL: "scrolling" },
+          scrolling: { SCROLL_END: "idle", POINTER_ENTER: "interacting" },
+          interacting: { SCROLL: "interacting", POINTER_LEAVE: "idle" },
+          idle: {
+            HIDE: "hidden",
+            SCROLL: "scrolling",
+            POINTER_ENTER: "interacting",
+          },
+        });
+      return (
+        (0, import_react.useEffect)(() => {
+          if (state === "idle") {
+            let hideTimer = window.setTimeout(
+              () => send("HIDE"),
+              context.scrollHideDelay
+            );
+            return () => window.clearTimeout(hideTimer);
+          }
+        }, [state, context.scrollHideDelay, send]),
+        (0, import_react.useEffect)(() => {
+          let viewport = context.viewport,
+            scrollDirection = isHorizontal ? "scrollLeft" : "scrollTop";
+          if (viewport) {
+            let prevScrollPos = viewport[scrollDirection],
+              handleScroll = () => {
+                let scrollPos = viewport[scrollDirection];
+                prevScrollPos !== scrollPos &&
+                  (send("SCROLL"), debounceScrollEnd()),
+                  (prevScrollPos = scrollPos);
+              };
+            return (
+              viewport.addEventListener("scroll", handleScroll),
+              () => viewport.removeEventListener("scroll", handleScroll)
+            );
+          }
+        }, [context.viewport, isHorizontal, send, debounceScrollEnd]),
+        (0, import_react.createElement)(
+          $921a889cee6df7e8$export$99c2b779aa4e8b8b,
+          { present: forceMount || state !== "hidden" },
+          (0, import_react.createElement)(
+            $57acba87d6e25586$var$ScrollAreaScrollbarVisible,
+            _extends2(
+              { "data-state": state === "hidden" ? "hidden" : "visible" },
+              scrollbarProps,
+              {
+                ref: forwardedRef,
+                onPointerEnter: $e42e1063c40fb3ef$export$b9ecd428b558ff10(
+                  props.onPointerEnter,
+                  () => send("POINTER_ENTER")
+                ),
+                onPointerLeave: $e42e1063c40fb3ef$export$b9ecd428b558ff10(
+                  props.onPointerLeave,
+                  () => send("POINTER_LEAVE")
+                ),
+              }
+            )
+          )
+        )
+      );
+    }),
+  $57acba87d6e25586$var$ScrollAreaScrollbarAuto = (0, import_react.forwardRef)(
+    (props, forwardedRef) => {
+      let context = $57acba87d6e25586$var$useScrollAreaContext(
+        $57acba87d6e25586$var$SCROLLBAR_NAME,
+        props.__scopeScrollArea
+      ),
         { forceMount, ...scrollbarProps } = props,
         [visible, setVisible] = (0, import_react.useState)(!1),
         isHorizontal = props.orientation === "horizontal",
         handleResize = $57acba87d6e25586$var$useDebounceCallback(() => {
           if (context.viewport) {
             let isOverflowX =
-                context.viewport.offsetWidth < context.viewport.scrollWidth,
+              context.viewport.offsetWidth < context.viewport.scrollWidth,
               isOverflowY =
                 context.viewport.offsetHeight < context.viewport.scrollHeight;
             setVisible(isHorizontal ? isOverflowX : isOverflowY);
@@ -7713,43 +7713,43 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
     }
   ),
   $57acba87d6e25586$var$ScrollAreaScrollbarVisible = (0,
-  import_react.forwardRef)((props, forwardedRef) => {
-    let { orientation = "vertical", ...scrollbarProps } = props,
-      context = $57acba87d6e25586$var$useScrollAreaContext(
-        $57acba87d6e25586$var$SCROLLBAR_NAME,
-        props.__scopeScrollArea
-      ),
-      thumbRef = (0, import_react.useRef)(null),
-      pointerOffsetRef = (0, import_react.useRef)(0),
-      [sizes, setSizes] = (0, import_react.useState)({
-        content: 0,
-        viewport: 0,
-        scrollbar: { size: 0, paddingStart: 0, paddingEnd: 0 },
-      }),
-      thumbRatio = $57acba87d6e25586$var$getThumbRatio(
-        sizes.viewport,
-        sizes.content
-      ),
-      commonProps = {
-        ...scrollbarProps,
-        sizes,
-        onSizesChange: setSizes,
-        hasThumb: thumbRatio > 0 && thumbRatio < 1,
-        onThumbChange: (thumb) => (thumbRef.current = thumb),
-        onThumbPointerUp: () => (pointerOffsetRef.current = 0),
-        onThumbPointerDown: (pointerPos) =>
-          (pointerOffsetRef.current = pointerPos),
-      };
-    function getScrollPosition(pointerPos, dir) {
-      return $57acba87d6e25586$var$getScrollPositionFromPointer(
-        pointerPos,
-        pointerOffsetRef.current,
-        sizes,
-        dir
-      );
-    }
-    return orientation === "horizontal"
-      ? (0, import_react.createElement)(
+    import_react.forwardRef)((props, forwardedRef) => {
+      let { orientation = "vertical", ...scrollbarProps } = props,
+        context = $57acba87d6e25586$var$useScrollAreaContext(
+          $57acba87d6e25586$var$SCROLLBAR_NAME,
+          props.__scopeScrollArea
+        ),
+        thumbRef = (0, import_react.useRef)(null),
+        pointerOffsetRef = (0, import_react.useRef)(0),
+        [sizes, setSizes] = (0, import_react.useState)({
+          content: 0,
+          viewport: 0,
+          scrollbar: { size: 0, paddingStart: 0, paddingEnd: 0 },
+        }),
+        thumbRatio = $57acba87d6e25586$var$getThumbRatio(
+          sizes.viewport,
+          sizes.content
+        ),
+        commonProps = {
+          ...scrollbarProps,
+          sizes,
+          onSizesChange: setSizes,
+          hasThumb: thumbRatio > 0 && thumbRatio < 1,
+          onThumbChange: (thumb) => (thumbRef.current = thumb),
+          onThumbPointerUp: () => (pointerOffsetRef.current = 0),
+          onThumbPointerDown: (pointerPos) =>
+            (pointerOffsetRef.current = pointerPos),
+        };
+      function getScrollPosition(pointerPos, dir) {
+        return $57acba87d6e25586$var$getScrollPositionFromPointer(
+          pointerPos,
+          pointerOffsetRef.current,
+          sizes,
+          dir
+        );
+      }
+      return orientation === "horizontal"
+        ? (0, import_react.createElement)(
           $57acba87d6e25586$var$ScrollAreaScrollbarX,
           _extends2({}, commonProps, {
             ref: forwardedRef,
@@ -7776,32 +7776,32 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
             },
           })
         )
-      : orientation === "vertical"
-      ? (0, import_react.createElement)(
-          $57acba87d6e25586$var$ScrollAreaScrollbarY,
-          _extends2({}, commonProps, {
-            ref: forwardedRef,
-            onThumbPositionChange: () => {
-              if (context.viewport && thumbRef.current) {
-                let scrollPos = context.viewport.scrollTop,
-                  offset = $57acba87d6e25586$var$getThumbOffsetFromScroll(
-                    scrollPos,
-                    sizes
-                  );
-                thumbRef.current.style.transform = `translate3d(0, ${offset}px, 0)`;
-              }
-            },
-            onWheelScroll: (scrollPos) => {
-              context.viewport && (context.viewport.scrollTop = scrollPos);
-            },
-            onDragScroll: (pointerPos) => {
-              context.viewport &&
-                (context.viewport.scrollTop = getScrollPosition(pointerPos));
-            },
-          })
-        )
-      : null;
-  }),
+        : orientation === "vertical"
+          ? (0, import_react.createElement)(
+            $57acba87d6e25586$var$ScrollAreaScrollbarY,
+            _extends2({}, commonProps, {
+              ref: forwardedRef,
+              onThumbPositionChange: () => {
+                if (context.viewport && thumbRef.current) {
+                  let scrollPos = context.viewport.scrollTop,
+                    offset = $57acba87d6e25586$var$getThumbOffsetFromScroll(
+                      scrollPos,
+                      sizes
+                    );
+                  thumbRef.current.style.transform = `translate3d(0, ${offset}px, 0)`;
+                }
+              },
+              onWheelScroll: (scrollPos) => {
+                context.viewport && (context.viewport.scrollTop = scrollPos);
+              },
+              onDragScroll: (pointerPos) => {
+                context.viewport &&
+                  (context.viewport.scrollTop = getScrollPosition(pointerPos));
+              },
+            })
+          )
+          : null;
+    }),
   $57acba87d6e25586$var$ScrollAreaScrollbarX = (0, import_react.forwardRef)(
     (props, forwardedRef) => {
       let { sizes, onSizesChange, ...scrollbarProps } = props,
@@ -7952,18 +7952,18 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
   $57acba87d6e25586$var$ScrollAreaScrollbarImpl = (0, import_react.forwardRef)(
     (props, forwardedRef) => {
       let {
-          __scopeScrollArea,
-          sizes,
-          hasThumb,
-          onThumbChange,
-          onThumbPointerUp,
-          onThumbPointerDown,
-          onThumbPositionChange,
-          onDragScroll,
-          onWheelScroll,
-          onResize,
-          ...scrollbarProps
-        } = props,
+        __scopeScrollArea,
+        sizes,
+        hasThumb,
+        onThumbChange,
+        onThumbPointerUp,
+        onThumbPointerDown,
+        onThumbPositionChange,
+        onDragScroll,
+        onWheelScroll,
+        onResize,
+        ...scrollbarProps
+      } = props,
         context = $57acba87d6e25586$var$useScrollAreaContext(
           $57acba87d6e25586$var$SCROLLBAR_NAME,
           __scopeScrollArea
@@ -8035,13 +8035,13 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
                 (event) => {
                   event.button === 0 &&
                     (event.target.setPointerCapture(event.pointerId),
-                    (rectRef.current = scrollbar.getBoundingClientRect()),
-                    (prevWebkitUserSelectRef.current =
-                      document.body.style.webkitUserSelect),
-                    (document.body.style.webkitUserSelect = "none"),
-                    context.viewport &&
+                      (rectRef.current = scrollbar.getBoundingClientRect()),
+                      (prevWebkitUserSelectRef.current =
+                        document.body.style.webkitUserSelect),
+                      (document.body.style.webkitUserSelect = "none"),
+                      context.viewport &&
                       (context.viewport.style.scrollBehavior = "auto"),
-                    handleDragScroll(event));
+                      handleDragScroll(event));
                 }
               ),
               onPointerMove: $e42e1063c40fb3ef$export$b9ecd428b558ff10(
@@ -8057,7 +8057,7 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
                     (document.body.style.webkitUserSelect =
                       prevWebkitUserSelectRef.current),
                     context.viewport &&
-                      (context.viewport.style.scrollBehavior = ""),
+                    (context.viewport.style.scrollBehavior = ""),
                     (rectRef.current = null);
                 }
               ),
@@ -8105,7 +8105,7 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
         debounceScrollEnd = $57acba87d6e25586$var$useDebounceCallback(() => {
           removeUnlinkedScrollListenerRef.current &&
             (removeUnlinkedScrollListenerRef.current(),
-            (removeUnlinkedScrollListenerRef.current = void 0));
+              (removeUnlinkedScrollListenerRef.current = void 0));
         }, 100);
       return (
         (0, import_react.useEffect)(() => {
@@ -8169,15 +8169,15 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
   $57acba87d6e25586$export$56969d565df7cc4b = (0, import_react.forwardRef)(
     (props, forwardedRef) => {
       let context = $57acba87d6e25586$var$useScrollAreaContext(
-          $57acba87d6e25586$var$CORNER_NAME,
-          props.__scopeScrollArea
-        ),
+        $57acba87d6e25586$var$CORNER_NAME,
+        props.__scopeScrollArea
+      ),
         hasBothScrollbarsVisible = !!(context.scrollbarX && context.scrollbarY);
       return context.type !== "scroll" && hasBothScrollbarsVisible
         ? (0, import_react.createElement)(
-            $57acba87d6e25586$var$ScrollAreaCornerImpl,
-            _extends2({}, props, { ref: forwardedRef })
-          )
+          $57acba87d6e25586$var$ScrollAreaCornerImpl,
+          _extends2({}, props, { ref: forwardedRef })
+        )
         : null;
     }
   ),
@@ -8196,7 +8196,7 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
           var _context$scrollbarX;
           let height =
             ((_context$scrollbarX = context.scrollbarX) === null ||
-            _context$scrollbarX === void 0
+              _context$scrollbarX === void 0
               ? void 0
               : _context$scrollbarX.offsetHeight) || 0;
           context.onCornerHeightChange(height), setHeight(height);
@@ -8205,27 +8205,27 @@ var $57acba87d6e25586$var$SCROLL_AREA_NAME = "ScrollArea",
           var _context$scrollbarY;
           let width =
             ((_context$scrollbarY = context.scrollbarY) === null ||
-            _context$scrollbarY === void 0
+              _context$scrollbarY === void 0
               ? void 0
               : _context$scrollbarY.offsetWidth) || 0;
           context.onCornerWidthChange(width), setWidth(width);
         }),
         hasSize
           ? (0, import_react.createElement)(
-              $8927f6f2acc4f386$export$250ffa63cdc0d034.div,
-              _extends2({}, cornerProps, {
-                ref: forwardedRef,
-                style: {
-                  width: width1,
-                  height: height1,
-                  position: "absolute",
-                  right: context.dir === "ltr" ? 0 : void 0,
-                  left: context.dir === "rtl" ? 0 : void 0,
-                  bottom: 0,
-                  ...props.style,
-                },
-              })
-            )
+            $8927f6f2acc4f386$export$250ffa63cdc0d034.div,
+            _extends2({}, cornerProps, {
+              ref: forwardedRef,
+              style: {
+                width: width1,
+                height: height1,
+                position: "absolute",
+                right: context.dir === "ltr" ? 0 : void 0,
+                left: context.dir === "rtl" ? 0 : void 0,
+                bottom: 0,
+                ...props.style,
+              },
+            })
+          )
           : null
       );
     }
@@ -8239,9 +8239,9 @@ function $57acba87d6e25586$var$getThumbRatio(viewportSize, contentSize) {
 }
 function $57acba87d6e25586$var$getThumbSize(sizes) {
   let ratio = $57acba87d6e25586$var$getThumbRatio(
-      sizes.viewport,
-      sizes.content
-    ),
+    sizes.viewport,
+    sizes.content
+  ),
     scrollbarPadding =
       sizes.scrollbar.paddingStart + sizes.scrollbar.paddingEnd,
     thumbSize = (sizes.scrollbar.size - scrollbarPadding) * ratio;
@@ -8304,7 +8304,7 @@ function $57acba87d6e25586$var$isScrollingWithinScrollbarBounds(
 }
 var $57acba87d6e25586$var$addUnlinkedScrollListener = (
   node,
-  handler = () => {}
+  handler = () => { }
 ) => {
   let prevPosition = { left: node.scrollLeft, top: node.scrollTop },
     rAF = 0;
@@ -8353,7 +8353,7 @@ function $57acba87d6e25586$var$useResizeObserver(element, onResize) {
   }, [element, handleResize]);
 }
 var $57acba87d6e25586$export$be92b6f5f03c0fe9 =
-    $57acba87d6e25586$export$ccf8d8d7bbf3c2cc,
+  $57acba87d6e25586$export$ccf8d8d7bbf3c2cc,
   $57acba87d6e25586$export$d5c6c08dc2d3ca7 =
     $57acba87d6e25586$export$a21cbf9f11fca853,
   $57acba87d6e25586$export$9a4e88b92edfce6b =
@@ -8433,33 +8433,33 @@ var $57acba87d6e25586$export$be92b6f5f03c0fe9 =
       { scrollbarsize: scrollbarSize, offset, className },
       import_react.default.createElement(ScrollAreaViewport, null, children),
       horizontal &&
-        import_react.default.createElement(
-          ScrollAreaScrollbar,
-          {
-            orientation: "horizontal",
-            offset,
-            horizontal: horizontal.toString(),
-            vertical: vertical.toString(),
-          },
-          import_react.default.createElement(ScrollAreaThumb, null)
-        ),
+      import_react.default.createElement(
+        ScrollAreaScrollbar,
+        {
+          orientation: "horizontal",
+          offset,
+          horizontal: horizontal.toString(),
+          vertical: vertical.toString(),
+        },
+        import_react.default.createElement(ScrollAreaThumb, null)
+      ),
       vertical &&
-        import_react.default.createElement(
-          ScrollAreaScrollbar,
-          {
-            orientation: "vertical",
-            offset,
-            horizontal: horizontal.toString(),
-            vertical: vertical.toString(),
-          },
-          import_react.default.createElement(ScrollAreaThumb, null)
-        ),
+      import_react.default.createElement(
+        ScrollAreaScrollbar,
+        {
+          orientation: "vertical",
+          offset,
+          horizontal: horizontal.toString(),
+          vertical: vertical.toString(),
+        },
+        import_react.default.createElement(ScrollAreaThumb, null)
+      ),
       horizontal &&
-        vertical &&
-        import_react.default.createElement(
-          $57acba87d6e25586$export$ac61190d9fc311a9,
-          null
-        )
+      vertical &&
+      import_react.default.createElement(
+        $57acba87d6e25586$export$ac61190d9fc311a9,
+        null
+      )
     ),
   { navigator, document: document2, window: globalWindow } = scope;
 prism_light_default.registerLanguage("jsextra", js_extras_default);
@@ -8474,49 +8474,49 @@ prism_light_default.registerLanguage("tsx", tsx_default);
 prism_light_default.registerLanguage("typescript", typescript_default);
 prism_light_default.registerLanguage("graphql", graphql_default);
 var themedSyntax = (0, import_memoizerific.default)(2)((theme) =>
-    Object.entries(theme.code || {}).reduce(
-      (acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }),
-      {}
-    )
-  ),
+  Object.entries(theme.code || {}).reduce(
+    (acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }),
+    {}
+  )
+),
   copyToClipboard = createCopyToClipboardFunction();
 function createCopyToClipboardFunction() {
   return navigator?.clipboard
     ? (text) => navigator.clipboard.writeText(text)
     : async (text) => {
-        let tmp = document2.createElement("TEXTAREA"),
-          focus = document2.activeElement;
-        (tmp.value = text),
-          document2.body.appendChild(tmp),
-          tmp.select(),
-          document2.execCommand("copy"),
-          document2.body.removeChild(tmp),
-          focus.focus();
-      };
+      let tmp = document2.createElement("TEXTAREA"),
+        focus = document2.activeElement;
+      (tmp.value = text),
+        document2.body.appendChild(tmp),
+        tmp.select(),
+        document2.execCommand("copy"),
+        document2.body.removeChild(tmp),
+        focus.focus();
+    };
 }
 var Wrapper = newStyled.div(
-    ({ theme }) => ({
-      position: "relative",
-      overflow: "hidden",
-      color: theme.color.defaultText,
-    }),
-    ({ theme, bordered }) =>
-      bordered
-        ? {
-            border: `1px solid ${theme.appBorderColor}`,
-            borderRadius: theme.borderRadius,
-            background: theme.background.content,
-          }
-        : {},
-    ({ showLineNumbers }) =>
-      showLineNumbers
-        ? {
-            ".react-syntax-highlighter-line-number::before": {
-              content: "attr(data-line-number)",
-            },
-          }
-        : {}
-  ),
+  ({ theme }) => ({
+    position: "relative",
+    overflow: "hidden",
+    color: theme.color.defaultText,
+  }),
+  ({ theme, bordered }) =>
+    bordered
+      ? {
+        border: `1px solid ${theme.appBorderColor}`,
+        borderRadius: theme.borderRadius,
+        background: theme.background.content,
+      }
+      : {},
+  ({ showLineNumbers }) =>
+    showLineNumbers
+      ? {
+        ".react-syntax-highlighter-line-number::before": {
+          content: "attr(data-line-number)",
+        },
+      }
+      : {}
+),
   UnstyledScroller = ({ children, className }) =>
     import_react.default.createElement(
       ScrollArea,
@@ -8567,10 +8567,10 @@ var Wrapper = newStyled.div(
     showLineNumbers
       ? renderer
         ? ({ rows, ...rest }) =>
-            renderer({
-              rows: rows.map((row) => processLineNumber(row)),
-              ...rest,
-            })
+          renderer({
+            rows: rows.map((row) => processLineNumber(row)),
+            ...rest,
+          })
         : defaultRenderer2
       : renderer,
   SyntaxHighlighter2 = ({
@@ -8587,8 +8587,8 @@ var Wrapper = newStyled.div(
   }) => {
     if (typeof children != "string" || !children.trim()) return null;
     let highlightableCode = formatter
-        ? formatter(format, children)
-        : children.trim(),
+      ? formatter(format, children)
+      : children.trim(),
       [copied, setCopied] = (0, import_react.useState)(!1),
       onClick = (0, import_react.useCallback)(
         (e) => {
@@ -8628,8 +8628,8 @@ var Wrapper = newStyled.div(
       ),
       copyable
         ? import_react.default.createElement(ActionBar, {
-            actionItems: [{ title: copied ? "Copied" : "Copy", onClick }],
-          })
+          actionItems: [{ title: copied ? "Copied" : "Copy", onClick }],
+        })
         : null
     );
   };
