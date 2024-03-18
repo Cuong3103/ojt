@@ -37,3 +37,47 @@ export const userColumns: ColumnType[] = [
     options: {},
   },
 ];
+
+export const syllabusColumns: ColumnType[] = [
+  {
+    id: "syllabus",
+    label: "Syllabus",
+    options: {},
+  },
+  {
+    id: "code",
+    label: "Code",
+    options: {},
+  },
+  {
+    id: "createdOn",
+    label: "Created On",
+    options: {},
+  },
+  {
+    id: "createdBy",
+    label: "Created By",
+    options: {},
+  },
+  {
+    id: "duration",
+    label: "Duration",
+    options: {},
+  },
+  {
+    id: "outputStandard",
+    label: "Output standard",
+    options: {},
+  },
+  {
+    id: "status",
+    label: "Status",
+    options: {},
+  },
+
+  {
+    id: "moreButton",
+    label: "",
+    options: {},
+  },
+];

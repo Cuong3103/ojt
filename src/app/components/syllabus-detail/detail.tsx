@@ -3,6 +3,8 @@ import "./detail.css";
 import React, { FC, useState } from "react";
 import { MdOutlineSnippetFolder } from "react-icons/md";
 import { BsFillPersonLinesFill } from "react-icons/bs";
+import { Chip } from "../chip/chip";
+import Image from "next/image";
 
 export const Detail: FC = () => {
   const [status, setStatus] = useState("Online");
@@ -11,40 +13,40 @@ export const Detail: FC = () => {
   };
 
   return (
-    <div>
-      <footer className="footer  p-2 bg-stone-200 text-base-content w-50 h-10 rounded-lg">
-        <p>.NET Introduction</p>
-        <div className="body">
-          <div className="bad-1">
-            <span
-              id="badge-dismiss-dark"
-              className="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300"
-            >
-              H4SD
-            </span>
-          </div>
-          <div className="bad-2">
-            <span>30mins</span>
-          </div>
-
-          <div>
-            <button
-              className={`button ${status === "Online" ? "online" : "offline"}`}
-              onClick={handleButtonClick}
-            >
-              {status}
-            </button>
-          </div>
-
-          <div className="icon-person">
-            <BsFillPersonLinesFill />
-          </div>
-
-          <div className="icon-folder">
-            <MdOutlineSnippetFolder />
-          </div>
+    <div className="w-full bg-[#DFDEDE] flex items-center justify-between px-[20px] py-[5px] rounded-[10px]">
+      <div className="left w-[121px] h-[22px]">
+        <p className="text-sm font-medium">.NET Introduction</p>
+      </div>
+      <div className="right flex items-center w-[385px] h-[28px] justify-between">
+        <div className="shape-1">
+          <Chip active="H4SD" />
         </div>
-      </footer>
+        <div className="shape-2 w-[49px] h-[17px]">
+          <p className="text-sm font-normal">30mins</p>
+        </div>
+
+        <div>
+          <button
+            className={`button ${status === "Online" ? "online" : "offline"}`}
+            onClick={handleButtonClick}
+          >
+            {status}
+          </button>
+        </div>
+
+        <div className="icon-person">
+          <Image
+            src="../assets/icons/lecture.svg"
+            alt="lecture"
+            width={24}
+            height={24}
+          />
+        </div>
+
+        <div className="icon-folder">
+          <MdOutlineSnippetFolder style={{ height: "24px", width: "24px" }} />
+        </div>
+      </div>
     </div>
   );
 };

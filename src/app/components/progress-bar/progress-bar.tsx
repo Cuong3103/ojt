@@ -29,7 +29,7 @@ export const ProgressBar: FC<{ text: string }> = ({ text }) => {
       case "General":
         return "bg-main";
       case "Outline":
-        return "bg-blue-main";
+        return "bg-[#EDF2F7]";
       case "Other":
         return "bg-orange-main";
       case "Done":
@@ -56,16 +56,16 @@ export const ProgressBar: FC<{ text: string }> = ({ text }) => {
         </div>
         <div className="flex flex-row mt-2.5">
           <div className="w-1/4 px-2.5">
-            <p className="text-xs text-center font-normal">General</p>
+            <p className="text-xs text-center font-medium">General</p>
           </div>
           <div className="w-1/4 px-2.5">
-            <p className="text-xs text-center font-normal">Outline</p>
+            <p className="text-xs text-center font-medium">Outline</p>
           </div>
           <div className="w-1/4 px-2.5">
-            <p className="text-xs text-center font-normal">Other</p>
+            <p className="text-xs text-center font-medium">Other</p>
           </div>
           <div className="w-1/4 px-2.5">
-            <p className="text-xs text-center font-normal">Done</p>
+            <p className="text-xs text-center font-medium">Done</p>
           </div>
         </div>
       </div>

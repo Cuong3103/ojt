@@ -45,8 +45,18 @@
 .badge.badge-ghost {
     width: 72px;
     height: 27px;
-    background-color: #2d3748;
+    background-color: #B9B9B9;
     color: #fff;
+    font-size: 12px;
+}
+
+.badge.badge-type {
+    width: 94px;
+    height: 30px;
+    background-color: #474747;
+    color: #fff;
+    padding: 7px 15px;
+    border-radius: 8px;
     font-size: 12px;
 }
 

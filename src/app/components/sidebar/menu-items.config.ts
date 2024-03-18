@@ -18,8 +18,8 @@ export const menuItems: MenuItem[] = [
     submenu: true,
     icon: FiBookOpen,
     submenuItems: [
-      { title: "View syllabus", path: "" },
-      { title: "Create syllabus", path: "" },
+      { title: "View syllabus", path: "/view" },
+      { title: "Create syllabus", path: "/create" },
     ],
   },
   {

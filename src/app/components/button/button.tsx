@@ -1,22 +1,29 @@
-import React, { FC } from "react";
-import { ReactNode } from "react";
+import React from "react";
 
 type ButtonProps = {
   title: string;
-  icon?: ReactNode;
-  handleClick?: () => void;
+  icon?: React.ReactNode;
+  className: string;
+  onClick?: () => void;
 };
 
-export const Button: FC<ButtonProps> = ({ title, icon, handleClick }) => {
+const Button: React.FC<ButtonProps> = ({
+  title,
+  icon,
+  className,
+  onClick,
+}: ButtonProps) => {
   return (
     <div>
       <button
-        className="flex items-center min-w-20 h-8 text-white bg-primary-color px-6 py-2 font-bold text-sm rounded-xl"
-        onClick={handleClick}
+        onClick={onClick}
+        className={`flex items-center w-fit font-bold ${className}`}
       >
-        {icon && <div className="mr-2">{icon}</div>}
+        {icon && <div className="mr-[5px]">{icon}</div>}
         {title}
       </button>
     </div>
   );
 };
+
+export default Button;

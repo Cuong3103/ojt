@@ -55,7 +55,7 @@ export const Header: FC = async (props) => {
           </div>
           <div className="flex flex-col w-24 h-11">
             <p className="text-white text-base w-max max-h-5 font-bold ">
-              {renderUsernameFromEmail(session?.user.email) || "user"}
+              {"user"}
             </p>
             <LogoutButton />
           </div>
