@@ -1,11 +1,13 @@
-export const validateUserFields = (fields: Record<string, any>): Record<string, string> => {
+export const validateUserFields = (
+  fields: Record<string, any>
+): Record<string, string> => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^[0-9]{10,}$/;
   const errors: Record<string, string> = {};
 
-  const requiredFields = ['fullName', 'birthDay', 'role'];
+  const requiredFields = ["fullName", "email", "phone", "birthDay", "role"];
 
-  requiredFields.forEach(field => {
+  requiredFields.forEach((field) => {
     if (!fields[field]) {
       errors[field] = `${field} is required`;
     }

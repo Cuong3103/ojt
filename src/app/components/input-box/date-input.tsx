@@ -20,7 +20,7 @@ export const DateInput: FC<DateInputProps> = ({
   onChange,
 }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Dayjs>();
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(value);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const inputElement = inputRef.current;
@@ -33,7 +33,6 @@ export const DateInput: FC<DateInputProps> = ({
     setShowDatePicker(false);
     onChange && onChange(date);
   };
-  value = selectedDate;
   return (
     <>
       <div
@@ -49,7 +48,7 @@ export const DateInput: FC<DateInputProps> = ({
             className={`input input-bordered w-full max-w-xs pr-10 ${
               error ? "error" : ""
             }`}
-            value={selectedDate ? selectedDate.format("YYYY-MM-DD") : ""}
+            defaultValue={value?.format("DD/MM/YYYY")}
             readOnly
           />
           {error && <p className="text-red-600 text-xs italic">{error}</p>}
