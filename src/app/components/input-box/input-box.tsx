@@ -3,15 +3,17 @@ import "./input-box.css";
 
 type InputBoxProps = {
   label: string;
-  value: string;
+  value?: string;
+  defaultValue?: string;
   name: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   error?: string;
 };
 
 export const InputBox: FC<InputBoxProps> = ({
   label,
   value,
+  defaultValue,
   name,
   onChange,
   error,
@@ -27,6 +29,7 @@ export const InputBox: FC<InputBoxProps> = ({
             className={`input input-bordered w-full max-w-xs ${
               error ? "error" : ""
             }`}
+            defaultValue={defaultValue}
             value={value}
             onChange={onChange}
           />

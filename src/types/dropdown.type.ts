@@ -1,8 +1,10 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, ReactNode } from "react";
 
 export type Option = {
   label: string;
-  value: string;
+  value?: string;
+  icon?: ReactNode;
+  showModal?: boolean;
 };
 
 export type DropdownProps = {

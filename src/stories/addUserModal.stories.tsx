@@ -1,4 +1,4 @@
-import { AddUserModal } from "../app/components/add-user-modal/add-user-modal";
+import { AddUserModal } from "@/app/components/user-modal/add-user-modal";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof AddUserModal> = {

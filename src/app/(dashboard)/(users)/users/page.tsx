@@ -1,18 +1,14 @@
 "use client";
 
-import { AddUserModal } from "@/app/components/add-user-modal/add-user-modal";
-import Button from "@/app/components/button/button";
+import { AddUserModal } from "@/app/components/user-modal/add-user-modal";
+import Button from "../../../components/button/button";
 import { Chip } from "@/app/components/chip/chip";
 import { SearchInput } from "@/app/components/input-box/search-input";
 import Pagination from "@/app/components/pagination/index";
 import { Table } from "@/app/components/table/table";
 import { MockDataService } from "@/app/services/mock-response.service";
-import axiosInstance from "@/lib/axios";
-import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
-import { UsersFlag } from "@/lib/feature-flags/feature-flags.constant";
 import { fetchUserList } from "@/services/users";
 import { User } from "@/types/models/user.model.type";
-import { API_LIST, getRoute } from "@/utils/constants";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { userGenerator } from "@/utils/mockHelper";
 import { totalPage } from "@/utils/paginationHelper";
@@ -21,10 +17,18 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 import { BsFilterLeft } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoFilterSharp } from "react-icons/io5";
+import { FaPencilAlt } from "react-icons/fa";
+import { RxAvatar } from "react-icons/rx";
+import { FaEyeSlash } from "react-icons/fa6";
 
+const options = [
+  { icon: <FaPencilAlt />, label: "Edit user", showModal: true },
+  { icon: <RxAvatar />, label: "Change role" },
+  { icon: <FaEyeSlash />, label: "De-activate user" },
+];
 const UserListPage: FC = () => {
   const [query, setQuery] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState<User[]>([]);
   const [metadata, setMetadata] = useState({
@@ -56,7 +60,7 @@ const UserListPage: FC = () => {
     }));
 
   const getUsers = async () => {
-    const isEnabled = await isFlagEnabled(UsersFlag.GET_ALL);
+    const isEnabled = true;
     const response = isEnabled
       ? await fetchUserList(currentPage + 1, limit)
       : successUsersMock;
@@ -78,7 +82,7 @@ const UserListPage: FC = () => {
       <div className="flex justify-between items-center m-4">
         <Button title="Filter" icon={<IoFilterSharp />} />
         <Button
-          onClick={() => setShowModal(true)}
+          onClick={() => setShowAddModal(true)}
           title="Add User"
           icon={<IoIosAddCircleOutline />}
           className="h-full bg-primary-color text-white py-2 px-10 rounded-lg"
@@ -88,7 +92,13 @@ const UserListPage: FC = () => {
         style={{ backgroundColor: "#474747", fontStyle: "italic" }}
         removeBadge="HaNTT2"
       ></Chip>
-      <Table data={data} columns={userColumns} icon={<BsFilterLeft />} />
+      <Table
+        data={data}
+        columns={userColumns}
+        icon={<BsFilterLeft />}
+        popupMenu={options}
+        setData={setData}
+      />
       <div className="flex">
         <Pagination
           page={totalPage(metadata)}
@@ -109,14 +119,13 @@ const UserListPage: FC = () => {
           </select>
         </div>
       </div>
-      {showModal && (
+      {showAddModal && (
         <AddUserModal
-          showModal={() => setShowModal(false)}
+          showAddModal={() => setShowAddModal(false)}
           setUsers={setData}
         />
       )}
     </div>
   );
 };
-
 export default UserListPage;
