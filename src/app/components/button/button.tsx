@@ -3,7 +3,7 @@ import React from "react";
 type ButtonProps = {
   title: string;
   icon?: React.ReactNode;
-  className: string;
+  className?: string;
   onClick?: () => void;
 };
 

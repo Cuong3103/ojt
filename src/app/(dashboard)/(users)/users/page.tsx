@@ -1,7 +1,7 @@
 "use client";
 
 import { AddUserModal } from "@/app/components/add-user-modal/add-user-modal";
-import { Button } from "@/app/components/button/button";
+import Button from "@/app/components/button/button";
 import { Chip } from "@/app/components/chip/chip";
 import { SearchInput } from "@/app/components/input-box/search-input";
 import Pagination from "@/app/components/pagination/index";
@@ -21,15 +21,6 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 import { BsFilterLeft } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoFilterSharp } from "react-icons/io5";
-
-// type UserListResponse = {
-//   data: {
-//     statusCode: number,
-//     message: string,
-//     data: User[],
-//     metadata: MetadataResponse
-//   },
-// }
 
 const UserListPage: FC = () => {
   const [query, setQuery] = useState("");
@@ -87,9 +78,10 @@ const UserListPage: FC = () => {
       <div className="flex justify-between items-center m-4">
         <Button title="Filter" icon={<IoFilterSharp />} />
         <Button
-          handleClick={() => setShowModal(true)}
+          onClick={() => setShowModal(true)}
           title="Add User"
           icon={<IoIosAddCircleOutline />}
+          className="h-full bg-primary-color text-white py-2 px-10 rounded-lg"
         />
       </div>
       <Chip

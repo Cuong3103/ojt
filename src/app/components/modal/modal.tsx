@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { Button } from "../button/button";
+import Button from "../button/button";
 import { Cancel } from "../button/cancel";
 
 type ModalType = {
@@ -40,8 +40,12 @@ export const Modal: FC<ModalType> = ({
             </div>
           ))}
 
-          <div className="flex justify-center space-x-4">
-            <Button title={buttonTitle} handleClick={handleSubmit} />
+          <div className="flex items-center justify-center space-x-4">
+            <Button
+              title={buttonTitle}
+              onClick={handleSubmit}
+              className="h-full btn bg-primary-color text-white"
+            />
             <Cancel onClick={showModal} />
           </div>
         </div>
