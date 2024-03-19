@@ -18,7 +18,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = async (props) => {
     return (
       <div className="">
         <Header />
-        <div className="flex m-auto h-screen justify-start">
+        <div className="flex m-auto h-screen justify-start ">
           <Sidebar />
           {props.children}
         </div>

@@ -42,8 +42,8 @@ export const menuItems: MenuItem[] = [
     submenu: true,
     icon: GoMortarBoard,
     submenuItems: [
-      { title: "View class", path: "" },
-      { title: "Create class", path: "" },
+      { title: "View class", path: "/view" },
+      { title: "Create class", path: "/create" },
     ],
   },
   {
