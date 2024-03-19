@@ -5,6 +5,6 @@
 label {
   margin-right: 2px;
   padding: 5px 10px;
-  border-radius: 100px 100px 0px 0px;
-  border-bottom: none;
+  border-radius: 20px 20px 0px 0px;
+  border-bottom-width: 8px;
 }
