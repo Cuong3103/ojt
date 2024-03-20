@@ -3,7 +3,7 @@
 import { AddUserModal } from "@/app/components/user-modal/add-user-modal";
 import Button from "../../../components/button/button";
 import { Chip } from "@/app/components/chip/chip";
-import { SearchInput } from "@/app/components/input-box/search-input";
+import { InputSearch } from "@/app/components/input-box/search-input";
 import Pagination from "@/app/components/pagination/index";
 import { Table } from "@/app/components/table/table";
 import { MockDataService } from "@/app/services/mock-response.service";
@@ -78,7 +78,7 @@ const UserListPage: FC = () => {
       <div className="font-bold text-xl tracking-wide mb-4 m-3">
         User Management
       </div>
-      <SearchInput />
+      <InputSearch />
       <div className="flex justify-between items-center m-4">
         <Button title="Filter" icon={<IoFilterSharp />} />
         <Button
