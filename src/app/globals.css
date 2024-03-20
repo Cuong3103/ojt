@@ -2,3 +2,29 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #ddd;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #285D9A;
+    border-radius: 5px;
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    /*width: fit-content;*/
+    font-weight: bold;
+}

@@ -81,3 +81,41 @@ export const syllabusColumns: ColumnType[] = [
     options: {},
   },
 ];
+
+export const propgramColumns: ColumnType[] = [
+  {
+    id: "id",
+    label: "ID",
+    options: {},
+  },
+  {
+    id: "programName",
+    label: "Program name",
+    options: {},
+  },
+  {
+    id: "createdOn",
+    label: "Created on",
+    options: {},
+  },
+  {
+    id: "createdBy",
+    label: "Created by",
+    options: {},
+  },
+  {
+    id: "duration",
+    label: "Duration",
+    options: {},
+  },
+  {
+    id: "status",
+    label: "Status",
+    options: {},
+  },
+  {
+    id: "moreButton",
+    label: "",
+    options: {},
+  },
+];
