@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
+import React from "react";
 
 type ButtonProps = {
   title: string;
-  icon?: ReactNode;
+  icon?: React.ReactNode;
   className?: string;
   onClick?: () => void;
 };
@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({
     <div>
       <button
         onClick={onClick}
-        className={`flex items-center w-fit duration-300 font-bold ${className}`}
+        className={`flex items-center w-fit font-bold ${className}`}
       >
         {icon && <div className="mr-[5px]">{icon}</div>}
         {title}
