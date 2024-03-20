@@ -16,15 +16,3 @@ export type User = {
   modifiedDate?: string;
   createdDate?: string;
 };
-
-export type Program = {
-  id: number;
-  uuid?: string;
-  programName?: string;
-  createdOn?: string;
-  createdBy?: string;
-  duration?: string;
-  status?: string;
-  createdDate?: string;
-};
-
