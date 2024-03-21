@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 
 import { Chip } from "../chip/chip"
-import ViewDetail from "@/app/(dashboard)/(class)/view/ViewDetail";
+import Link from "next/link";
 
 export type Column = {
     id: string;
@@ -19,6 +19,8 @@ type TableProps = {
 };
 
 export const Table: FC<TableProps> = ({ data, columns, icon }) => {
+
+    
     return (
         <div className="bg-white shadow-md rounded-lg overflow-auto m-4">
             <table className="w-full table-fixed">
@@ -45,11 +47,12 @@ export const Table: FC<TableProps> = ({ data, columns, icon }) => {
                         <tr key={index} className={index % 2 === 0 ? "bg-gray-50" : ""}>
                             {columns.map((column) => (
                                 <td
-                                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900   overflow-clip"
+                                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 overflow-clip"
                                     key={column.id}
                                 >
                                     {column.id === "class" ? (
-                                        <a href="">{row[column.id]} </a>
+                                        <Link href={`/viewClassDetail?classCode=${row?.classCode}`}>{row[column.id]}</Link>
+                                        // <Link href='/viewClassDetail'>{row[column.id]}</Link>
                                     ) :
                                         column.id === "moreButton" ? (
                                             <button>
