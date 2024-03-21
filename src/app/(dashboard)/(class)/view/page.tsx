@@ -10,7 +10,7 @@ import Button from "@/app/components/button/button";
 import { Table } from "@/app/components/table/table.class";
 import { Chip } from "@/app/components/chip/chip";
 import Pagination from "@/app/components/pagination/index";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const columns = [
   {
@@ -19,7 +19,7 @@ const columns = [
     minWidth: 300,
     maxWidth: 400,
     render: (rowData: any) => (
-      <Link to={`/view/${rowData.classCode}`}>{rowData.class}</Link>
+      <Link href={`/view/${rowData.classCode}`}>{rowData.class}</Link>
     ),
   },
 
@@ -74,6 +74,11 @@ const columns = [
 ];
 
 const ViewClassPage: FC = () => {
+  const HandleCreateClass = () => {
+    <Link href="/create" />;
+    console.log("LINK LINK LINK");
+  };
+
   return (
     <div className="flex-1">
       <div className=" navbar white-box border-2 bg-primary-color border-gray-400 h-20 w-full  text-white text-[25px] tracking-wider pl-8 flex items-center mb-4 ">
@@ -82,7 +87,11 @@ const ViewClassPage: FC = () => {
       <InputSearch />
       <div className="flex justify-between items-center m-4 ">
         <Button title="Filter" icon={<IoFilterSharp />} />
-        <Button title="Create Class" icon={<IoIosAddCircleOutline />} />
+        <Button
+          onClick={HandleCreateClass}
+          title="Create Class"
+          icon={<IoIosAddCircleOutline />}
+        />
       </div>
       <Chip
         style={{ backgroundColor: "#474747", fontStyle: "italic" }}
