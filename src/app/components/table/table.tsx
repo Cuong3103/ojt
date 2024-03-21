@@ -19,8 +19,8 @@ type TableProps = {
   data: any[];
   columns: ColumnType[];
   icon?: ReactNode;
-  popupMenu: Option[];
-  setData: Dispatch<SetStateAction<any>>;
+  popupMenu?: Option[];
+  setData?: Dispatch<SetStateAction<any>>;
 };
 
 export const Table: FC<TableProps> = ({

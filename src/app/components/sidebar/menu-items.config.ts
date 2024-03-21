@@ -18,39 +18,37 @@ export const menuItems: MenuItem[] = [
     submenu: true,
     icon: FiBookOpen,
     submenuItems: [
-      { title: "View syllabus", path: "/view" },
-      { title: "Create syllabus", path: "/create" },
+      { title: "View syllabus", path: "/syllabuses" },
+      { title: "Create syllabus", path: "/syllabuses/create" },
     ],
   },
   {
     title: "Training program",
     submenu: true,
     icon: RiMicroscopeLine,
-    submenu: true,
     submenuItems: [
       {
         title: "View training program",
-        path: "/training-program"
+        path: "/training-programs",
       },
       {
         title: "Create training program",
-        path: "/create-program"
-      }
-    ]
+        path: "/training-programs/create",
+      },
+    ],
   },
   {
     title: "Class",
     submenu: true,
     icon: GoMortarBoard,
     submenuItems: [
-      { title: "View class", path: "/view" },
-      { title: "Create class", path: "/create" },
+      { title: "View class", path: "/classes" },
+      { title: "Create class", path: "/classes/create" },
     ],
   },
   {
     title: "Training calendar",
     icon: FaRegCalendar,
-
   },
   {
     title: "User management",
@@ -71,7 +69,7 @@ export const menuItems: MenuItem[] = [
     icon: AiOutlineSetting,
     submenuItems: [
       { title: "Edit profile", path: "/profile" },
-      { title: "Calendar", path: "" }
+      { title: "Calendar", path: "" },
     ],
   },
 ];

@@ -9,7 +9,7 @@ import { totalPage } from "@/utils/paginationHelper";
 import SearchBar from "@/app/components/input-search/SearchBar";
 import { TableProgram } from "@/app/components/table/TableViewProgram";
 import { LuArrowUpToLine } from "react-icons/lu";
-import mockPrograms from "@/app/(dashboard)/(training-program)/training-program/mockPrograms";
+import mockPrograms from "@/app/(dashboard)/training-programs/mockPrograms";
 import Button from "@/app/components/button/button";
 
 const TrainingProgram = () => {
@@ -71,7 +71,7 @@ const TrainingProgram = () => {
         <div className={"flex items-center gap-2"}>
           <SearchBar />
           <Button
-            classCss={
+            className={
               "h-[38px] px-[10px] w-fit text-white bg-primary-color rounded-[10px] hover:bg-neutral-600 active:bg-neutral-700 focus:outline-none focus:ring focus:ring-neutral-300"
             }
             title="Filter"
@@ -80,14 +80,14 @@ const TrainingProgram = () => {
         </div>
         <div className="flex items-center gap-2">
           <Button
-            classCss={
+            className={
               "h-[38px] px-[10px] w-fit text-white bg-[#D45B13] rounded-[10px] hover:bg-orange-700 active:bg-orange-900 focus:outline-none focus:ring focus:ring-orange-300"
             }
             title="Import"
             icon={<LuArrowUpToLine />}
           />
           <Button
-            classCss={
+            className={
               "h-[38px] px-[10px] w-fit text-white bg-primary-color rounded-[10px] hover:bg-neutral-600 active:bg-neutral-700 focus:outline-none focus:ring focus:ring-neutral-300"
             }
             title="Add New"

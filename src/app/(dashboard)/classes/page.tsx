@@ -11,6 +11,7 @@ import { Table } from "@/app/components/table/table.class";
 import { Chip } from "@/app/components/chip/chip";
 import Pagination from "@/app/components/pagination/index";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const columns = [
   {
@@ -19,7 +20,7 @@ const columns = [
     minWidth: 300,
     maxWidth: 400,
     render: (rowData: any) => (
-      <Link href={`/view/${rowData.classCode}`}>{rowData.class}</Link>
+      <Link href={`/classes/detail/${rowData.classCode}`}>{rowData.class}</Link>
     ),
   },
 
@@ -74,9 +75,8 @@ const columns = [
 ];
 
 const ViewClassPage: FC = () => {
-  const HandleCreateClass = () => {
-    <Link href="/create" />;
-    console.log("LINK LINK LINK");
+  const handleCreateClass = () => {
+    return redirect("/classes/create");
   };
 
   return (
@@ -88,7 +88,7 @@ const ViewClassPage: FC = () => {
       <div className="flex justify-between items-center m-4 ">
         <Button title="Filter" icon={<IoFilterSharp />} />
         <Button
-          onClick={HandleCreateClass}
+          onClick={handleCreateClass}
           title="Create Class"
           icon={<IoIosAddCircleOutline />}
         />

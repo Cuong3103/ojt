@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import "./page.css";
-import { SearchInput } from "@/app/components/input-box/search-input";
+import { InputSearch } from "@/app/components/input-box/search-input";
 import { MdOutlineUpload } from "react-icons/md";
 import { IoAddCircleOutline } from "react-icons/io5";
 import Button from "@/app/components/button/button";
@@ -20,8 +20,8 @@ const Page: React.FC = () => {
       </div>
       <div className="head-control mt-2 flex items-center justify-between px-5">
         <div className="left">
-          <SearchInput />
-          <SearchInput />
+          <InputSearch />
+          <InputSearch />
         </div>
         <div className="right flex items-center gap-2">
           <Button
