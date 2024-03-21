@@ -1,6 +1,6 @@
 "use server";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { jwtDecode } from "jwt-decode";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Session, getServerSession } from "next-auth";
 
 export const getSession = async () => {
@@ -19,11 +19,11 @@ const getDecodedToken = (accessToken?: string) => {
     try {
       return jwtDecode(accessToken);
     } catch (error) {
-      throw new Error()
+      throw new Error();
     }
   }
-}
+};
 
 export const getExpiryFromToken = (accessToken?: string) => {
   return getDecodedToken(accessToken)?.exp;
-}
+};

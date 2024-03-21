@@ -4,7 +4,7 @@ import { IoFilterSharp } from "react-icons/io5";
 import { BsFilterLeft } from "react-icons/bs";
 import { classes } from "./class.config";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { SearchInput } from "@/app/components/input-box/search-input";
+import { InputSearch } from "@/app/components/input-box/search-input";
 import { FC } from "react";
 import Button from "@/app/components/button/button";
 import { Table } from "@/app/components/table/table.class";
@@ -79,7 +79,7 @@ const ViewClassPage: FC = () => {
       <div className=" navbar white-box border-2 bg-primary-color border-gray-400 h-20 w-full  text-white text-[25px] tracking-wider pl-8 flex items-center mb-4 ">
         Training Class
       </div>
-      <SearchInput />
+      <InputSearch />
       <div className="flex justify-between items-center m-4 ">
         <Button title="Filter" icon={<IoFilterSharp />} />
         <Button title="Create Class" icon={<IoIosAddCircleOutline />} />

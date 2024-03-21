@@ -24,16 +24,17 @@ export const menuItems: MenuItem[] = [
   },
   {
     title: "Training program",
+    submenu: true,
     icon: RiMicroscopeLine,
     submenu: true,
     submenuItems: [
       {
         title: "View training program",
-        path: ""
+        path: "/training-program"
       },
       {
         title: "Create training program",
-        path: ""
+        path: "/create-program"
       }
     ]
   },
@@ -49,6 +50,7 @@ export const menuItems: MenuItem[] = [
   {
     title: "Training calendar",
     icon: FaRegCalendar,
+
   },
   {
     title: "User management",
