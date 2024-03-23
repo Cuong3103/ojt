@@ -11,11 +11,13 @@ import { TableProgram } from "@/app/components/table/TableViewProgram";
 import { LuArrowUpToLine } from "react-icons/lu";
 import mockPrograms from "@/app/(dashboard)/training-programs/mockPrograms";
 import Button from "@/app/components/button/button";
+import useQuery from "@/hooks/useQuery";
+import { programService } from "@/services/programs/programService";
 
 const TrainingProgram = () => {
   // const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [metadata, setMetadata] = useState({
     hasNextPage: false,
     hasPrevPage: false,
@@ -23,6 +25,14 @@ const TrainingProgram = () => {
     total: 1,
   });
   const [limit, setLimit] = useState(10);
+
+  const { data: programData, loading: programLoading } = useQuery(
+    programService.getProgram
+  );
+
+  const program = programData.content || [];
+
+  console.log("data", program);
 
   // const userService = new MockDataService<User>(
   //     userGenerator,
