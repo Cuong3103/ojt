@@ -15,9 +15,8 @@ import { programService } from "@/services/programs/programService";
 import { InputSearch } from "@/app/components/input-box/search-input";
 
 const TrainingProgram = () => {
-  // const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  // const [data, setData] = useState([]);
   const [metadata, setMetadata] = useState({
     hasNextPage: false,
     hasPrevPage: false,
