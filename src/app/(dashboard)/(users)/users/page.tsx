@@ -37,13 +37,16 @@ const UserListPage: FC = () => {
     limit: 1,
     total: 1,
   });
+
   const [limit, setLimit] = useState(10);
+
   const userService = new MockDataService<User>(
     userGenerator,
     100,
     limit,
     currentPage
   );
+  
   const successUsersMock = userService.getMockResponse();
 
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
