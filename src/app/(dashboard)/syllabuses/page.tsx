@@ -12,7 +12,16 @@ import Pagination from "@/app/components/pagination";
 import { Table } from "@/app/components/table/table";
 import { syllabusColumns } from "@/utils/tableColumnHelper";
 import Link from "next/link";
+import { FaEyeSlash, FaPencilAlt } from "react-icons/fa";
+import { RxAvatar } from "react-icons/rx";
+import { HiOutlineDuplicate } from "react-icons/hi";
 
+const options = [
+  { icon: <FaPencilAlt />, label: "Add Training Program" },
+  { icon: <RxAvatar />, label: "Edit syllabus" },
+  { icon: <HiOutlineDuplicate />, label: "Duplicate Syllabus" },
+  { icon: <FaEyeSlash />, label: "Delete syllabus" },
+];
 const Page: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -229,6 +238,7 @@ const Page: React.FC = () => {
             data={syllabuses}
             columns={syllabusColumns}
             icon={<BsFilterLeft />}
+            popupMenu={options}
           />
         </div>
       </div>
