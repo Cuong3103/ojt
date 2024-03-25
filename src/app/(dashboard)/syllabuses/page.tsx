@@ -50,17 +50,22 @@ const Page: React.FC = () => {
 
   const syllabusStatus = (syllabus: any) => {
     if (syllabus.isActive === false) {
-      return "Inactive";
+      return <Chip inactive="Inactive" />;
     } else if (syllabus.isActive === true && syllabus.isApproved === false) {
-      return "draft";
+      return <Chip draft="draft" />;
     } else {
-      return "active";
+      return <Chip active="active" />;
     }
+  };
+
+  const syllabusName = (syllabus: any) => {
+    return <Link href={"/syllabuses/viewdetail"}>{syllabus.name}</Link>;
   };
 
   const formatSyllabusList = (syllabuses: any[]) =>
     syllabuses.map((syllabus) => ({
       ...syllabus,
+      name: syllabusName(syllabus),
       status: syllabusStatus(syllabus),
     }));
 

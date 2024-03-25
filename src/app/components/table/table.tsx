@@ -130,8 +130,6 @@ export const Table: FC<TableProps> = ({
             />
           </span>
         );
-      case "name":
-        return <Link href={"/syllabuses/viewdetail"}>{row[column.id]}</Link>;
 
       case "outputStandard":
         return (
@@ -145,20 +143,7 @@ export const Table: FC<TableProps> = ({
             )}
           </span>
         );
-      case "status":
-        return (
-          <span>
-            {row[column.id] === "active" ? (
-              <Chip active="active" />
-            ) : row[column.id] === "Inactive" ? (
-              <Chip inactive="Inactive" />
-            ) : row[column.id] === "draft" ? (
-              <Chip draft="draft" />
-            ) : (
-              <Chip active="active" />
-            )}
-          </span>
-        );
+
       default:
         return row[column.id];
     }
