@@ -6,6 +6,7 @@ import { PopupMenu } from "../dropdown/popup-menu";
 import { Option } from "@/types/dropdown.type";
 import { USER_ROLE } from "@/utils/constants";
 import { Chip } from "../chip/chip";
+import Link from "next/link";
 
 export type Column = {
   id: string;
@@ -129,6 +130,9 @@ export const Table: FC<TableProps> = ({
             />
           </span>
         );
+      case "name":
+        return <Link href={"/syllabuses/viewdetail"}>{row[column.id]}</Link>;
+
       case "outputStandard":
         return (
           <span>

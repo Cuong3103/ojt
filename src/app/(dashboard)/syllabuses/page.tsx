@@ -6,7 +6,7 @@ import { MdOutlineUpload } from "react-icons/md";
 import { IoAddCircleOutline } from "react-icons/io5";
 import Button from "@/app/components/button/button";
 import { Chip } from "@/app/components/chip/chip";
-import { syllabuses } from "./syllabus.config";
+//import { syllabuses } from "./syllabus.config";
 import { BsFilterLeft } from "react-icons/bs";
 import Pagination from "@/app/components/pagination";
 import { Table } from "@/app/components/table/table";
