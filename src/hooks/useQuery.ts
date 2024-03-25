@@ -4,7 +4,7 @@ const useQuery = <T>(
   promise: (query: string) => Promise<T>,
   dependencies: any[] = []
 ) => {
-  const [data, setData] = useState<T[]>([]);
+  const [data, setData] = useState<T | undefined>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | undefined>();
 
@@ -21,15 +21,14 @@ const useQuery = <T>(
   };
 
   useEffect(() => {
-    // Fetch data initially and on dependency changes
-    fetchData(); // Initial query value, you may need to adjust it
-  }, dependencies); // useEffect dependency array
+    fetchData();
+  }, dependencies);
 
   return {
     data,
     loading,
     error,
-    refetch: fetchData, // Expose fetchData function for manual refetching
+    refetch: fetchData,
   };
 };
 

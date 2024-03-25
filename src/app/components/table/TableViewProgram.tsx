@@ -1,5 +1,4 @@
 import {FC, ReactNode} from "react";
-
 import {Chip} from "../chip/chip";
 import {ColumnType} from "@/types/column.type";
 

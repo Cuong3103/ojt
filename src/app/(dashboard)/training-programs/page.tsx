@@ -13,6 +13,8 @@ import Button from "@/app/components/button/button";
 import useQuery from "@/hooks/useQuery";
 import { programService } from "@/services/programs/programService";
 import { InputSearch } from "@/app/components/input-box/search-input";
+import useDebounce from "@/hooks/useDebounce";
+import { fromTimestampToDateString } from "@/utils/formatUtils";
 
 const TrainingProgram = () => {
   const [query, setQuery] = useState("");
@@ -29,9 +31,11 @@ const TrainingProgram = () => {
     programService.getProgram
   );
 
-  const program = programData.content || [];
+  const programs = programData?.content || [];
 
-  console.log("data", program);
+  console.log("programData", programData);
+
+  console.log("data", programs);
 
   // const userService = new MockDataService<User>(
   //     userGenerator,
@@ -45,6 +49,27 @@ const TrainingProgram = () => {
     setCurrentPage(0);
     setLimit(Number(e.target.value));
   };
+
+  const convertTrainingStatusToText = (trainingStatus: number) => {
+    switch (trainingStatus) {
+      case 0:
+        return "DRAFT";
+      case 1:
+        return "INACTIVE";
+      case 2:
+        return "ACTIVE";
+      default:
+        return "";
+    }
+  };
+
+  const formatTrainingProgramList = (programs: any[]) =>
+    programs.map((program) => ({
+      ...program,
+      startTime: fromTimestampToDateString(program.startTime),
+      duration: Math.round(program.duration / (24 * 60 * 60)),
+      training_status: convertTrainingStatusToText(program.training_status),
+    }));
 
   // const getUsers = async () => {
   //     let response: any;
@@ -105,9 +130,10 @@ const TrainingProgram = () => {
         </div>
       </div>
       <TableProgram
-        data={mockPrograms}
+        data={formatTrainingProgramList(programs)}
         columns={propgramColumns}
         icon={<BsFilterLeft />}
+        // {...programs}
       />
       <div className="flex mt-[30px]">
         <Pagination
