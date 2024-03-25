@@ -15,6 +15,8 @@ import Link from "next/link";
 import { FaEyeSlash, FaPencilAlt } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
 import { HiOutlineDuplicate } from "react-icons/hi";
+import { syllabusService } from "@/services/syllabuses/syllabusService";
+import useQuery from "@/hooks/useQuery";
 
 const options = [
   { icon: <FaPencilAlt />, label: "Add Training Program" },
@@ -23,6 +25,48 @@ const options = [
   { icon: <FaEyeSlash />, label: "Delete syllabus" },
 ];
 const Page: React.FC = () => {
+  {
+    /**================== Api ========================= */
+  }
+  const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [metadata, setMetadata] = useState({
+    hasNextPage: false,
+    hasPrevPage: false,
+    limit: 1,
+    total: 1,
+  });
+  const [limit, setLimit] = useState(10);
+
+  const { data: syllabusData, loading: programLoading } = useQuery(
+    syllabusService.getSyllabus
+  );
+
+  const syllabuses = syllabusData?.content || [];
+
+  console.log("syllabusData", syllabusData);
+
+  console.log("data", syllabuses);
+
+  const syllabusStatus = (syllabus: any) => {
+    if (syllabus.isActive === false) {
+      return "Inactive";
+    } else if (syllabus.isActive === true && syllabus.isApproved === false) {
+      return "draft";
+    } else {
+      return "active";
+    }
+  };
+
+  const formatSyllabusList = (syllabuses: any[]) =>
+    syllabuses.map((syllabus) => ({
+      ...syllabus,
+      status: syllabusStatus(syllabus),
+    }));
+
+  {
+    /**================== Modal Import ========================= */
+  }
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
@@ -235,7 +279,7 @@ const Page: React.FC = () => {
         </div>
         <div className="body-control mt-2">
           <Table
-            data={syllabuses}
+            data={formatSyllabusList(syllabuses)}
             columns={syllabusColumns}
             icon={<BsFilterLeft />}
             popupMenu={options}

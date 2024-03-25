@@ -52,7 +52,7 @@ const CreateSyllabusPage: React.FC = () => {
                 <span className="font-semibold text-base">Level</span>
                 <select className=" rounded-[5px] shadow px-[10px] py-[5px] w-[270px]">
                   <option value="1">Auto Detect</option>
-                  <option value="2">Auto Detect Auto Detect</option>
+                  <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                 </select>

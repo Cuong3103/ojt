@@ -40,7 +40,7 @@ export const userColumns: ColumnType[] = [
 
 export const syllabusColumns: ColumnType[] = [
   {
-    id: "syllabus",
+    id: "name",
     label: "Syllabus",
     options: {},
   },
@@ -89,12 +89,12 @@ export const propgramColumns: ColumnType[] = [
     options: {},
   },
   {
-    id: "programName",
+    id: "name",
     label: "Program name",
     options: {},
   },
   {
-    id: "createdOn",
+    id: "startTime",
     label: "Created on",
     options: {},
   },
@@ -109,7 +109,7 @@ export const propgramColumns: ColumnType[] = [
     options: {},
   },
   {
-    id: "status",
+    id: "training_status",
     label: "Status",
     options: {},
   },

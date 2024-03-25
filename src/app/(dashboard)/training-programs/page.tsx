@@ -6,16 +6,19 @@ import { propgramColumns } from "@/utils/tableColumnHelper";
 import { BsFilterLeft } from "react-icons/bs";
 import Pagination from "@/app/components/pagination";
 import { totalPage } from "@/utils/paginationHelper";
-import SearchBar from "@/app/components/input-search/SearchBar";
 import { TableProgram } from "@/app/components/table/TableViewProgram";
 import { LuArrowUpToLine } from "react-icons/lu";
 import mockPrograms from "@/app/(dashboard)/training-programs/mockPrograms";
 import Button from "@/app/components/button/button";
+import useQuery from "@/hooks/useQuery";
+import { programService } from "@/services/programs/programService";
+import { InputSearch } from "@/app/components/input-box/search-input";
+import useDebounce from "@/hooks/useDebounce";
+import { fromTimestampToDateString } from "@/utils/formatUtils";
 
 const TrainingProgram = () => {
-  // const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const [data, setData] = useState([]);
   const [metadata, setMetadata] = useState({
     hasNextPage: false,
     hasPrevPage: false,
@@ -23,6 +26,16 @@ const TrainingProgram = () => {
     total: 1,
   });
   const [limit, setLimit] = useState(10);
+
+  const { data: programData, loading: programLoading } = useQuery(
+    programService.getProgram
+  );
+
+  const programs = programData?.content || [];
+
+  console.log("programData", programData);
+
+  console.log("data", programs);
 
   // const userService = new MockDataService<User>(
   //     userGenerator,
@@ -36,6 +49,27 @@ const TrainingProgram = () => {
     setCurrentPage(0);
     setLimit(Number(e.target.value));
   };
+
+  const convertTrainingStatusToText = (trainingStatus: number) => {
+    switch (trainingStatus) {
+      case 0:
+        return "DRAFT";
+      case 1:
+        return "INACTIVE";
+      case 2:
+        return "ACTIVE";
+      default:
+        return "";
+    }
+  };
+
+  const formatTrainingProgramList = (programs: any[]) =>
+    programs.map((program) => ({
+      ...program,
+      startTime: fromTimestampToDateString(program.startTime),
+      duration: Math.round(program.duration / (24 * 60 * 60)),
+      training_status: convertTrainingStatusToText(program.training_status),
+    }));
 
   // const getUsers = async () => {
   //     let response: any;
@@ -69,7 +103,7 @@ const TrainingProgram = () => {
       </h2>
       <div className={"flex items-center justify-between px-[15px] m-auto"}>
         <div className={"flex items-center gap-2"}>
-          <SearchBar />
+          <InputSearch />
           <Button
             className={
               "h-[38px] px-[10px] w-fit text-white bg-primary-color rounded-[10px] hover:bg-neutral-600 active:bg-neutral-700 focus:outline-none focus:ring focus:ring-neutral-300"
@@ -96,9 +130,10 @@ const TrainingProgram = () => {
         </div>
       </div>
       <TableProgram
-        data={mockPrograms}
+        data={formatTrainingProgramList(programs)}
         columns={propgramColumns}
         icon={<BsFilterLeft />}
+        // {...programs}
       />
       <div className="flex mt-[30px]">
         <Pagination
