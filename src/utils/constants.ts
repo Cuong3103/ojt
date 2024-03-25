@@ -49,7 +49,7 @@ export const getRoutePagination = (
   }
   return `${BASE_API_URL}${route}${queryParams}`;
 };
-export const getRouteWithId = (route: string, id: number) =>
+export const getRouteWithId = (route: string, id: number | string) =>
   getRoute(route) + `/${id}`;
 
 export const minutesToMiliseconds = (minute: number) => minute * 60 * 1000;
