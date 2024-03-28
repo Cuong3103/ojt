@@ -10,7 +10,6 @@ type PopupMenuProps = {
 
 export const PopupMenu: FC<PopupMenuProps> = ({ options, data, setData }) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-
   const handleOpenPopup = () => {
     setShowUpdateModal(!showUpdateModal);
   };
@@ -33,7 +32,7 @@ export const PopupMenu: FC<PopupMenuProps> = ({ options, data, setData }) => {
       </ul>
       {showUpdateModal && data && (
         <UpdateUserModal
-          data={data}
+          userUUID={data.uuid}
           showUpdateModal={() => setShowUpdateModal(false)}
           setData={setData}
         />

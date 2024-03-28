@@ -2,10 +2,16 @@ export const validateUserFields = (
   fields: Record<string, any>
 ): Record<string, string> => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phoneRegex = /^[0-9]{10,}$/;
+  const phoneRegex = /^0\d{9}$/;
   const errors: Record<string, string> = {};
 
-  const requiredFields = ["fullName", "email", "phone", "birthDay", "role"];
+  const requiredFields = [
+    "fullName",
+    "email",
+    "phone",
+    "birthDay",
+    "userRoleId",
+  ];
 
   requiredFields.forEach((field) => {
     if (!fields[field]) {

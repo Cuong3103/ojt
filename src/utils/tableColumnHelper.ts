@@ -27,7 +27,7 @@ export const userColumns: ColumnType[] = [
     options: {},
   },
   {
-    id: "role",
+    id: "userRoleId",
     label: "Type",
     options: {},
   },

@@ -3,8 +3,6 @@ import { InputBox } from "@/app/components/input-box/input-box";
 import { Modal } from "@/app/components/modal/modal";
 import { Toggle } from "@/app/components/toggle/toggle";
 import { MockResponse } from "@/app/services/mock-response.service";
-import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
-import { UsersFlag } from "@/lib/feature-flags/feature-flags.constant";
 import { User } from "@/types/models/user.model.type";
 import { SUCCESS_HTTP_CODES, USER_ROLE } from "@/utils/constants";
 import { validateUserFields } from "@/utils/validateUserUtils";
@@ -13,6 +11,7 @@ import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import { toast } from "react-toastify";
 import { Dropdown } from "../dropdown/dropdown";
 import { DateInput } from "../input-box/date-input";
+import { addUser } from "@/services/users";
 
 type AddUserModalProps = {
   showAddModal: () => void;
@@ -32,15 +31,14 @@ export const AddUserModal: FC<AddUserModalProps> = ({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [birthDay, setBirthDay] = useState<Dayjs>();
-  const [gender, setGender] = useState("male");
-  const [status, setStatus] = useState("");
-  const [role, setRole] = useState("");
+  const [gender, setGender] = useState<boolean>(true);
+  const [status, setStatus] = useState<boolean>(true);
+  const [userRoleId, setUserRoleId] = useState<number>(1);
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
-
   const handleDropdownChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setRole(event.target.value);
+    setUserRoleId(parseInt(event.target.value));
   };
 
   const handleSave = async () => {
@@ -49,7 +47,7 @@ export const AddUserModal: FC<AddUserModalProps> = ({
       birthDay,
       email,
       phone,
-      role,
+      userRoleId,
     });
 
     if (Object.keys(errors).length > 0) {
@@ -59,22 +57,36 @@ export const AddUserModal: FC<AddUserModalProps> = ({
 
     const createUser = async () => {
       let response: any;
-      const isEnabled = await isFlagEnabled(UsersFlag.CREATE_USER);
-      if (!isEnabled) {
-        const id = Math.floor(Math.random() * 100);
-        const dob = birthDay?.format("YYYY-MM-DD");
-        const user = { id, fullName, phone, email, dob, gender, role };
+      const isEnabled = true;
+      const password = "pass";
+      const dob = birthDay?.unix();
+      const names = fullName.split(" ");
+      const firstName = names[0];
+      const lastName = names.slice(1).join(" ");
+      const user = {
+        firstName,
+        lastName,
+        password,
+        phone,
+        email,
+        dob,
+        gender,
+        userRoleId,
+      };
+      if (isEnabled) {
+        response = await addUser(user as any);
+      } else {
         response = new MockResponse(201, user);
       }
-
       if (SUCCESS_HTTP_CODES.includes(response.statusCode)) {
-        setUsers((prevUsers: User[]) => [response.data, ...prevUsers]);
+        const User = response.content;
+        User.fullName = [User.firstName, User.lastName].join(" ");
+        setUsers((prevUsers: User[]) => [User, ...prevUsers]);
         toast.success("Create successful");
       }
     };
-
+    await createUser();
     showAddModal();
-    createUser();
   };
 
   return (
@@ -87,7 +99,7 @@ export const AddUserModal: FC<AddUserModalProps> = ({
           component: (
             <Dropdown
               id="userType"
-              value={role}
+              value={userRoleId}
               error={fieldErrors["role"]}
               options={options}
               onChange={handleDropdownChange}
@@ -171,7 +183,7 @@ export const AddUserModal: FC<AddUserModalProps> = ({
               on="Active"
               off="Inactive"
               value={status}
-              onChange={(value: string) => setStatus(value)}
+              onChange={(value: boolean) => setStatus(value)}
             />
           ),
         },

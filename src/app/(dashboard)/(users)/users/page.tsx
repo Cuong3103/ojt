@@ -54,7 +54,7 @@ const UserListPage: FC = () => {
   const formatUserList = (users: User[]) =>
     users.map((user) => ({
       ...user,
-      fullName: [user.firstName, user.lastName].join(", "),
+      fullName: [user.firstName, user.lastName].join(" "),
       dob: fromTimestampToDateString(user.dob),
       gender: user.gender ? "male" : "female",
     }));
@@ -71,7 +71,7 @@ const UserListPage: FC = () => {
 
   useEffect(() => {
     getUsers();
-  }, [currentPage, limit]);
+  }, [data, currentPage, limit]);
 
   return (
     <div>

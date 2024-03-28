@@ -2,14 +2,14 @@ import { ChangeEvent, ReactNode } from "react";
 
 export type Option = {
   label: string;
-  value?: string;
+  value?: string | number;
   icon?: ReactNode;
   showModal?: boolean;
 };
 
 export type DropdownProps = {
   id: string;
-  value: string;
+  value: string | number;
   options: Option[];
   error?: string;
   onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
