@@ -8,6 +8,7 @@ type InputBoxProps = {
   name: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  readOnly?: boolean;
 };
 
 export const InputBox: FC<InputBoxProps> = ({
@@ -17,6 +18,7 @@ export const InputBox: FC<InputBoxProps> = ({
   name,
   onChange,
   error,
+  readOnly = false,
 }) => {
   return (
     <>
@@ -32,6 +34,7 @@ export const InputBox: FC<InputBoxProps> = ({
             defaultValue={defaultValue}
             value={value}
             onChange={onChange}
+            readOnly={readOnly}
           />
           {error && <p className={"form-alert"}>{error}</p>}
         </form>

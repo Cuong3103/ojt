@@ -35,11 +35,11 @@ export const DateInput: FC<DateInputProps> = ({
   };
   return (
     <>
-      <div
-        onClick={() => setShowDatePicker(!showDatePicker)}
-        className="inputbox relative"
-      >
-        <form className="inputbox__form">
+      <div className="inputbox relative">
+        <form
+          className="inputbox__form"
+          onClick={() => setShowDatePicker(!showDatePicker)}
+        >
           <input
             aria-label={name}
             ref={inputRef}

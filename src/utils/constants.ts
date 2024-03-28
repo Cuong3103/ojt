@@ -15,9 +15,9 @@ export enum API_LIST {
 }
 
 export enum USER_ROLE {
-  ADMIN = "ADMIN",
-  TRAINER = "TRAINER",
-  USER = "USER",
+  ADMIN = 1,
+  TRAINER = 3,
+  CLASS_ADMIN = 2,
 }
 
 export const HTTP_CODE = {

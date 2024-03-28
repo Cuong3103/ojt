@@ -22,6 +22,12 @@ export const getUserByUUID = async (uuid: string) => {
   );
 };
 
+export const addUser = async (user: User) => {
+  return handleResponse(
+    await axiosInstance.post(getRoute(API_LIST.ADMIN_MODIFY_USER), user)
+  );
+};
+
 export const updateAvatar = async (file: File, id: number) => {
   return handleResponse(
     await axiosInstance.put(getRouteWithId(API_LIST.UPDATE_AVATAR, id), {
