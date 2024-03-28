@@ -9,6 +9,7 @@ export enum API_LIST {
   LOGIN = "/auth/signin",
   REFRESH_TOKEN = "/auth/refresh",
   ADMIN_USER_LIST = "/user/hidden",
+  ADMIN_USER_FILTER = "/user/search/hidden",
   ADMIN_MODIFY_USER = "/user",
   UPDATE_AVATAR = "/user/updateImage",
   CREATE_CLASS = "/class",
@@ -37,7 +38,10 @@ export const SUCCESS_HTTP_CODES = [
   HTTP_CODE.ACCEPTED,
 ];
 
-export const getRoute = (route: string) => BASE_API_URL + route;
+export const getRoute = (route: string, query?: string) => {
+  return !query ? BASE_API_URL + route : BASE_API_URL + route + `?${query}`;
+};
+
 export const getRoutePagination = (
   route: API_LIST,
   page?: number,
