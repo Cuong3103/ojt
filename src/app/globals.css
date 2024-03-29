@@ -25,6 +25,5 @@
 }
 
 th:nth-child(2), td:nth-child(2) {
-    /*width: fit-content;*/
     font-weight: bold;
 }

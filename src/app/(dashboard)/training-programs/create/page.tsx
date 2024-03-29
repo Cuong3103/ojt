@@ -3,12 +3,10 @@ import React, { useState } from "react";
 import InputBox from "@/app/components/input-box/InputBox";
 import Button from "@/app/components/button/button";
 const CreateTrainingProgram = () => {
-  const [training, setTraining] = useState([]);
   const [loading, setLoading] = useState(false);
+  
 
-  // const _onClick = () => {
 
-  // };
   return (
     <section className={"w-full"}>
       <h2

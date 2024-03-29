@@ -2,20 +2,34 @@
 import React, { ChangeEvent, useState } from "react";
 import { IoFilterSharp } from "react-icons/io5";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { propgramColumns } from "@/utils/tableColumnHelper";
+import { programColumns } from "@/utils/tableColumnHelper";
 import { BsFilterLeft } from "react-icons/bs";
 import Pagination from "@/app/components/pagination";
 import { totalPage } from "@/utils/paginationHelper";
-import SearchBar from "@/app/components/input-search/SearchBar";
 import { TableProgram } from "@/app/components/table/TableViewProgram";
 import { LuArrowUpToLine } from "react-icons/lu";
-import mockPrograms from "@/app/(dashboard)/training-programs/mockPrograms";
 import Button from "@/app/components/button/button";
+import useQuery from "@/hooks/useQuery";
+import { programService } from "@/services/programs/programService";
+import useDebounce from "@/hooks/useDebounce";
+import { fromTimestampToDateString } from "@/utils/formatUtils";
+import { Chip } from "@/app/components/chip/chip";
+import Link from "next/link";
+import { FaEyeSlash, FaPencilAlt } from "react-icons/fa";
+import { RxAvatar } from "react-icons/rx";
+import SearchBar from "@/app/components/input-search/SearchBar";
+import { AddUserModal } from "@/app/components/user-modal/add-user-modal";
+
+const options = [
+  { icon: <FaPencilAlt />, label: "Edit user" },
+  { icon: <RxAvatar />, label: "Change role" },
+  { icon: <FaEyeSlash />, label: "De-activate user" },
+];
 
 const TrainingProgram = () => {
-  // const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const [data, setData] = useState([]);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [metadata, setMetadata] = useState({
     hasNextPage: false,
     hasPrevPage: false,
@@ -24,43 +38,49 @@ const TrainingProgram = () => {
   });
   const [limit, setLimit] = useState(10);
 
-  // const userService = new MockDataService<User>(
-  //     userGenerator,
-  //     100,
-  //     limit,
-  //     currentPage
-  // );
-  // const successUsersMock = userService.getMockResponse();
+  const { data: programData, loading: programLoading, setData: setProgarmData } = useQuery(
+    programService.getProgram
+  );
+
+  const programs = programData?.content || [];
 
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(0);
     setLimit(Number(e.target.value));
   };
 
-  // const getUsers = async () => {
-  //     let response: any;
-  //     const isEnabled = await isFlagEnabled(UsersFlag.GET_ALL);
-  //     if (!isEnabled) {
-  //         response = successUsersMock;
-  //     } else {
-  //         const res = await axiosInstance.get(getRoute(API_LIST.USER_LIST), {
-  //             params: {
-  //                 page: currentPage,
-  //                 limit,
-  //             },
-  //         });
-  //
-  //         response = await res.data.data;
-  //     }
-  //
-  //     const { data, metadata } = response;
-  //     setData(data);
-  //     setMetadata(metadata);
-  // };
-  //
-  // useEffect(() => {
-  //     getUsers();
-  // }, [currentPage, limit]);
+  const convertTrainingStatusToText = (trainingStatus: number) => {
+    switch (trainingStatus) {
+      case 0:
+        return <Chip draft="Draft" />;
+      case 1:
+        return <Chip inactive="Inactive" />;
+      case 2:
+        return <Chip active="Active" />;
+      default:
+        return "";
+    }
+  };
+
+  const formatTrainingProgramList = (programs: any[]) =>
+    programs.map((program) => {
+      const durationInDays = Math.round(
+        program?.duration / (24 * 60 * 60 * 1000)
+      );
+      const linkName = (
+        <Link href={"training-program/slug"}>{program?.name}</Link>
+      );
+      return {
+        ...program,
+        name: linkName,
+        startTime: fromTimestampToDateString(program.startTime),
+        duration:
+          durationInDays > 1
+            ? `${durationInDays} days`
+            : `${durationInDays} day`,
+        training_status: convertTrainingStatusToText(program.training_status),
+      };
+    });
 
   return (
     <section className={"w-full"}>
@@ -69,7 +89,7 @@ const TrainingProgram = () => {
       </h2>
       <div className={"flex items-center justify-between px-[15px] m-auto"}>
         <div className={"flex items-center gap-2"}>
-          <SearchBar />
+          <SearchBar value={query} placeholder={"Search by ..."} />
           <Button
             className={
               "h-[38px] px-[10px] w-fit text-white bg-primary-color rounded-[10px] hover:bg-neutral-600 active:bg-neutral-700 focus:outline-none focus:ring focus:ring-neutral-300"
@@ -85,20 +105,25 @@ const TrainingProgram = () => {
             }
             title="Import"
             icon={<LuArrowUpToLine />}
+            onClick={() => setShowAddModal(true)}
           />
-          <Button
-            className={
-              "h-[38px] px-[10px] w-fit text-white bg-primary-color rounded-[10px] hover:bg-neutral-600 active:bg-neutral-700 focus:outline-none focus:ring focus:ring-neutral-300"
-            }
-            title="Add New"
-            icon={<IoIosAddCircleOutline />}
-          />
+          <Link href={"/training-programs/create"}>
+            <Button
+              className={
+                "h-[38px] px-[10px] w-fit text-white bg-primary-color rounded-[10px] hover:bg-neutral-600 active:bg-neutral-700 focus:outline-none focus:ring focus:ring-neutral-300"
+              }
+              title="Add New"
+              icon={<IoIosAddCircleOutline />}
+            />
+          </Link>
         </div>
       </div>
       <TableProgram
-        data={mockPrograms}
-        columns={propgramColumns}
+        data={formatTrainingProgramList(programs)}
+        columns={programColumns}
         icon={<BsFilterLeft />}
+        popupMenu={options}
+        // {...programs}
       />
       <div className="flex mt-[30px]">
         <Pagination
@@ -121,6 +146,12 @@ const TrainingProgram = () => {
           </select>
         </div>
       </div>
+      {showAddModal && (
+        <AddUserModal
+          showAddModal={() => setShowAddModal(false)}
+          setUsers={setProgarmData}
+        />
+      )}
     </section>
   );
 };

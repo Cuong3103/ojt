@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { ChangeEvent } from "react";
 import { KeyboardEvent } from "react";
 import "./inputbox.css";
@@ -13,7 +13,7 @@ interface Props {
   [key: string]: any;
 }
 
-function InputBox({ value, className, onChange, onKeyDown, placeholder, ...restProps }: Props) {
+function InputBox({ value, className, onChange, onKeyDown, placeholder, ...restProps }: Props, ref: any) {
   const [input, setInput] = useState(value);
 
   // Check user enter key in input box
@@ -21,8 +21,6 @@ function InputBox({ value, className, onChange, onKeyDown, placeholder, ...restP
     const value = event?.target.value || "";
     setInput(value);
   };
-
-  console.log("_onInputChange", value);
 
 
   const _onKeyDown = (event: KeyboardEvent) => {
@@ -44,6 +42,7 @@ function InputBox({ value, className, onChange, onKeyDown, placeholder, ...restP
             onChange={_onInputChange}
             onKeyDown={_onKeyDown}
             value={input}
+            ref={ref}
             {...restProps}
           />
         </label>
@@ -52,4 +51,4 @@ function InputBox({ value, className, onChange, onKeyDown, placeholder, ...restP
   );
 }
 
-export default InputBox;
+export default forwardRef(InputBox);
