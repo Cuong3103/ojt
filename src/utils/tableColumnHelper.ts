@@ -27,7 +27,7 @@ export const userColumns: ColumnType[] = [
     options: {},
   },
   {
-    id: "role",
+    id: "userRoleId",
     label: "Type",
     options: {},
   },
@@ -82,7 +82,7 @@ export const syllabusColumns: ColumnType[] = [
   },
 ];
 
-export const propgramColumns: ColumnType[] = [
+export const programColumns: ColumnType[] = [
   {
     id: "id",
     label: "ID",

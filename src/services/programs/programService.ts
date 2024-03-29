@@ -7,4 +7,10 @@ export const programService = {
   getProgramBySlug(slug = "") {
     return axiosInstance.get(`/trainingProgram/${slug}`);
   },
+  postTrainingProgram(payload = {}) {
+    return axiosInstance.post(`/trainingProgram`, payload);
+  },
+  getProgramBySearch(query = "") {
+    return axiosInstance.get(`/trainingProgram/search/${query}`);
+  },
 };

@@ -14,7 +14,7 @@ const useQuery = <T>(
       const res = await promise(query);
       setData(res?.data || []);
     } catch (error) {
-      setError(error);
+      setError(error as Error);
     } finally {
       setLoading(false);
     }
@@ -26,6 +26,7 @@ const useQuery = <T>(
 
   return {
     data,
+    setData,
     loading,
     error,
     refetch: fetchData,

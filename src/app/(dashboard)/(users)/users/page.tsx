@@ -7,7 +7,7 @@ import { InputSearch } from "@/app/components/input-box/search-input";
 import Pagination from "@/app/components/pagination/index";
 import { Table } from "@/app/components/table/table";
 import { MockDataService } from "@/app/services/mock-response.service";
-import { fetchUserList } from "@/services/users";
+import { fetchUserList, normalSearch } from "@/services/users";
 import { User } from "@/types/models/user.model.type";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { userGenerator } from "@/utils/mockHelper";
@@ -20,14 +20,19 @@ import { IoFilterSharp } from "react-icons/io5";
 import { FaPencilAlt } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
 import { FaEyeSlash } from "react-icons/fa6";
+import { UserAdvancedSearch } from "@/app/components/advanced-search/UserAdvancedSearch";
+import { toast } from "react-toastify";
+import { API_LIST, getRoute } from "@/utils/constants";
 
 const options = [
   { icon: <FaPencilAlt />, label: "Edit user", showModal: true },
   { icon: <RxAvatar />, label: "Change role" },
   { icon: <FaEyeSlash />, label: "De-activate user" },
 ];
+
 const UserListPage: FC = () => {
-  const [query, setQuery] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isFiltering, setIsFiltering] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState<User[]>([]);
@@ -46,7 +51,7 @@ const UserListPage: FC = () => {
     limit,
     currentPage
   );
-  
+
   const successUsersMock = userService.getMockResponse();
 
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -54,10 +59,18 @@ const UserListPage: FC = () => {
     setLimit(Number(e.target.value));
   };
 
+  const handleOpenAdvancedBox = () => setIsFiltering(!isFiltering);
+
+  const handleNormalSearch = async (event: any) => {
+    if (event.key === "Enter") {
+      toast.success("HELLO");
+    }
+  };
+
   const formatUserList = (users: User[]) =>
     users.map((user) => ({
       ...user,
-      fullName: [user.firstName, user.lastName].join(", "),
+      fullName: [user.firstName, user.lastName].join(" "),
       dob: fromTimestampToDateString(user.dob),
       gender: user.gender ? "male" : "female",
     }));
@@ -77,24 +90,35 @@ const UserListPage: FC = () => {
   }, [currentPage, limit]);
 
   return (
-    <div>
+    <div className="mb-20">
       <div className="font-bold text-xl tracking-wide mb-4 m-3">
         User Management
       </div>
-      <InputSearch />
-      <div className="flex justify-between items-center m-4">
-        <Button title="Filter" icon={<IoFilterSharp />} />
+      <article className="flex items-center m-auto justify-end">
+        <div className="flex items-center gap-4 flex-grow">
+          <InputSearch onKeyDown={(e) => handleNormalSearch(e)} />
+          <Button
+            title="Filter"
+            icon={<IoFilterSharp />}
+            className="btn bg-primary-color text-white hover:text-black"
+            onClick={handleOpenAdvancedBox}
+          />
+        </div>
         <Button
           onClick={() => setShowAddModal(true)}
           title="Add User"
           icon={<IoIosAddCircleOutline />}
           className="h-full bg-primary-color text-white py-2 px-10 rounded-lg"
         />
-      </div>
-      <Chip
+      </article>
+      <UserAdvancedSearch
+        isOpenBox={isFiltering}
+        handleOpenBox={handleOpenAdvancedBox}
+      />
+      {/* <Chip
         style={{ backgroundColor: "#474747", fontStyle: "italic" }}
         removeBadge="HaNTT2"
-      ></Chip>
+      ></Chip> */}
       <Table
         data={data}
         columns={userColumns}

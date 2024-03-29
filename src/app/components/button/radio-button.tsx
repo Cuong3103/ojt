@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 
 type RadioButtonProps = {
-  options: { id: string; label: string; defaultChecked?: boolean }[];
-  value?: string;
   name: string;
-  onChange?: (value: string) => void;
+  options: { id: string; label: string }[];
+  value?: boolean;
+  onChange?: (value: boolean) => void;
 };
 
 export const RadioButton: FC<RadioButtonProps> = ({
@@ -13,6 +13,13 @@ export const RadioButton: FC<RadioButtonProps> = ({
   name,
   onChange,
 }) => {
+  const handleChange = (optionId: string) => {
+    const selectedOption = options.find((option) => option.id === optionId);
+    if (selectedOption && onChange) {
+      onChange(selectedOption.id === "male");
+    }
+  };
+
   return (
     <div className="flex justify-center">
       {options.map((option, index) => (
@@ -25,8 +32,8 @@ export const RadioButton: FC<RadioButtonProps> = ({
             className="radio mr-1"
             type="radio"
             name="inlineRadioOptions"
-            checked={(index === 0 && !value) || option.id === value}
-            onChange={() => onChange && onChange(option.id)}
+            checked={option.id === "male" ? value === true : value === false}
+            onChange={() => handleChange(option.id)}
           />
           <label
             className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer"

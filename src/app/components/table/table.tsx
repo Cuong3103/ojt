@@ -20,8 +20,8 @@ type TableProps = {
   data: any[];
   columns: ColumnType[];
   icon?: ReactNode;
-  popupMenu?: Option[];
-  setData?: Dispatch<SetStateAction<any>>;
+  popupMenu: Option[];
+  setData: Dispatch<SetStateAction<any>>;
 };
 
 export const Table: FC<TableProps> = ({
@@ -68,7 +68,7 @@ export const Table: FC<TableProps> = ({
             </button>
 
             {isPopupOpen && dataId === row.id && (
-              <PopupMenu setData={setData} data={[row]} options={popupMenu} />
+              <PopupMenu setData={setData} data={row} options={popupMenu} />
             )}
           </>
         );
@@ -118,7 +118,7 @@ export const Table: FC<TableProps> = ({
             )}
           </span>
         );
-      case "role":
+      case "userRoleId":
         return (
           <span>
             <Chip

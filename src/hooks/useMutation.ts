@@ -6,7 +6,7 @@ const useMutation = (promise: (payload: any) => Promise<any>) => {
   const [error, setError] = useState<Error | undefined>();
 
   const execute = async (
-    payload: {},
+    payload: any,
     options?: {
       onSuccess?: (data: any) => void;
       onFail?: (error: Error) => void;
@@ -18,8 +18,8 @@ const useMutation = (promise: (payload: any) => Promise<any>) => {
       setData(res?.data || []);
       options?.onSuccess?.(res?.data);
     } catch (error) {
-      setError(error);
-      options?.onFail?.(error);
+      setError(error as Error);
+      options?.onFail?.(error as Error);
     } finally {
       setLoading(false);
     }

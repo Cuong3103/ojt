@@ -4,19 +4,21 @@ import React, { ChangeEvent, MouseEvent, useState } from "react";
 
 interface Props {
   value?: string;
-  onChange?: (value: string) => void;
-  onClick?: (event: MouseEvent) => void;
-
+  // onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  // onClick?: (event: MouseEvent) => void;
+  placeholder: string;
   [key: string]: any;
 }
 
-const SearchBar = ({value = "", onChange, onClick, ...restProps}: Props) => {
+const SearchBar = ({value, placeholder, ...restProps}: Props) => {
     const [input, setInput] = useState(value);
 
     const _onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = event?.target.value || "";
-        setInput(value);
+      const value = event?.target.value || "";
+      setInput(value);
     };
+
+    console.log("onChange",value);
 
     const _onClicked = (event: MouseEvent) => {
         event.preventDefault();
@@ -33,7 +35,7 @@ const SearchBar = ({value = "", onChange, onClick, ...restProps}: Props) => {
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={"search__bar-icon"}
+            className={"search__bar-icon absolute ml-1"}
           >
             <g id="search" clip-path="url(#clip0_184_16914)">
               <path
@@ -50,10 +52,10 @@ const SearchBar = ({value = "", onChange, onClick, ...restProps}: Props) => {
           </svg>
           <input
             type="search"
-            placeholder={"Search by..."}
-            className="input input-bordered max-w-xs flex-1 text-black box-border placeholder:italic placeholder:text-slate-400"
-            onChange={_onInputChange}
+            placeholder={placeholder}
+            className="input input-bordered outline-none focus:outline-none pl-8 w-full h-[35px] flex-1 text-black box-border placeholder:italic placeholder:text-slate-400 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1"
             value={input}
+            onChange={_onInputChange}
             {...restProps}
           />
         </label>

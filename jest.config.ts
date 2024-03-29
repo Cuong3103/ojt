@@ -17,6 +17,11 @@ const config: Config = {
   modulePathIgnorePatterns: ["<rootDir>/src/stories"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
+    "^jose": require.resolve("jose"),
+    "^@panva/hkdf": require.resolve("@panva/hkdf"),
+    "preact-render-to-string": require.resolve("preact-render-to-string"),
+    preact: require.resolve("preact"),
+    uuid: require.resolve("uuid"),
   },
 };
 

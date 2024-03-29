@@ -2,17 +2,18 @@ import { USER_ROLE } from "@/utils/constants";
 
 export type User = {
   id: number;
-  uuid?: string;
-  firstName?: string;
-  lastName?: string;
-  fullName?: string;
+  uuid: string;
+  firstName: string;
+  lastName: string;
   username?: string;
   email: string;
-  dob: number;
-  gender: "male" | "female";
-  role: USER_ROLE;
-  phone?: string;
-  status?: string; //TODO: This field is quite not transparent
+  dob?: number;
+  avatarUrl?: string;
+  gender?: boolean;
+  role?: USER_ROLE;
+  userRoleId: number;
+  phone: string;
+  status: boolean;
   modifiedDate?: string;
   createdDate?: string;
 };
@@ -27,4 +28,3 @@ export type Program = {
   status?: string;
   createdDate?: string;
 };
-

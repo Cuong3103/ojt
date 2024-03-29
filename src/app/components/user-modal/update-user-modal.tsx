@@ -2,9 +2,6 @@ import { RadioButton } from "@/app/components/button/radio-button";
 import { InputBox } from "@/app/components/input-box/input-box";
 import { Modal } from "@/app/components/modal/modal";
 import { Toggle } from "@/app/components/toggle/toggle";
-import { MockResponse } from "@/app/services/mock-response.service";
-import { isFlagEnabled } from "@/lib/feature-flags/config-cat";
-import { UsersFlag } from "@/lib/feature-flags/feature-flags.constant";
 import { User } from "@/types/models/user.model.type";
 import { SUCCESS_HTTP_CODES, USER_ROLE } from "@/utils/constants";
 import { validateUserFields } from "@/utils/validateUserUtils";
@@ -19,9 +16,11 @@ import React, {
 import { toast } from "react-toastify";
 import { Dropdown } from "../dropdown/dropdown";
 import { DateInput } from "../input-box/date-input";
+import { getUserByUUID, updateProfile } from "@/services/users/index";
+import { fromTimestampToDateString } from "@/utils/formatUtils";
 
 type UpdateUserModalProps = {
-  data: any;
+  userUUID: any;
   showUpdateModal: () => void;
   setData: Dispatch<SetStateAction<any>>;
 };
@@ -32,39 +31,45 @@ const options = [
 ];
 
 export const UpdateUserModal: FC<UpdateUserModalProps> = ({
-  data,
+  userUUID,
   showUpdateModal,
   setData,
 }) => {
-  const [id, setId] = useState();
+  const [userId, setUserId] = useState(0);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [birthDay, setBirthDay] = useState<Dayjs>();
-  const [gender, setGender] = useState("");
-  const [status, setStatus] = useState("");
-  const [role, setRole] = useState("");
+  const [gender, setGender] = useState<boolean>();
+  const [status, setStatus] = useState<boolean>(true);
+  const [userRoleId, setUserRoleId] = useState<number>(0);
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
-  useEffect(() => {
-    if (data) {
-      data.map((userData: any) => {
-        setId(userData.id);
-        setFullName(userData.fullName);
-        setEmail(userData.email);
-        setPhone(userData.phone);
-        setBirthDay(dayjs(userData.dob));
-        setGender(userData.gender);
-        setStatus(userData.status);
-        setRole(userData.role);
-        setFieldErrors({});
-      });
-    }
-  }, [data]);
 
+  const getCurrentUser = async (uuid?: string) => {
+    if (!uuid) throw new Error("UUID is not correct");
+
+    const response = await getUserByUUID(uuid);
+    return response.content;
+  };
+
+  useEffect(() => {
+    const fetchUserByUUID = async () => {
+      const currentUser = await getCurrentUser(userUUID);
+      setUserId(currentUser.id);
+      setUserRoleId(currentUser.userRoleId);
+      setFullName(currentUser.firstName + " " + currentUser.lastName);
+      setEmail(currentUser.email);
+      setPhone(currentUser.phone);
+      setBirthDay(dayjs(currentUser.dob));
+      setGender(currentUser.gender);
+      setStatus(currentUser.status);
+    };
+    fetchUserByUUID();
+  }, []);
   const handleDropdownChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setRole(event.target.value);
+    setUserRoleId(parseInt(event.target.value));
   };
 
   const handleSave = async () => {
@@ -73,28 +78,60 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
       birthDay,
       email,
       phone,
-      role,
+      userRoleId,
     });
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
+      toast.error("There is something wrong");
       return;
     }
 
-    const updateUser = async () => {
-      let response: any;
-      const isEnabled = await isFlagEnabled(UsersFlag.UPDATE_USER);
-      if (!isEnabled) {
-        const dob = birthDay?.format("YYYY-MM-DD");
-        const user = { id, fullName, phone, email, dob, gender, role };
-        response = new MockResponse(200, user);
-      }
-
+    const editUser = async () => {
+      const password = "pass";
+      const dob = birthDay?.unix();
+      const names = fullName.split(" ");
+      const firstName = names[0];
+      const lastName = names.slice(1).join(" ");
+      const user = {
+        id: userId,
+        uuid: userUUID,
+        email: email,
+        firstName,
+        lastName,
+        password,
+        phone,
+        dob,
+        gender,
+        userRoleId,
+        status,
+      };
+      const response = await updateProfile(user, userId);
       if (SUCCESS_HTTP_CODES.includes(response.statusCode)) {
         setData((prevUsers: User[]) => {
           const updatedUsers = prevUsers.map((user) => {
-            if (user.id === response.data.id) {
-              return response.data;
+            if (user.id === response.content.id) {
+              const {
+                id,
+                uuid,
+                firstName,
+                lastName,
+                dob,
+                gender,
+                userRoleId,
+                status,
+              } = response.content;
+              return {
+                id,
+                uuid,
+                dob: fromTimestampToDateString(dob),
+                gender: gender ? "male" : "female",
+                email,
+                phone,
+                fullName: firstName + " " + lastName,
+                userRoleId,
+                status,
+              };
             } else {
               return user;
             }
@@ -106,10 +143,9 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
       }
     };
 
+    await editUser();
     showUpdateModal();
-    updateUser();
   };
-
   return (
     <Modal
       title="Update user"
@@ -120,7 +156,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
           component: (
             <Dropdown
               id="userType"
-              value={role}
+              value={userRoleId}
               error={fieldErrors["role"]}
               options={options}
               onChange={handleDropdownChange}
@@ -150,6 +186,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
             <InputBox
               name="email"
               label="Email address"
+              readOnly={true}
               defaultValue={email}
               error={fieldErrors["email"]}
             />
@@ -205,7 +242,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
               on="Active"
               off="Inactive"
               value={status}
-              onChange={(value: string) => setStatus(value)}
+              onChange={(value: boolean) => setStatus(value)}
             />
           ),
         },

@@ -12,7 +12,7 @@ export const getUserTokenInfo = (session: Session) => {
   return session.user;
 };
 
-const getDecodedToken = (accessToken?: string) => {
+export const getDecodedToken = (accessToken?: string) => {
   if (!accessToken) {
     return null;
   } else {

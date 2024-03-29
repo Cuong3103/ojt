@@ -9,15 +9,16 @@ export enum API_LIST {
   LOGIN = "/auth/signin",
   REFRESH_TOKEN = "/auth/refresh",
   ADMIN_USER_LIST = "/user/hidden",
+  ADMIN_USER_FILTER = "/user/search/hidden",
   ADMIN_MODIFY_USER = "/user",
   UPDATE_AVATAR = "/user/updateImage",
   CREATE_CLASS = "/class",
 }
 
 export enum USER_ROLE {
-  ADMIN = "ADMIN",
-  TRAINER = "TRAINER",
-  USER = "USER",
+  ADMIN = 1,
+  TRAINER = 3,
+  CLASS_ADMIN = 2,
 }
 
 export const HTTP_CODE = {
@@ -37,7 +38,10 @@ export const SUCCESS_HTTP_CODES = [
   HTTP_CODE.ACCEPTED,
 ];
 
-export const getRoute = (route: string) => BASE_API_URL + route;
+export const getRoute = (route: string, query?: string) => {
+  return !query ? BASE_API_URL + route : BASE_API_URL + route + `?${query}`;
+};
+
 export const getRoutePagination = (
   route: API_LIST,
   page?: number,
@@ -49,7 +53,7 @@ export const getRoutePagination = (
   }
   return `${BASE_API_URL}${route}${queryParams}`;
 };
-export const getRouteWithId = (route: string, id: number) =>
+export const getRouteWithId = (route: string, id: number | string) =>
   getRoute(route) + `/${id}`;
 
 export const minutesToMiliseconds = (minute: number) => minute * 60 * 1000;
