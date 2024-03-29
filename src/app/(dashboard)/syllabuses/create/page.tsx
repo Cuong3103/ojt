@@ -29,11 +29,19 @@ const CreateSyllabusPage: React.FC = () => {
         </div>
         <div className="flex items-center gap-[15px]">
           <p className="font-semibold text-base">Code</p>
-          <span className="text-sm">NPL</span>
+          <input
+            type="text"
+            placeholder="NPL"
+            className="w-[28px] h-[28px] text-sm"
+          />
         </div>
         <div className="flex items-center gap-[15px]">
           <p className="font-semibold text-base">Version</p>
-          <span className="text-sm opacity-50">1.0</span>
+          <input
+            type="text"
+            placeholder="1.0"
+            className="w-[28px] h-[28px] text-sm"
+          />
         </div>
       </div>
 

@@ -5,6 +5,7 @@ import { MdOutlineSnippetFolder } from "react-icons/md";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 import { Chip } from "../chip/chip";
 import Image from "next/image";
+import { HiOutlineLightBulb } from "react-icons/hi";
 
 export const Detail: FC = () => {
   const [status, setStatus] = useState("Online");
@@ -24,7 +25,6 @@ export const Detail: FC = () => {
         <div className="shape-2 w-[49px] h-[17px]">
           <p className="text-sm font-normal">30mins</p>
         </div>
-
         <div>
           <button
             className={`button ${status === "Online" ? "online" : "offline"}`}
@@ -34,13 +34,8 @@ export const Detail: FC = () => {
           </button>
         </div>
 
-        <div className="icon-person">
-          <Image
-            src="../assets/icons/lecture.svg"
-            alt="lecture"
-            width={24}
-            height={24}
-          />
+        <div className="icon">
+          <HiOutlineLightBulb style={{ height: "24px", width: "24px" }} />
         </div>
 
         <div className="icon-folder">

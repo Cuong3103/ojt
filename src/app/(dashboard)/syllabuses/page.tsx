@@ -17,6 +17,8 @@ import { RxAvatar } from "react-icons/rx";
 import { HiOutlineDuplicate } from "react-icons/hi";
 import { syllabusService } from "@/services/syllabuses/syllabusService";
 import useQuery from "@/hooks/useQuery";
+import { fromTimestampToDateString } from "@/utils/formatUtils";
+import { OnOffToggle } from "@/app/components/onOffToggle/page";
 
 const options = [
   { icon: <FaPencilAlt />, label: "Add Training Program" },
@@ -52,9 +54,9 @@ const Page: React.FC = () => {
     if (syllabus.isActive === false) {
       return <Chip inactive="Inactive" />;
     } else if (syllabus.isActive === true && syllabus.isApproved === false) {
-      return <Chip draft="draft" />;
+      return <Chip draft="Draft" />;
     } else {
-      return <Chip active="active" />;
+      return <Chip active="Active" />;
     }
   };
 
@@ -67,6 +69,8 @@ const Page: React.FC = () => {
       ...syllabus,
       name: syllabusName(syllabus),
       status: syllabusStatus(syllabus),
+      createdBy: syllabus.createBy,
+      createdOn: fromTimestampToDateString(syllabus.createdDate),
     }));
 
   {

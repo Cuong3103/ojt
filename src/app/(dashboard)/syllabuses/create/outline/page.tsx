@@ -1,16 +1,42 @@
+"use client";
 import "./outline-page.css";
 import { ProgressBar } from "@/app/components/progress-bar/progress-bar";
 import { Tab } from "@/app/components/syllabus-tab/tab";
 import { FcPieChart } from "react-icons/fc";
 import { CiCircleMinus } from "react-icons/ci";
-import { MdOutlineEdit } from "react-icons/md";
+import { MdOutlineCancel, MdOutlineEdit } from "react-icons/md";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { Detail } from "@/app/components/syllabus-detail/detail";
-
 import Button from "@/app/components/button/button";
 import { IoAddCircleOutline } from "react-icons/io5";
 import Image from "next/image";
+import { useState } from "react";
+import { OnOffToggle } from "@/app/components/onOffToggle/page";
+import { Chip } from "@/app/components/chip/chip";
+import { FaAddressBook, FaPencilAlt } from "react-icons/fa";
+import { PopupMenu } from "@/app/components/dropdown/popup-menu";
+import { Delivery } from "@/app/components/dropdown-delivery/delivery";
+import { OutputStandard } from "@/app/components/dropdown-outputStandard/outputStandard";
+
 const OutlineSyllabusPage: React.FC = () => {
+  {
+    /**============== Add Unit ==================== */
+  }
+  const [isOpenUnit, setIsOpenUnit] = useState(false);
+
+  const handleOpenUnit = () => {
+    setIsOpenUnit(true);
+    console.log("Open");
+  };
+
+  const handleCancelUnit = () => {
+    setIsOpenUnit(false);
+    console.log("Cancel");
+  };
+  const handleCreateUnit = () => {
+    setIsOpenUnit(false);
+    console.log("Create");
+  };
   return (
     <div className="w-screen">
       <div className="p-5">
@@ -68,6 +94,7 @@ const OutlineSyllabusPage: React.FC = () => {
                   </div>
                 </summary>
                 <ul className="syllabus-list py-[10px] shadow bg-base-100 w-full left-0 top-11">
+                  {/**Unit 5 
                   <li className="flex flex-col gap-[10px] syllabus-detail">
                     <div className="header-syllabus flex w-full h-[46px] justify-between">
                       <div className="hs-left flex gap-[34px]">
@@ -105,7 +132,7 @@ const OutlineSyllabusPage: React.FC = () => {
                         style={{ height: "24px", width: "24px" }}
                       />
                     </div>
-                  </li>
+                  </li>*/}
                   <li className="flex flex-col gap-[10px] syllabus-detail">
                     <div className="header-syllabus flex w-full h-[46px] justify-between">
                       <div className="hs-left flex gap-[34px]">
@@ -139,9 +166,92 @@ const OutlineSyllabusPage: React.FC = () => {
                       {" "}
                       <Detail />
                       <Detail />
-                      <IoAddCircleOutline
-                        style={{ height: "24px", width: "24px" }}
-                      />
+                      <button onClick={handleOpenUnit}>
+                        {<IoAddCircleOutline className="w-[24px] h-[24px]" />}
+                      </button>
+                      {isOpenUnit && (
+                        <dialog className="modal" open>
+                          <div className="w-[542px] h-[478px] flex flex-col gap-[15px] pb-[32px] shadow-lg bg-white rounded-[20px]">
+                            <div className="head w-full h-[44px] bg-[#2D3748] rounded-t-[20px] flex items-center justify-between py-[10px] px-[16px]">
+                              <button onClick={handleCancelUnit}></button>
+                              <p className="text-base font-semibold text-white">
+                                New content
+                              </p>
+                              <button onClick={handleCancelUnit}>
+                                <MdOutlineCancel className="text-white w-[24px] h-[24px]" />
+                              </button>
+                            </div>
+                            <div className="body w-full h-[340px] px-[32px] flex flex-col gap-[20px]">
+                              <div className="w-full h-[56px] flex gap-[16px] items-center">
+                                <p className="w-[149px] h-[36px] text-base font-medium flex items-center">
+                                  Name
+                                </p>
+                                <input
+                                  type="text"
+                                  placeholder="Name of content..."
+                                  className="w-[313px] h-[36px] p-[10px] border-[1px] border-[#8B8B8B] rounded-[6px]"
+                                />
+                              </div>
+                              <div className="w-full h-[56px] flex gap-[16px] items-center">
+                                <p className="w-[149px] h-[36px] text-base font-medium flex items-center">
+                                  Output Standard
+                                </p>
+                                <div className="w-[315px] h-[36px]">
+                                  <OutputStandard />
+                                </div>
+                              </div>
+                              <div className="w-full h-[56px] flex gap-[16px] items-center">
+                                <p className="w-[149px] h-[36px] text-base font-medium flex items-center">
+                                  Training time
+                                </p>
+                                <input
+                                  type="text"
+                                  placeholder="Minutes"
+                                  className="w-[313px] h-[36px] p-[10px] border-[1px] border-[#8B8B8B] rounded-[6px]"
+                                />
+                              </div>
+                              <div className="w-full h-[56px] flex gap-[16px] items-center">
+                                <p className="w-[149px] h-[36px] text-base font-medium flex items-center">
+                                  Delivery type
+                                </p>
+                                <div className="w-[315px] h-[36px]">
+                                  <Delivery />
+                                </div>
+                              </div>
+                              <div className="w-full h-[56px] flex gap-[16px] items-center">
+                                <p className="w-[149px] h-[36px] text-base font-medium flex items-center">
+                                  Method
+                                </p>
+
+                                <div className="w-[313px] h-[36px] flex items-center">
+                                  <OnOffToggle
+                                    value=""
+                                    name=""
+                                    onChange={(newValue) =>
+                                      console.log(newValue)
+                                    }
+                                    on="Online"
+                                    off="Offline"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="bottom flex items-center justify-center gap-[15px]">
+                              {" "}
+                              <Button
+                                className="w-[68px] h-[31px] px-[10px] py-[7px] text-sm text-[#E74A3B] underline"
+                                title="Cancel"
+                                onClick={handleCancelUnit}
+                              />
+                              <Button
+                                className="w-[96px] h-[31px] px-[25px] py-[7px] rounded-[10px] text-sm text-white bg-[#2D3748] flex items-center justify-center"
+                                title="Create"
+                                onClick={handleCreateUnit}
+                              />
+                            </div>
+                          </div>
+                        </dialog>
+                      )}
                     </div>
                   </li>
                   <li className="syllabus-detail">
@@ -185,7 +295,7 @@ const OutlineSyllabusPage: React.FC = () => {
                   </li>
                 </ul>
               </details>
-              {/*"Dropdown day 2"*/}
+              {/*"Dropdown day 2"
               <details className="w-full">
                 <summary className="py-[10px] px-[16px] bg-main flex items-center gap-[10px]">
                   <p className="text-white text-base font-semibold">Day 2</p>
@@ -316,8 +426,8 @@ const OutlineSyllabusPage: React.FC = () => {
                     </div>
                   </li>
                 </ul>
-              </details>
-              {/*"Dropdown day 3"*/}
+              </details>*/}
+              {/*"Dropdown day 3"
               <details className="w-full">
                 <summary className="py-[10px] px-[16px] bg-main flex items-center gap-[10px]">
                   <p className="text-white text-base font-semibold">Day 3</p>
@@ -448,7 +558,7 @@ const OutlineSyllabusPage: React.FC = () => {
                     </div>
                   </li>
                 </ul>
-              </details>
+              </details>*/}
 
               <div className="w-full pl-[16px] mt-[20px]">
                 <Button
