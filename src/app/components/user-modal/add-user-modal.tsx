@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { Dropdown } from "../dropdown/dropdown";
 import { DateInput } from "../input-box/date-input";
 import { addUser } from "@/services/users";
+import { fromTimestampToDateString } from "@/utils/formatUtils";
 
 type AddUserModalProps = {
   showAddModal: () => void;
@@ -31,7 +32,7 @@ export const AddUserModal: FC<AddUserModalProps> = ({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [birthDay, setBirthDay] = useState<Dayjs>();
-  const [gender, setGender] = useState<boolean>(true);
+  const [gender, setGender] = useState("male");
   const [status, setStatus] = useState<boolean>(true);
   const [userRoleId, setUserRoleId] = useState<number>(1);
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
@@ -40,7 +41,6 @@ export const AddUserModal: FC<AddUserModalProps> = ({
   ) => {
     setUserRoleId(parseInt(event.target.value));
   };
-
   const handleSave = async () => {
     const errors = validateUserFields({
       fullName,
@@ -81,6 +81,7 @@ export const AddUserModal: FC<AddUserModalProps> = ({
       if (SUCCESS_HTTP_CODES.includes(response.statusCode)) {
         const User = response.content;
         User.fullName = [User.firstName, User.lastName].join(" ");
+        User.dob = fromTimestampToDateString(dob);
         setUsers((prevUsers: User[]) => [User, ...prevUsers]);
         toast.success("Create successful");
       }
@@ -166,8 +167,8 @@ export const AddUserModal: FC<AddUserModalProps> = ({
             <RadioButton
               name="gender"
               options={[
-                { id: "male", label: "Male" },
-                { id: "female", label: "Female" },
+                { id: "MALE", label: "Male" },
+                { id: "FEMALE", label: "Female" },
               ]}
               value={gender}
               onChange={setGender}

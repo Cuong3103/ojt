@@ -20,7 +20,11 @@ type TableProps = {
   columns: ColumnType[];
   icon?: ReactNode;
   popupMenu: Option[];
+  subOptions?: Option[];
+  openSubMenu?: boolean;
+  setDataToUpdate: Dispatch<SetStateAction<any>>;
   setData: Dispatch<SetStateAction<any>>;
+  handleSubMenuItemClick?: (value: any) => void;
 };
 
 export const Table: FC<TableProps> = ({
@@ -28,11 +32,13 @@ export const Table: FC<TableProps> = ({
   columns,
   icon,
   popupMenu,
-  setData,
+  openSubMenu,
+  setDataToUpdate,
+  handleSubMenuItemClick,
 }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [dataId, setDataId] = useState();
-
+  setDataToUpdate(dataId);
   const handleOpenPopup = (dataId: any) => {
     setDataId(dataId);
     setIsPopupOpen(!isPopupOpen);
@@ -67,7 +73,11 @@ export const Table: FC<TableProps> = ({
             </button>
 
             {isPopupOpen && dataId === row.id && (
-              <PopupMenu setData={setData} data={row} options={popupMenu} />
+              <PopupMenu
+                options={popupMenu}
+                openSubMenu={openSubMenu}
+                onSubMenuItemClick={handleSubMenuItemClick}
+              />
             )}
           </>
         );

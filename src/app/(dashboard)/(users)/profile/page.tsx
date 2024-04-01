@@ -9,10 +9,10 @@ import { userAgent } from "next/server";
 import { FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const getCurrentProfile = async (uuid?: string) => {
-  if (!uuid) throw new Error("UUID is not correct");
+const getCurrentProfile = async (id?: number) => {
+  if (!id) throw new Error("ID is not correct");
 
-  const response = await getUserByUUID(uuid);
+  const response = await getUserByUUID(id);
   return response.content;
 };
 
@@ -23,7 +23,7 @@ const ProfilePage: FC = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const session = await getSession();
-      const currentUser = await getCurrentProfile(session?.user.uuid);
+      const currentUser = await getCurrentProfile(session?.user.id);
       setProfile(currentUser);
     };
 
