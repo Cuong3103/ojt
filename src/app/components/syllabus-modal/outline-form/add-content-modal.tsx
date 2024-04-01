@@ -1,9 +1,9 @@
 "use client";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { MdOutlineCancel } from "react-icons/md";
-import { OutputStandard } from "../../dropdown-outputStandard/outputStandard";
-import { Delivery } from "../../dropdown-delivery/delivery";
-import { OnOffToggle } from "../../onOffToggle/page";
+import { OutputStandard } from "../../dropdown/dropdown-outputStandard";
+import { Delivery } from "../../dropdown/dropdown-delivery";
+import { SyllabusToggle } from "../../toggle/syllabus-toggle";
 import Button from "../../button/button";
 import { Content } from "@/types/models/user.model.type";
 
@@ -117,7 +117,7 @@ export const AddContentForm: React.FC<AddContentFormProps> = ({
               </p>
 
               <div className="w-[313px] h-[36px] flex items-center">
-                <OnOffToggle
+                <SyllabusToggle
                   value=""
                   name=""
                   onChange={(newValue) => setMethod(newValue)}

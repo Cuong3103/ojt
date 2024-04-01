@@ -8,7 +8,7 @@ type onOffToggleProps = {
   onChange: (value: string) => void;
 };
 
-export const OnOffToggle: FC<onOffToggleProps> = ({
+export const SyllabusToggle: FC<onOffToggleProps> = ({
   on,
   off,
   value,

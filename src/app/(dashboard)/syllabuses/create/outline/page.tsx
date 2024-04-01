@@ -11,12 +11,6 @@ import Button from "@/app/components/button/button";
 import { IoAddCircleOutline } from "react-icons/io5";
 import Image from "next/image";
 import { useState } from "react";
-import { OnOffToggle } from "@/app/components/onOffToggle/page";
-import { Chip } from "@/app/components/chip/chip";
-import { FaAddressBook, FaPencilAlt } from "react-icons/fa";
-import { PopupMenu } from "@/app/components/dropdown/popup-menu";
-import { Delivery } from "@/app/components/dropdown-delivery/delivery";
-import { OutputStandard } from "@/app/components/dropdown-outputStandard/outputStandard";
 import { AddContentForm } from "@/app/components/syllabus-modal/outline-form/add-content-modal";
 import { Content } from "@/types/models/user.model.type";
 
@@ -27,7 +21,12 @@ const OutlineSyllabusPage: React.FC = () => {
   const [showAddContentModal, setShowAddContentModal] = useState(false);
   const [contents, setContents] = useState<Content[]>([]);
   console.log(contents);
-  const [data, setData] = useState<Content[]>([]);
+  const [days, setDays] = useState<string[]>([]);
+
+  const handleAddDay = () => {
+    setDays((prevDays) => [...prevDays, "New Day"]);
+  };
+
   return (
     <div className="w-screen">
       <div className="p-5">
@@ -70,432 +69,134 @@ const OutlineSyllabusPage: React.FC = () => {
           <div className="left w-4/5">
             <hr className="h-[2px] bg-[#8B8B8B]" />
             <div className="w-full">
-              {/*"Dropdown day 1"*/}
-              <details className="w-full">
-                <summary className="py-[10px] px-[16px] bg-main flex items-center gap-[10px]">
-                  <p className="text-white text-base font-semibold">Day 1</p>
-                  <div>
-                    <CiCircleMinus
-                      style={{
-                        color: "#E74A3B",
-                        width: "20px",
-                        height: "20px",
-                      }}
-                    />
-                  </div>
-                </summary>
-                <ul className="syllabus-list py-[10px] shadow bg-base-100 w-full left-0 top-11">
-                  {/**Unit 5 
-                  <li className="flex flex-col gap-[10px] syllabus-detail">
-                    <div className="header-syllabus flex w-full h-[46px] justify-between">
-                      <div className="hs-left flex gap-[34px]">
-                        <div className="unit">
-                          <p className="font-semibold text-black text-base">
-                            Unit 5
-                          </p>
-                        </div>
-                        <div className="flex">
-                          <div className="h-[46px]">
-                            <p className="font-semibold text-black text-base mb-[5px]">
-                              .Net Introduction
-                            </p>
-                            <p className="text-xs font-medium">7hrs</p>
-                          </div>
-                          <div className="ml-1">
-                            {" "}
-                            <MdOutlineEdit
-                              style={{ height: "18px", width: "18px" }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="hs-right">
-                        <IoIosArrowDropdown
-                          style={{ height: "20px", width: "20px" }}
-                        />
-                      </div>
-                    </div>
-                    <div className="body-syllabus w-full flex flex-col gap-[5px]">
-                      {" "}
-                      <Detail />
-                      <Detail />
-                      <IoAddCircleOutline
-                        style={{ height: "24px", width: "24px" }}
+              {days.map((day, index) => (
+                <details key={index} className="w-full">
+                  <summary className="py-[10px] px-[16px] bg-main flex items-center gap-[10px]">
+                    <p className="text-white text-base font-semibold">{`Day ${
+                      index + 1
+                    }`}</p>
+                    <div>
+                      <CiCircleMinus
+                        style={{
+                          color: "#E74A3B",
+                          width: "20px",
+                          height: "20px",
+                        }}
                       />
                     </div>
-                  </li>*/}
-                  <li className="flex flex-col gap-[10px] syllabus-detail">
-                    <div className="header-syllabus flex w-full h-[46px] justify-between">
-                      <div className="hs-left flex gap-[34px]">
-                        <div className="unit">
-                          <p className="font-semibold text-black text-base">
-                            Unit 6
-                          </p>
-                        </div>
-                        <div className="flex">
-                          <div className="h-[46px]">
-                            <p className="font-semibold text-black text-base mb-[5px]">
-                              .Java
+                  </summary>
+                  <ul className="syllabus-list py-[10px] shadow bg-base-100 w-full left-0 top-11">
+                    <li className="flex flex-col gap-[10px] syllabus-detail">
+                      <div className="header-syllabus flex w-full h-[46px] justify-between">
+                        <div className="hs-left flex gap-[34px]">
+                          <div className="unit">
+                            <p className="font-semibold text-black text-base">
+                              Unit 6
                             </p>
-                            <p className="text-xs font-medium">12hrs</p>
                           </div>
-                          <div className="ml-1">
-                            {" "}
-                            <MdOutlineEdit
-                              style={{ height: "18px", width: "18px" }}
-                            />
+                          <div className="flex">
+                            <div className="h-[46px]">
+                              <p className="font-semibold text-black text-base mb-[5px]">
+                                .Java
+                              </p>
+                              <p className="text-xs font-medium">12hrs</p>
+                            </div>
+                            <div className="ml-1">
+                              {" "}
+                              <MdOutlineEdit
+                                style={{ height: "18px", width: "18px" }}
+                              />
+                            </div>
                           </div>
                         </div>
+                        <div className="hs-right">
+                          <IoIosArrowDropdown
+                            style={{ height: "20px", width: "20px" }}
+                          />
+                        </div>
                       </div>
-                      <div className="hs-right">
-                        <IoIosArrowDropdown
-                          style={{ height: "20px", width: "20px" }}
-                        />
-                      </div>
-                    </div>
-                    <div className="body-syllabus w-full flex flex-col gap-[5px]">
-                      {" "}
-                      {contents.map((content, index) => (
-                        <Detail
-                          key={index}
-                          name={content.name}
-                          outputStandard={content.outputStandard}
-                          delivery={content.deliveryType}
-                          trainingTime={content.trainingTime}
-                          status={content.method}
-                        />
-                      ))}
-                      {/* <Detail
+                      <div className="body-syllabus w-full flex flex-col gap-[5px]">
+                        {" "}
+                        {contents.map((content, index) => (
+                          <Detail
+                            key={index}
+                            name={content.name}
+                            outputStandard={content.outputStandard}
+                            delivery={content.deliveryType}
+                            trainingTime={content.trainingTime}
+                            status={content.method}
+                          />
+                        ))}
+                        {/* <Detail
                         name="Hung ne"
                         outputStandard="HPH9"
                         delivery="Guide/Review"
                         trainingTime={20}
                         status="Offline"
                       /> */}
-                      <button onClick={() => setShowAddContentModal(true)}>
-                        {<IoAddCircleOutline className="w-[24px] h-[24px]" />}
-                      </button>
-                      {showAddContentModal && (
-                        <AddContentForm
-                          showAddContentModal={() =>
-                            setShowAddContentModal(false)
-                          }
-                          setContents={setContents}
-                        />
-                      )}
-                    </div>
-                  </li>
-                  <li className="syllabus-detail">
-                    <div className="header-syllabus  w-full h-[46px] justify-between flex items-center">
-                      <div className="hs-left flex gap-[34px] items-center">
-                        <div className="unit">
-                          <p className="font-semibold text-black text-base">
-                            Unit 7
-                          </p>
-                        </div>
-                        <div className="flex gap-[20px]">
-                          <div className="">
-                            <input
-                              type="text"
-                              placeholder="Unit name"
-                              className="w-[174px] h-[36px] border-[1px] border-[#8B8B8B] rounded-[6px] p-[10px] placeholder-black"
-                              id=""
+                        <button onClick={() => setShowAddContentModal(true)}>
+                          {<IoAddCircleOutline className="w-[24px] h-[24px]" />}
+                        </button>
+                        {showAddContentModal && (
+                          <AddContentForm
+                            showAddContentModal={() =>
+                              setShowAddContentModal(false)
+                            }
+                            setContents={setContents}
+                          />
+                        )}
+                      </div>
+                    </li>
+                    <li className="syllabus-detail">
+                      <div className="header-syllabus  w-full h-[46px] justify-between flex items-center">
+                        <div className="hs-left flex gap-[34px] items-center">
+                          <div className="unit">
+                            <p className="font-semibold text-black text-base">
+                              Unit 7
+                            </p>
+                          </div>
+                          <div className="flex gap-[20px]">
+                            <div className="">
+                              <input
+                                type="text"
+                                placeholder="Unit name"
+                                className="w-[174px] h-[36px] border-[1px] border-[#8B8B8B] rounded-[6px] p-[10px] placeholder-black"
+                                id=""
+                              />
+                            </div>
+                            <Button
+                              className="w-[97px] h-[36px] bg-main px-[25px] py-[2px] rounded-[8px] flex items-center justify-center text-white"
+                              title="Create"
                             />
                           </div>
-                          <Button
-                            className="w-[97px] h-[36px] bg-main px-[25px] py-[2px] rounded-[8px] flex items-center justify-center text-white"
-                            title="Create"
+                        </div>
+                        <div className="hs-right">
+                          <IoIosArrowDropdown
+                            style={{ height: "20px", width: "20px" }}
                           />
                         </div>
                       </div>
-                      <div className="hs-right">
-                        <IoIosArrowDropdown
-                          style={{ height: "20px", width: "20px" }}
+                    </li>
+                    <li className="syllabus-detail">
+                      <div className="header-syllabus  w-full h-[46px] justify-between flex items-center">
+                        <Button
+                          className="px-[10px] py-[7px] rounded-[10px] bg-[#474747] text-white text-sm font-bold"
+                          title="Add unit"
+                          icon={<IoAddCircleOutline />}
                         />
                       </div>
-                    </div>
-                  </li>
-                  <li className="syllabus-detail">
-                    <div className="header-syllabus  w-full h-[46px] justify-between flex items-center">
-                      <Button
-                        className="px-[10px] py-[7px] rounded-[10px] bg-[#474747] text-white text-sm font-bold"
-                        title="Add unit"
-                        icon={<IoAddCircleOutline />}
-                      />
-                    </div>
-                  </li>
-                </ul>
-              </details>
-              {/*"Dropdown day 2"
-              <details className="w-full">
-                <summary className="py-[10px] px-[16px] bg-main flex items-center gap-[10px]">
-                  <p className="text-white text-base font-semibold">Day 2</p>
-                  <div>
-                    <CiCircleMinus
-                      style={{
-                        color: "#E74A3B",
-                        width: "20px",
-                        height: "20px",
-                      }}
-                    />
-                  </div>
-                </summary>
-                <ul className="syllabus-list py-[10px] shadow bg-base-100 w-full left-0 top-11">
-                  <li className="flex flex-col gap-[10px] syllabus-detail">
-                    <div className="header-syllabus flex w-full h-[46px] justify-between">
-                      <div className="hs-left flex gap-[34px]">
-                        <div className="unit">
-                          <p className="font-semibold text-black text-base">
-                            Unit 5
-                          </p>
-                        </div>
-                        <div className="flex">
-                          <div className="h-[46px]">
-                            <p className="font-semibold text-black text-base mb-[5px]">
-                              .Net Introduction
-                            </p>
-                            <p className="text-xs font-medium">7hrs</p>
-                          </div>
-                          <div className="ml-1">
-                            {" "}
-                            <MdOutlineEdit
-                              style={{ height: "18px", width: "18px" }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="hs-right">
-                        <IoIosArrowDropdown
-                          style={{ height: "20px", width: "20px" }}
-                        />
-                      </div>
-                    </div>
-                    <div className="body-syllabus w-full flex flex-col gap-[5px]">
-                      {" "}
-                      <Detail />
-                      <Detail />
-                      <IoAddCircleOutline
-                        style={{ height: "24px", width: "24px" }}
-                      />
-                    </div>
-                  </li>
-                  <li className="flex flex-col gap-[10px] syllabus-detail">
-                    <div className="header-syllabus flex w-full h-[46px] justify-between">
-                      <div className="hs-left flex gap-[34px]">
-                        <div className="unit">
-                          <p className="font-semibold text-black text-base">
-                            Unit 6
-                          </p>
-                        </div>
-                        <div className="flex">
-                          <div className="h-[46px]">
-                            <p className="font-semibold text-black text-base mb-[5px]">
-                              .Java
-                            </p>
-                            <p className="text-xs font-medium">12hrs</p>
-                          </div>
-                          <div className="ml-1">
-                            {" "}
-                            <MdOutlineEdit
-                              style={{ height: "18px", width: "18px" }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="hs-right">
-                        <IoIosArrowDropdown
-                          style={{ height: "20px", width: "20px" }}
-                        />
-                      </div>
-                    </div>
-                    <div className="body-syllabus w-full flex flex-col gap-[5px]">
-                      {" "}
-                      <Detail />
-                      <Detail />
-                      <IoAddCircleOutline
-                        style={{ height: "24px", width: "24px" }}
-                      />
-                    </div>
-                  </li>
-                  <li className="syllabus-detail">
-                    <div className="header-syllabus  w-full h-[46px] justify-between flex items-center">
-                      <div className="hs-left flex gap-[34px] items-center">
-                        <div className="unit">
-                          <p className="font-semibold text-black text-base">
-                            Unit 7
-                          </p>
-                        </div>
-                        <div className="flex gap-[20px]">
-                          <div className="">
-                            <input
-                              type="text"
-                              placeholder="Unit name"
-                              className="w-[174px] h-[36px] border-[1px] border-[#8B8B8B] rounded-[6px] p-[10px] placeholder-black"
-                              id=""
-                            />
-                          </div>
-                          <Button
-                            className="w-[97px] h-[36px] bg-main px-[25px] py-[2px] rounded-[8px] flex items-center justify-center text-white"
-                            title="Create"
-                          />
-                        </div>
-                      </div>
-                      <div className="hs-right">
-                        <IoIosArrowDropdown
-                          style={{ height: "20px", width: "20px" }}
-                        />
-                      </div>
-                    </div>
-                  </li>
-                  <li className="syllabus-detail">
-                    <div className="header-syllabus  w-full h-[46px] justify-between flex items-center">
-                      <Button
-                        className="px-[10px] py-[7px] rounded-[10px] bg-[#474747] text-white text-sm font-bold"
-                        title="Add unit"
-                        icon={<IoAddCircleOutline />}
-                      />
-                    </div>
-                  </li>
-                </ul>
-              </details>*/}
-              {/*"Dropdown day 3"
-              <details className="w-full">
-                <summary className="py-[10px] px-[16px] bg-main flex items-center gap-[10px]">
-                  <p className="text-white text-base font-semibold">Day 3</p>
-                  <div>
-                    <CiCircleMinus
-                      style={{
-                        color: "#E74A3B",
-                        width: "20px",
-                        height: "20px",
-                      }}
-                    />
-                  </div>
-                </summary>
-                <ul className="syllabus-list shadow-md pt-[10px] bg-base-100 w-full left-0 top-11 rounded-b-[20px]">
-                  <li className="flex flex-col gap-[10px] syllabus-detail">
-                    <div className="header-syllabus flex w-full h-[46px] justify-between">
-                      <div className="hs-left flex gap-[34px]">
-                        <div className="unit">
-                          <p className="font-semibold text-black text-base">
-                            Unit 5
-                          </p>
-                        </div>
-                        <div className="flex">
-                          <div className="h-[46px]">
-                            <p className="font-semibold text-black text-base mb-[5px]">
-                              .Net Introduction
-                            </p>
-                            <p className="text-xs font-medium">7hrs</p>
-                          </div>
-                          <div className="ml-1">
-                            {" "}
-                            <MdOutlineEdit
-                              style={{ height: "18px", width: "18px" }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="hs-right">
-                        <IoIosArrowDropdown
-                          style={{ height: "20px", width: "20px" }}
-                        />
-                      </div>
-                    </div>
-                    <div className="body-syllabus w-full flex flex-col gap-[5px]">
-                      {" "}
-                      <Detail />
-                      <Detail />
-                      <IoAddCircleOutline
-                        style={{ height: "24px", width: "24px" }}
-                      />
-                    </div>
-                  </li>
-                  <li className="flex flex-col gap-[10px] syllabus-detail">
-                    <div className="header-syllabus flex w-full h-[46px] justify-between">
-                      <div className="hs-left flex gap-[34px]">
-                        <div className="unit">
-                          <p className="font-semibold text-black text-base">
-                            Unit 6
-                          </p>
-                        </div>
-                        <div className="flex">
-                          <div className="h-[46px]">
-                            <p className="font-semibold text-black text-base mb-[5px]">
-                              .Java
-                            </p>
-                            <p className="text-xs font-medium">12hrs</p>
-                          </div>
-                          <div className="ml-1">
-                            {" "}
-                            <MdOutlineEdit
-                              style={{ height: "18px", width: "18px" }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="hs-right">
-                        <IoIosArrowDropdown
-                          style={{ height: "20px", width: "20px" }}
-                        />
-                      </div>
-                    </div>
-                    <div className="body-syllabus w-full flex flex-col gap-[5px]">
-                      {" "}
-                      <Detail />
-                      <Detail />
-                      <IoAddCircleOutline
-                        style={{ height: "24px", width: "24px" }}
-                      />
-                    </div>
-                  </li>
-                  <li className="syllabus-detail">
-                    <div className="header-syllabus flex w-full h-[46px] justify-between items-center">
-                      <div className="hs-left flex gap-[34px] items-center">
-                        <div className="unit">
-                          <p className="font-semibold text-black text-base">
-                            Unit 7
-                          </p>
-                        </div>
-                        <div className="flex gap-[20px]">
-                          <div className="">
-                            <input
-                              type="text"
-                              placeholder="Unit name"
-                              className="w-[174px] h-[36px] border-[1px] border-[#8B8B8B] rounded-[6px] p-[10px] placeholder-black"
-                              id=""
-                            />
-                          </div>
-                          <Button
-                            className="w-[97px] h-[36px] bg-main px-[25px] py-[2px] rounded-[8px] flex items-center justify-center text-white"
-                            title="Create"
-                          />
-                        </div>
-                      </div>
-                      <div className="hs-right">
-                        <IoIosArrowDropdown
-                          style={{ height: "20px", width: "20px" }}
-                        />
-                      </div>
-                    </div>
-                  </li>
-                  <li className="syllabus-detail">
-                    <div className="header-syllabus flex w-full h-[46px] justify-between items-center">
-                      <Button
-                        className="px-[10px] py-[7px] rounded-[10px] bg-[#474747] text-white text-sm font-bold"
-                        title="Add unit"
-                        icon={<IoAddCircleOutline />}
-                      />
-                    </div>
-                  </li>
-                </ul>
-              </details>*/}
+                    </li>
+                  </ul>
+                </details>
+              ))}
+              {/*"Dropdown day 1"*/}
 
               <div className="w-full pl-[16px] mt-[20px]">
                 <Button
                   className="w-[106px] h-[38px] py-[7px] px-[10px] bg-main rounded-[10px] text-white"
                   title="Add day"
                   icon={<IoAddCircleOutline />}
+                  onClick={handleAddDay}
                 />
               </div>
             </div>

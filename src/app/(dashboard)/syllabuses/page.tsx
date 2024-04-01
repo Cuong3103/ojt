@@ -18,7 +18,7 @@ import { HiOutlineDuplicate } from "react-icons/hi";
 import { syllabusService } from "@/services/syllabuses/syllabusService";
 import useQuery from "@/hooks/useQuery";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
-import { OnOffToggle } from "@/app/components/onOffToggle/page";
+import { OnOffToggle } from "@/app/components/toggle/syllabus-toggle";
 
 const options = [
   { icon: <FaPencilAlt />, label: "Add Training Program" },
