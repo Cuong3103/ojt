@@ -47,6 +47,9 @@ const Page: React.FC = () => {
             data={syllabuses}
             columns={syllabusColumns}
             icon={<BsFilterLeft />}
+            popupMenu={[]}
+            setData={() => {}}
+            setDataToUpdate={() => {}}
           />
         </div>
       </div>

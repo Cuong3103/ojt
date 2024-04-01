@@ -9,7 +9,7 @@ export type User = {
   email: string;
   dob?: number;
   avatarUrl?: string;
-  gender?: boolean;
+  gender: string;
   role?: USER_ROLE;
   userRoleId: number;
   phone: string;

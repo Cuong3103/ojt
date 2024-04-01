@@ -16,7 +16,7 @@ export const fetchUserList = async (page?: number, limit?: number) => {
   );
 };
 
-export const getUserByUUID = async (uuid: string) => {
+export const getUserByUUID = async (uuid: number) => {
   return handleResponse(
     await axiosInstance.get(getRouteWithId(API_LIST.ADMIN_MODIFY_USER, uuid))
   );
@@ -43,6 +43,7 @@ export const updateProfile = async (user: User, id: number) => {
       lastName: user.lastName,
       phone: user.phone,
       dob: user.dob,
+      email: user.email,
       status: user.status,
       gender: user.gender,
       avatarUrl: user.avatarUrl,

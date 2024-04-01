@@ -1,12 +1,19 @@
 import { AddUserModal } from "@/app/components/user-modal/add-user-modal";
 import { render, screen, fireEvent } from "@testing-library/react";
 import axios from "axios";
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 jest.mock("next-auth/react");
 
+jest.mock("next/router", () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}));
+
 describe("AddUserModal", () => {
   const postSpy = jest.spyOn(axios, "post");
-  beforeEach(() => {});
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -64,7 +71,8 @@ describe("AddUserModal", () => {
     fireEvent.change(emailInput, { target: { value: "test@gmail.com" } });
     fireEvent.change(phoneNumberInput, { target: { value: "1234567899" } });
     fireEvent.click(dateInput);
-    fireEvent.click(await screen.findByText("10"));
+    const today = dayjs();
+    fireEvent.change(dateInput, { target: { value: today } });
     fireEvent.click(statusInput);
     fireEvent.click(submitBtn);
   });

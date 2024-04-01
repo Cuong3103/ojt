@@ -1,15 +1,25 @@
 import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import { Option } from "@/types/dropdown.type";
-import { UpdateUserModal } from "../user-modal/update-user-modal";
+import { SubPopupMenu } from "./sub-menu-popup";
 
 type PopupMenuProps = {
   options: Option[];
+
   data?: any;
   setData: Dispatch<SetStateAction<any>>;
   title: string;
+  openSubMenu?: boolean;
+  onSubMenuItemClick?: (value: any) => void;
 };
 
-export const PopupMenu: FC<PopupMenuProps> = ({ options, title = "", data, setData }) => {
+export const PopupMenu: FC<PopupMenuProps> = ({
+  options,
+  title = "",
+  data,
+  openSubMenu,
+  setData,
+  onSubMenuItemClick,
+}) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const handleOpenPopup = () => {
     setShowUpdateModal(!showUpdateModal);
@@ -21,24 +31,19 @@ export const PopupMenu: FC<PopupMenuProps> = ({ options, title = "", data, setDa
       <ul>
         {options.map((option: Option, index: number) => (
           <li key={index} className="flex">
-            <a
-              onClick={
-                option.label === "Edit user" ? handleOpenPopup : undefined
-              }
-            >
+            <a onClick={option.onClick}>
               {option.icon}
               {option.label}
             </a>
+            {openSubMenu && option.subOption && (
+              <SubPopupMenu
+                subOptions={option.subOption}
+                onSubMenuItemClick={onSubMenuItemClick}
+              />
+            )}
           </li>
         ))}
       </ul>
-      {showUpdateModal && data && (
-        <UpdateUserModal
-          userUUID={data.uuid}
-          showUpdateModal={() => setShowUpdateModal(false)}
-          setData={setData}
-        />
-      )}
     </div>
   );
 };
