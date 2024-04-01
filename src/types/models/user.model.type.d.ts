@@ -28,3 +28,11 @@ export type Program = {
   status?: string;
   createdDate?: string;
 };
+
+export type Content = {
+  name: string;
+  outputStandard: string;
+  trainingTime: number;
+  deliveryType: string;
+  method: string;
+};

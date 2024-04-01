@@ -11,14 +11,21 @@ import { PiExam } from "react-icons/pi";
 import { IoSearchSharp } from "react-icons/io5";
 import { Chip } from "../chip/chip";
 
-export const OutputStandard: FC = () => {
+type OutputStandardProps = {
+  onOutputStandardChange: (value: string) => void; // Prop callback để truyền giá trị đã chọn ra ngoài
+};
+
+export const OutputStandard: FC<OutputStandardProps> = ({
+  onOutputStandardChange,
+}) => {
   const [type, setType] = useState("Select");
   const [showRadio, setShowRadio] = useState(false);
 
   const handleSetType = (value: string) => {
     setShowRadio(false);
     setType(value);
-    console.log(value);
+    onOutputStandardChange(value);
+    //onSelectOutputStandard(value); // Gọi prop callback và truyền giá trị đã chọn ra ngoài
   };
   const handleShowRadio = () => {
     setShowRadio(!showRadio);
@@ -52,37 +59,37 @@ export const OutputStandard: FC = () => {
             </div>
             <div
               className="flex items-center px-[16px] pb-[5px] cursor-pointer"
-              onClick={() => handleSetType("P3SD")}
+              onClick={() => handleSetType("P3KH")}
             >
               <Chip active="P3KH" />
             </div>
             <div
               className="flex items-center px-[16px] pb-[5px] cursor-pointer"
-              onClick={() => handleSetType("G9SD")}
+              onClick={() => handleSetType("T5NV")}
             >
               <Chip active="T5NV" />
             </div>
             <div
               className="flex items-center px-[16px] pb-[5px] cursor-pointer"
-              onClick={() => handleSetType("H4SD")}
+              onClick={() => handleSetType("H9PH")}
             >
               <Chip active="H9PH" />
             </div>
             <div
               className="flex items-center px-[16px] pb-[5px] cursor-pointer"
-              onClick={() => handleSetType("K5SD")}
+              onClick={() => handleSetType("N8NT")}
             >
               <Chip active="N8NT" />
             </div>
             <div
               className="flex items-center px-[16px] cursor-pointer"
-              onClick={() => handleSetType("P3SD")}
+              onClick={() => handleSetType("D3PV")}
             >
               <Chip active="D3PV" />
             </div>
             <div
               className="flex items-center px-[16px] cursor-pointer"
-              onClick={() => handleSetType("G9SD")}
+              onClick={() => handleSetType("K4TK")}
             >
               <Chip active="K4TK" />
             </div>

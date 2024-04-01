@@ -9,14 +9,17 @@ import {
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { PiExam } from "react-icons/pi";
 
-export const Delivery: FC = () => {
+type DeliveryProps = {
+  onDeliveryTypeChange: (type: string) => void;
+};
+export const Delivery: FC<DeliveryProps> = ({ onDeliveryTypeChange }) => {
   const [type, setType] = useState("Select one");
   const [showRadio, setShowRadio] = useState(false);
 
   const handleSetType = (value: string) => {
     setShowRadio(false);
     setType(value);
-    console.log(value);
+    onDeliveryTypeChange(value);
   };
   const handleShowRadio = () => {
     setShowRadio(!showRadio);
