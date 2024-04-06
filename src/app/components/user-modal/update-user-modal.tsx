@@ -42,7 +42,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
   const [birthDay, setBirthDay] = useState<Dayjs>();
   const [gender, setGender] = useState("");
   const [status, setStatus] = useState<boolean>(true);
-  const [userRoleId, setUserRoleId] = useState<number>(0);
+  const [userRoleId, setUserRoleId] = useState<number>(3);
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
 
   const getCurrentUser = async (id?: number) => {

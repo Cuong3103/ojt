@@ -1,23 +1,23 @@
-import { ReactNode } from "react";
+import { FC, ReactNode } from "react";
 
 type ButtonProps = {
   title: string;
   icon?: ReactNode;
-  classCss?: string;
-  handleClick?: () => void;
+  className?: string;
+  onClick?: () => void;
 };
 
 export const Button: FC<ButtonProps> = ({
-  classCss,
+  className,
   title,
   icon,
-  handleClick,
+  onClick,
 }) => {
   return (
     <div>
       <button
-        className={`flex items-center px-6 font-bold duration-300 text-sm rounded-lg ${classCss}`}
-        onClick={handleClick}
+        className={`flex items-center px-6 font-bold duration-300 text-sm rounded-lg ${className}`}
+        onClick={onClick}
       >
         {icon && <div className="mr-[5px]">{icon}</div>}
         {title}

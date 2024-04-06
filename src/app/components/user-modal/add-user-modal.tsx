@@ -32,7 +32,7 @@ export const AddUserModal: FC<AddUserModalProps> = ({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [birthDay, setBirthDay] = useState<Dayjs>();
-  const [gender, setGender] = useState("male");
+  const [gender, setGender] = useState("MALE");
   const [status, setStatus] = useState<boolean>(true);
   const [userRoleId, setUserRoleId] = useState<number>(1);
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
@@ -57,11 +57,25 @@ export const AddUserModal: FC<AddUserModalProps> = ({
 
     const createUser = async () => {
       let response: any;
-      const isEnabled = await isFlagEnabled(UsersFlag.CREATE_USER);
-      if (!isEnabled) {
-        const id = Math.floor(Math.random() * 100);
-        const dob = birthDay?.format("YYYY-MM-DD");
-        const user = { id, fullName, phone, email, dob, gender, role };
+      const isEnabled = true;
+      const password = "pass";
+      const dob = birthDay?.unix();
+      const names = fullName.split(" ");
+      const firstName = names[0];
+      const lastName = names.slice(1).join(" ");
+      const user = {
+        firstName,
+        lastName,
+        password,
+        phone,
+        email,
+        dob,
+        gender,
+        userRoleId,
+      };
+      if (isEnabled) {
+        response = await addUser(user as any);
+      } else {
         response = new MockResponse(201, user);
       }
       if (SUCCESS_HTTP_CODES.includes(response.statusCode)) {
@@ -73,8 +87,8 @@ export const AddUserModal: FC<AddUserModalProps> = ({
       }
     };
 
+    await createUser();
     showAddModal();
-    createUser();
   };
 
   return (

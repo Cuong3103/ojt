@@ -9,12 +9,7 @@ import Pagination from "@/app/components/pagination/index";
 import { Table } from "@/app/components/table/table";
 import { MockDataService } from "@/app/services/mock-response.service";
 
-import {
-  fetchUserList,
-  getUserByUUID,
-  updateProfile,
-  normalSearch,
-} from "@/services/users";
+import { fetchUserList, getUserByUUID, updateProfile } from "@/services/users";
 import { User } from "@/types/models/user.model.type";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { userGenerator } from "@/utils/mockHelper";
@@ -38,6 +33,7 @@ const UserListPage: FC = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showChangeRoleModal, setShowChangeRoleModal] = useState(false);
   const [userToUpdate, setUserToUpdate] = useState<number>(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -58,8 +54,6 @@ const UserListPage: FC = () => {
     currentPage
   );
 
-  const successUsersMock = userService.getMockResponse();
-
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(0);
     setLimit(Number(e.target.value));
@@ -73,6 +67,8 @@ const UserListPage: FC = () => {
   };
 
   const handleOpenUpdatePopup = () => {
+    setShowChangeRoleModal(false);
+    setIsPopupOpen(false);
     setShowUpdateModal(!showUpdateModal);
   };
 
@@ -125,13 +121,10 @@ const UserListPage: FC = () => {
       ...user,
       fullName: [user.firstName, user.lastName].join(", "),
       dob: fromTimestampToDateString(user.dob),
-      gender: user.gender ? "male" : "female",
     }));
 
   const getUsers = async () => {
-    
     const response = await fetchUserList(currentPage + 1, limit);
-
     setData(formatUserList(response.content) as any);
     setMetadata(response.meatadataDTO);
   };
@@ -174,9 +167,11 @@ const UserListPage: FC = () => {
         columns={userColumns}
         icon={<BsFilterLeft />}
         popupMenu={options}
+        openSubMenu={showChangeRoleModal}
+        isPopupOpen={isPopupOpen}
         setData={setData}
         setDataToUpdate={setUserToUpdate}
-        openSubMenu={showChangeRoleModal}
+        setIsPopupOpen={setIsPopupOpen}
         handleSubMenuItemClick={handleSubMenuItemClick}
       />
       <div className="flex">
