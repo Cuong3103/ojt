@@ -43,7 +43,7 @@ export const menuItems: MenuItem[] = [
     icon: GoMortarBoard,
     submenuItems: [
       { title: "View class", path: "/classes" },
-      { title: "Create class", path: "/classes/create" },
+      { title: "Create class", path: "/classes/detail" },
     ],
   },
   {

@@ -3,6 +3,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+label {
+    border-bottom-width: 0px;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 7px;

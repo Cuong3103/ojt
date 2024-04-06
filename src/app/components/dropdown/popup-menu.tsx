@@ -4,10 +4,7 @@ import { SubPopupMenu } from "./sub-menu-popup";
 
 type PopupMenuProps = {
   options: Option[];
-
-  data?: any;
-  setData: Dispatch<SetStateAction<any>>;
-  title: string;
+  title?: string;
   openSubMenu?: boolean;
   onSubMenuItemClick?: (value: any) => void;
 };
@@ -15,12 +12,11 @@ type PopupMenuProps = {
 export const PopupMenu: FC<PopupMenuProps> = ({
   options,
   title = "",
-  data,
   openSubMenu,
-  setData,
   onSubMenuItemClick,
 }) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+
   const handleOpenPopup = () => {
     setShowUpdateModal(!showUpdateModal);
   };
