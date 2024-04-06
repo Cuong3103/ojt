@@ -22,7 +22,9 @@ type TableProps = {
   popupMenu: Option[];
   subOptions?: Option[];
   openSubMenu?: boolean;
+  isPopupOpen?: boolean;
   setDataToUpdate: Dispatch<SetStateAction<any>>;
+  setIsPopupOpen: Dispatch<SetStateAction<any>>;
   setData: Dispatch<SetStateAction<any>>;
   handleSubMenuItemClick?: (value: any) => void;
 };
@@ -33,10 +35,11 @@ export const Table: FC<TableProps> = ({
   icon,
   popupMenu,
   openSubMenu,
+  isPopupOpen,
   setDataToUpdate,
   handleSubMenuItemClick,
+  setIsPopupOpen,
 }) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [dataId, setDataId] = useState();
   setDataToUpdate(dataId);
   const handleOpenPopup = (dataId: any) => {
@@ -84,7 +87,7 @@ export const Table: FC<TableProps> = ({
       case "gender":
         return (
           <span>
-            {row[column.id] === "male" ? (
+            {row[column.id] === "MALE" ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

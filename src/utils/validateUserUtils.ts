@@ -5,7 +5,13 @@ export const validateUserFields = (
   const phoneRegex = /^0\d{9}$/;
   const errors: Record<string, string> = {};
 
-  const requiredFields = ["fullName", "email", "phone", "birthDay", "role"];
+  const requiredFields = [
+    "fullName",
+    "email",
+    "phone",
+    "birthDay",
+    "userRoleId",
+  ];
 
   requiredFields.forEach((field) => {
     if (!fields[field]) {
