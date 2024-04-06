@@ -2,7 +2,7 @@ import { ChangeEvent, ReactNode } from "react";
 
 export type Option = {
   label: string;
-  value?: string | number;
+  value?: string;
   icon?: ReactNode;
   showModal?: boolean;
   subOption?: any;

@@ -1,24 +1,31 @@
 import { FC, ReactNode } from "react";
 
 import { Chip } from "../chip/chip"
-import ViewDetail from "@/app/(dashboard)/(class)/view/ViewDetail";
+import { PopupMenu } from "../dropdown/popup-menu";
 
 export type Column = {
-    id: string;
-    label: string;
-    minWidth?: number;
-    maxWidth?: number;
-    align?: "left" | "right" | "center";
-
+  id: string;
+  label: string;
+  minWidth?: number;
+  maxWidth?: number;
+  align?: "left" | "right" | "center";
 };
 
 type TableProps = {
     data: any[];
     columns: Column[];
     icon?: ReactNode;
+
 };
 
-export const Table: FC<TableProps> = ({ data, columns, icon }) => {
+
+export const Table: FC<TableProps> = ({
+    data,
+    columns,
+    icon,
+
+
+}) => {
     return (
         <div className="bg-white shadow-md rounded-lg overflow-auto m-4">
             <table className="w-full table-fixed">

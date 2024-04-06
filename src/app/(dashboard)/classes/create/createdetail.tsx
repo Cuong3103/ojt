@@ -1,342 +1,297 @@
-"use client";
+'use client'
 import { FC } from "react";
 import { Chip } from "@/app/components/chip/chip";
 import { TfiMoreAlt } from "react-icons/tfi";
-import { IoIosArrowDown, IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowBack } from 'react-icons/io';
 import { FaRegCalendar } from "react-icons/fa";
 import { useState } from "react";
 import { MdStarBorderPurple500 } from "react-icons/md";
 import { MdOutlineHomeWork } from "react-icons/md";
 import Image from "next/image";
-import { DatePicker } from "@/app/components/date-picker/date-picker";
+
 import { Tab } from "@/app/components/syllabus-tab/tab";
 import { SyllabusCard } from "@/app/components/syllabus-card/syllabus-card";
+import AppTimePicker from "@/app/components/time-picker/time-picker";
+import AppTimeFramePicker from "@/app/components/time-picker/time-frame-picker";
+import { Button } from "@/app/components/button/button";
+import { days } from "@/helpers/calendar";
+// import { SearchInput } from "@/app/components/input-box/search-input";
+
+
 
 const CreateClassDetailPage: FC = () => {
-  const [isExpandedGeneral, setIsExpandedGeneral] = useState(false);
-  const [isExpandedTimeFrame, setIsExpandedTimeFrame] = useState(false);
-  const [isExpandedAttended, setIsExpandedAttended] = useState(false);
-  const [inputValue, setInputValue] = useState({ from: "--:--", to: "--:--" });
+    const [isExpandedGeneral, setIsExpandedGeneral] = useState(false);
+    const [isExpandedTimeFrame, setIsExpandedTimeFrame] = useState(false);
+    const [isExpandedAttended, setIsExpandedAttended] = useState(false);
+    const [inputValue, setInputValue] = useState({ from: '--:--', to: '--:--' });
+    const formatDuration = (days: number | null, hours: number | null) => {
+        let label = "Label";
 
-  const toggleExpansionGeneral = () => {
-    setIsExpandedGeneral(!isExpandedGeneral);
-  };
+        if (days !== null && hours !== null) {
+            label = `${days}days(${hours}hour)`;
+        } else if (days !== null && hours === null) {
+            label = `${days}days`;
+        }
+        return label;
+    };
 
-  const toggleExpansionAttended = () => {
-    setIsExpandedAttended(!isExpandedAttended);
-  };
 
-  const toggleExpansionTimeFrame = () => {
-    setIsExpandedTimeFrame(!isExpandedTimeFrame);
-  };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setInputValue({
-      ...inputValue,
-      [name]: value,
-    });
-  };
+    const toggleExpansionGeneral = () => {
+        setIsExpandedGeneral(!isExpandedGeneral);
+    };
 
-  return (
-    <div>
-      <div className=" white-box border-2 bg-primary-color border-gray-400 h-60 text-white pl-8">
-        <div className="mt-7 text-[30px]">
-          <div style={{ letterSpacing: "0.3em" }}>Class</div>
+    const toggleExpansionAttended = () => {
+        setIsExpandedAttended(!isExpandedAttended);
+    };
 
-          <div
-            className="flex items-center  text-[35px] gap-5 mt-6 "
-            style={{ marginBottom: "2px" }}
-          >
-            <div className="font-bold" style={{ letterSpacing: "0.3em" }}>
-              Fresher Develop Operation
-            </div>
+    const toggleExpansionTimeFrame = () => {
+        setIsExpandedTimeFrame(!isExpandedTimeFrame);
+    };
 
-            <Chip
-              active="Planning"
-              style={{
-                backgroundColor: "#B9B9B9",
-                width: "90px",
-                fontSize: "16px",
-              }}
-            />
-            <TfiMoreAlt style={{ marginLeft: "300px" }} />
-          </div>
-        </div>
-        <hr
-          style={{
-            borderTop: "1px solid white",
-            margin: "16px 0",
-            width: "58%",
-          }}
-        />
-        <div
-          style={{
-            fontSize: "17px",
-            marginLeft: "30px",
-            letterSpacing: "0.2em",
-          }}
-        >
-          days<span style={{ fontStyle: "italic" }}> ( hours)</span> |
-        </div>
-      </div>
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setInputValue({
+            ...inputValue,
+            [name]: value
+        });
 
-      <div className=" mt-[30px] ml-[20px] flex">
+    };
+
+    return (
         <div>
-          <div className=" bg-gray-400 p-2 rounded-lg  w-[373px] ">
-            <div
-              className=" flex  items-center cursor-pointer text-white ml-[20px] mr-[20px] "
-              onClick={toggleExpansionGeneral}
-            >
-              <FaRegCalendar className=" w-[24px] h-[24px]" />
-              <span className="ml-[10px] font-bold">General</span>
-              <div className="ml-auto">
-                {isExpandedGeneral ? <IoIosArrowDown /> : <IoIosArrowBack />}
-              </div>
-            </div>
-          </div>
-          {/* thông tin của General */}
-          <div className="">
-            {isExpandedGeneral && (
-              <div className="rounded-lg w-[373px] h-[410px] bg-white border border-gray-800 ">
-                <div className=" flex  w-[318px] h-[33px] mt-[20px] ml-[25px] items-center ">
-                  <div className="flex items-center">
-                    <Image
-                      src="../assets/icons/alarm.svg"
-                      alt=""
-                      width={25}
-                      height={24}
-                    />
-                    <span className="ml-[10px] font-bold">Time</span>
-                  </div>
-                  <div className="flex ml-[40px]">
-                    <div>
-                      <label htmlFor="inputFrom">from</label>
-                      <input
-                        type="text"
-                        id="inputFrom"
-                        name="from"
-                        value={inputValue.from}
-                        onChange={handleInputChange}
-                        style={{
-                          width: "59px",
-                          height: "27px",
-                          borderWidth: "2px",
-                          borderRadius: "0px",
-                          borderColor: "#DDDDDD",
-                          marginLeft: "10px",
-                        }}
-                        className="border "
-                      />
+            <div className=" white-box border-2 bg-primary-color border-gray-400 h-60 text-white pl-8" >
+                <div className="mt-7 text-[30px]" >
+                    <div style={{ letterSpacing: '0.3em' }}>
+                        Class
                     </div>
-                    <div className="ml-[15px]">
-                      <label htmlFor="inputTo">to</label>
-                      <input
-                        type="text"
-                        id="inputTo"
-                        name="to"
-                        value={inputValue.to}
-                        onChange={handleInputChange}
-                        style={{
-                          width: "50px",
-                          height: "27px",
-                          borderWidth: "2px",
-                          borderRadius: "0px",
-                          borderColor: "#DDDDDD",
-                          marginLeft: "10px",
-                        }}
-                        className="border"
-                      />
-                    </div>
-                  </div>
-                </div>
 
-                <div className="flex ml-[25px] mt-[15px] ">
-                  <MdOutlineHomeWork className="w-[24px] h-[24px]" />
-                  <span className="ml-[10px]">Location</span>
+                    <div className="flex items-center  text-[35px] gap-5 mt-6 mr-[30px]" style={{ marginBottom: "2px" }}>
+                        <div className="font-bold" style={{ letterSpacing: '0.3em' }}>
+                            Fresher Develop Operation
+                        </div>
+
+                        <Chip
+                            active="Planning"
+                            style={{ backgroundColor: "#B9B9B9", width: "90px", fontSize: "16px" }}
+                        />
+                        <button className="ml-auto">
+                            <Image src="../assets/icons/more_horizontal.svg" alt="" width={48} height={48} />
+                        </button>
+
+                    </div>
                 </div>
-                <div className="flex ml-[25px] mt-[15px]">
-                  <Image
-                    src="../assets/icons/lecture.svg"
-                    alt=""
-                    width={24}
-                    height={24}
-                  />
-                  <span className="ml-[10px]">Trainer</span>
+                <hr style={{ borderTop: "1px solid white", margin: "16px 0", width: "58%" }} />
+                <div style={{ fontSize: "17px", marginLeft: "30px", letterSpacing: '0.2em' }}>
+                    {formatDuration(31, 97)}
+                    <span style={{ fontStyle: "" }}> | </span>
                 </div>
-                <div className="flex items-center ml-[25px] mt-[15px]">
-                  <Image
-                    src="../assets/icons/grade.svg"
-                    alt=""
-                    width={24}
-                    height={24}
-                  />
-                  <span className="font-bold ml-[10px]">Admin</span>
-                  <select className="bg-transparent border-2 outline-none ml-[40px] w-[190px] h-[27px]">
-                    <option>select</option>
-                  </select>
-                </div>
+            </div>
+
+
+            <div className=" mt-[30px] ml-[20px] flex">
                 <div>
-                  <select className="bg-transparent border-2 outline-none ml-[150px] w-[190px] h-[27px] mt-[15px]">
-                    <option>contact point</option>
-                  </select>
-                </div>
-                <div className="flex items-center ml-[25px] mt-[15px]">
-                  <Image
-                    src="../assets/icons/supplier.svg"
-                    alt=""
-                    width={24}
-                    height={24}
-                  />
-                  <span className="font-bold ml-[10px] ">FSU</span>
-                  <select className="bg-transparent border-2 outline-none ml-[60px] w-[190px] h-[27px]">
-                    <option>select</option>
-                  </select>
-                </div>
-                <hr
-                  className="mt-[15px] ml-[20px] mr-[30px]"
-                  style={{ borderTop: "1px solid black" }}
-                />
-                <div className="mt-[15px] ml-[25px]">
-                  <span>Created</span>
-                </div>
-                <div className="mt-[15px] ml-[25px]">
-                  <span>Review</span>
-                </div>
-                <div className="mt-[15px] mb-[20px] ml-[25px]">
-                  <span>App</span>
-                </div>
-              </div>
-            )}
-          </div>
+                    <div className=" bg-[#8B8B8B]  p-2 rounded-lg  w-[373px] ">
+                        <div className=" flex  items-center cursor-pointer text-white ml-[20px] mr-[20px] " onClick={toggleExpansionGeneral}>
+                            <FaRegCalendar className=" w-[24px] h-[24px]" />
+                            <span className="ml-[10px] font-bold">General</span>
+                            <div className="ml-auto">
+                                {isExpandedGeneral ? <IoIosArrowDown /> : <IoIosArrowBack />}
+                            </div>
+                        </div>
+                    </div>
+                    {/* thông tin của General */}
+                    <div>
+                        {isExpandedGeneral && (
+                            <div className="rounded-lg  h-[410px] bg-white border ">
+                                <div className=" flex   h-[33px] mt-[20px] justify-between items-center px-[20px] ">
+                                    <div className="flex items-center">
+                                        <Image src="../assets/icons/alarm.svg" alt="" width={25} height={24} />
+                                        <span className="ml-[10px] font-bold">Time</span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <label className="flex gap-[10px] border-y-0 items-center">
+                                            <span>from</span>
+                                            <div className="w-[59px] h-[27px]">
+                                                <AppTimePicker />
+                                            </div>
+                                        </label>
+                                        <label className="flex border-y-0 gap-[10px] items-center">
+                                            <span>to</span>
+                                            <div className="w-[59px] h-[27px]">
+                                                <AppTimePicker />
+                                            </div>
+                                        </label>
+                                    </div>
 
-          <div>
-            <div className=" bg-gray-400 rounded-lg text-white mt-[30px] p-2 w-[373px] ">
-              <div
-                className=" flex justify-between items-center cursor-pointer ml-[20px] mr-[20px] "
-                onClick={toggleExpansionAttended}
-              >
-                <MdStarBorderPurple500 className="w-[24px] h-[24px]" />
+                                </div>
 
-                <span className="font-bold" style={{ marginRight: "59%" }}>
-                  Attended
-                </span>
-                {isExpandedAttended ? <IoIosArrowDown /> : <IoIosArrowBack />}
-              </div>
-            </div>
-            {isExpandedAttended && (
-              <div className=" text-white text-center">
-                <div className="grid grid-cols-3 font-bold">
-                  {/* Cột Planned */}
-                  <div
-                    className="bg-[#2D3748] p-2  "
-                    style={{
-                      borderTopLeftRadius: "10px",
-                      borderBottomLeftRadius: "10px",
-                    }}
-                  >
-                    <div className="mt-[10px]  ">Planned</div>
-                    <input
-                      type="string"
-                      defaultValue=""
-                      placeholder=""
-                      className="bg-white border-2 outline-none w-[49px] h-[29px] text-black mt-[15px] mb-[10px] "
-                    />
-                  </div>
-                  {/* Cột Accepted */}
-                  <div className=" p-2 border  bg-blue-600">
-                    <div className="mt-[10px]">Accepted </div>
-                    <input
-                      type="string"
-                      defaultValue=""
-                      placeholder=""
-                      className="bg-white border-2 outline-none w-[49px] h-[29px] text-black mt-[15px] mb-[10px]"
-                    />
-                  </div>
-                  {/* Cột Actual */}
-                  <div
-                    className=" p-2 border  bg-gray-400 text-black"
-                    style={{
-                      borderBottomRightRadius: "10px",
-                      borderTopRightRadius: "10px",
-                    }}
-                  >
-                    <div className="mt-[10px]">Actual</div>
-                    <input
-                      type="string"
-                      defaultValue=""
-                      placeholder=""
-                      className="bg-white border-2 outline-none w-[49px] h-[29px] text-black mt-[15px] mb-[10px]"
-                    />
-                  </div>
+
+
+                                <div className="flex ml-[25px] mt-[15px] ">
+                                    <MdOutlineHomeWork className="w-[24px] h-[24px]" />
+                                    <span className="ml-[10px]">Location</span>
+                                </div>
+                                <div className="flex ml-[25px] mt-[15px]">
+                                    <Image src="../assets/icons/lecture.svg" alt="" width={24} height={24} />
+                                    <span className="ml-[10px]">Trainer</span>
+
+                                </div>
+                                <div className="flex items-center ml-[25px] mt-[15px]">
+                                    <Image src="../assets/icons/grade.svg" alt="" width={24} height={24} />
+                                    <span className="font-bold ml-[10px]">Admin</span>
+                                    <select className="bg-transparent border-2 outline-none ml-[40px] w-[190px] h-[27px]">
+                                        <option>select</option>
+                                    </select>
+
+
+                                </div>
+                                <div>
+                                    <select className="bg-transparent border-2 outline-none ml-[150px] w-[190px] h-[27px] mt-[15px]">
+                                        <option>contact point</option>
+                                    </select>
+                                </div>
+                                <div className="flex items-center ml-[25px] mt-[15px]">
+                                    <Image src="../assets/icons/supplier.svg" alt="" width={24} height={24} />
+                                    <span className="font-bold ml-[10px] ">FSU</span>
+                                    <select className="bg-transparent border-2 outline-none ml-[60px] w-[190px] h-[27px]">
+                                        <option>select</option>
+                                    </select>
+                                </div>
+                                <hr className="mt-[15px] ml-[20px] mr-[30px]" style={{ borderTop: "1px solid black" }} />
+                                <div className="mt-[15px] ml-[25px]" >
+                                    <span>Created</span>
+                                </div>
+                                <div className="mt-[15px] ml-[25px]">
+                                    <span>Review</span>
+                                </div>
+                                <div className="mt-[15px] mb-[20px] ml-[25px]">
+                                    <span>App</span>
+                                </div>
+
+                            </div>
+                        )}
+                    </div>
+
+                    <div>
+                        <div className=" bg-[#8B8B8B]  rounded-lg text-white mt-[30px] p-2 w-[373px] flex items-center cursor-pointer  " onClick={toggleExpansionAttended}>
+                            <div className="ml-[20px] " >
+                                <div className="flex
+                                ">
+                                    <div>
+                                        <MdStarBorderPurple500 className="w-[24px] h-[24px]" />
+                                    </div>
+                                    <div className="ml-[10px]">
+                                        <span className="font-bold" style={{ marginRight: "59%" }}>Attended</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div>
+                                <select className="text-black border-2 outline-none w-[163px] h-[28px] rounded-md ml-[20px]">
+                                    <option>select</option>
+                                </select>
+                            </div>
+                            <div className="ml-auto mr-[20px]">
+                                {isExpandedAttended ? <IoIosArrowDown /> : <IoIosArrowBack />}
+                            </div>
+
+
+
+
+                        </div>
+                        {isExpandedAttended && (
+                            <div className=" text-white text-center">
+                                <div className="grid grid-cols-3 font-bold">
+                                    {/* Cột Planned */}
+                                    <div className="bg-[#2D3748] p-2  " style={{ borderTopLeftRadius: "10px", borderBottomLeftRadius: "10px" }}>
+                                        <div className="mt-[10px]  ">Planned</div>
+                                        <input type="string" defaultValue="" placeholder="" className="bg-white border-2 outline-none w-[49px] h-[29px] text-black mt-[15px] mb-[10px] " />
+                                    </div>
+                                    {/* Cột Accepted */}
+                                    <div className=" p-2 border  bg-blue-600">
+                                        <div className="mt-[10px]">Accepted </div>
+                                        <input type="string" defaultValue="" placeholder="" className="bg-white border-2 outline-none w-[49px] h-[29px] text-black mt-[15px] mb-[10px]" />
+                                    </div>
+                                    {/* Cột Actual */}
+                                    <div className=" p-2 border  bg-gray-400 text-black" style={{ borderBottomRightRadius: "10px", borderTopRightRadius: "10px" }} >
+                                        <div className="mt-[10px]" >Actual</div>
+                                        <input type="string" defaultValue="" placeholder="" className="bg-white border-2 outline-none w-[49px] h-[29px] text-black mt-[15px] mb-[10px]" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        )}
+                    </div>
+
+
+
                 </div>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="">
-          <div className=" bg-gray-400 p-2 rounded-lg  text-white ml-[20px] w-[746px] ">
-            <div
-              className=" flex justify-between items-center cursor-pointer ml-[20px] mr-[20px] "
-              onClick={toggleExpansionTimeFrame}
-            >
-              <FaRegCalendar className="w-[24px] h-[24px]" />
-              <span className="font-bold" style={{ marginRight: "50%" }}>
-                Time Frame
-              </span>
-              <div>
-                <span style={{ marginRight: "10px" }}>25-Apr-22</span>
-                <span style={{ marginRight: "10px" }}>to</span>
-                <span>21-Fuly-22</span>
-              </div>
+                <div className="">
+                    <div className=" bg-[#8B8B8B]  rounded-lg  text-white ml-[20px] w-[746px] " >
+                        <label className=" flex items-center cursor-pointer ml-[20px] mr-[20px] border-y-0 " onClick={toggleExpansionTimeFrame}>
+                            <FaRegCalendar className="w-[24px] h-[24px]" />
+                            <span className="font-bold ml-[10px]">Time Frame</span>
+                            <div className="ml-auto">
+                                <AppTimeFramePicker />
 
-              {isExpandedTimeFrame ? <IoIosArrowDown /> : <IoIosArrowBack />}
+                            </div>
+                            <div>
+                                {isExpandedTimeFrame ? <IoIosArrowDown /> : <IoIosArrowBack />}
+                            </div>
+
+
+                        </label>
+
+                    </div>
+                    {isExpandedTimeFrame && (
+                        <div>
+                            
+                        </div>
+                    )}
+                </div>
             </div>
-          </div>
-          {isExpandedTimeFrame && <div>{/* <DatePicker /> */}</div>}
-        </div>
-      </div>
-      <div className="mt-[30px] ml-[20px]">
-        <Tab />
-      </div>
-      <div className="ml-[20px]">
-        <div className=" white-box border-2 bg-primary-color border-gray-400 h-[95px] text-white ">
-          <div
-            className="  items-center font-bold  "
-            style={{ letterSpacing: "0.3em" }}
-          >
-            <span className="ml-[20px] text-[25px] ">DevOps Foundation</span>
-            <button className="ml-[20px] ">
-              <Image
-                src="../assets/icons/create.svg"
-                alt=""
-                width={30}
-                height={30}
-                className="bg-white rounded-lg "
-              />
-            </button>
-          </div>
-          <div className="flex">
-            <div style={{ fontSize: "17px", marginLeft: "30px" }}>
-              31 days<span style={{ fontStyle: "italic" }}> (97 hours)</span> |
+            <div className="mt-[30px] ml-[20px]">
+                <Tab />
             </div>
-            <div className="ml-[10px]">
-              Modified on 23/07/2022 by Warrior Tran
+            <div className="ml-[20px]">
+                <div className=" white-box border-2 bg-primary-color border-gray-400 h-[95px]  ">
+                    <div className="ml-[30px] mt-[10px] mb-[20px] mr-[30px]">
+                        <div className="text-white">
+                            <span>Training Program name </span>
+                        </div>
+                        <div className="relative rounded-lg ">
+                            <input placeholder="Sreach ..." type="text" className="w-[440px] h-[35px] pl-[35px] pr-[10px] rounded-lg focus:outline-none" />
+                            <Image src="../assets/icons/sreach.svg" alt="" width={24} height={24} className="absolute top-[5px] ml-[10px] transform [-translate-y-1/2]" />
+                        </div>
+
+                    </div>
+                </div>
+                <div className="mt-[10px]">
+                    <SyllabusCard />
+                </div>
+                <div className=" white-box border-2 bg-primary-color h-[16px] mt-[10px]" style={{ borderBottomLeftRadius: "10px", borderBottomRightRadius: "10px" }}>
+                    <div className="w-full h-[68px] flex items-center justify-end">
+                        <div className="h-[28px] flex gap-[10px] mr-[20px] font-bold">
+                            <Button
+                                classCss=" w-[48px] h-[28px] py-[2px] rounded-[8px] underline text-[#E74A3B] text-sm mr-[30px]" title="Cancel" />
+                            <Button
+                                classCss="bg-[#474747] w-[140px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm "
+                                title="Save as draft" />
+                            <Button
+                                classCss=" w-[80px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm bg-[#2D3748]"
+                                title="Save" />
+                        </div>
+                    </div>
+
+
+
+                </div>
+
             </div>
-          </div>
-        </div>
-        <div className="mt-[10px]">
-          <SyllabusCard />
-        </div>
-        <div
-          className=" white-box border-2 bg-primary-color h-[16px] mt-[10px]"
-          style={{
-            borderBottomLeftRadius: "10px",
-            borderBottomRightRadius: "10px",
-          }}
-        ></div>
-      </div>
-    </div>
-  );
+        </div >
+
+
+    );
 };
 export default CreateClassDetailPage;

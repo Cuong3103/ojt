@@ -28,7 +28,7 @@ export const Chip: FC<ChipProps> = ({
       )}
       {removeBadge && (
         <div
-          className="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300 rounded-xl"
+          className="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent  hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300 rounded-xl"
           data-dismiss-target="#badge-dismiss-dark"
           aria-label="Remove"
         >

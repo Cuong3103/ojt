@@ -3,21 +3,21 @@ import { ReactNode } from "react";
 type ButtonProps = {
   title: string;
   icon?: ReactNode;
-  className?: string;
-  onClick?: () => void;
+  classCss?: string;
+  handleClick?: () => void;
 };
 
-const Button: React.FC<ButtonProps> = ({
+export const Button: FC<ButtonProps> = ({
+  classCss,
   title,
   icon,
-  className,
-  onClick,
-}: ButtonProps) => {
+  handleClick,
+}) => {
   return (
     <div>
       <button
-        onClick={onClick}
-        className={`flex items-center w-fit duration-300 font-bold ${className}`}
+        className={`flex items-center px-6 font-bold duration-300 text-sm rounded-lg ${classCss}`}
+        onClick={handleClick}
       >
         {icon && <div className="mr-[5px]">{icon}</div>}
         {title}

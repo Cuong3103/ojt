@@ -1,7 +1,7 @@
 import { Class } from "@/types/class.type";
 export const classes: Class[] = [
     {
-        name: "DevOps Foundation_HCM",
+        class: "DevOps Foundation_HCM",
         classCode: "HCM22_FR_DevOps_01",
         createOn: "22/04/2021",
         createBy: "HaNTT2",
@@ -12,7 +12,7 @@ export const classes: Class[] = [
 
     },
     {
-        name: "DevOps Foundation_HN",
+        class: "DevOps Foundation_HN",
         classCode: "HN22_FR_DevOps_01",
         createOn: "22/04/2021",
         createBy: "HaNTT2",
@@ -23,7 +23,7 @@ export const classes: Class[] = [
 
     },
     {
-        name: "DevOps Foundation_HN",
+        class: "DevOps Foundation_HN",
         classCode: "HN22_IN_BA_02",
         createOn: "22/04/2021",
         createBy: "HaNTT2",
@@ -34,7 +34,7 @@ export const classes: Class[] = [
 
     },
     {
-        name: "DevOps Foundation_HCM",
+        class: "DevOps Foundation_HCM",
         classCode: "HCM22_FR_DevOps_01",
         createOn: "22/04/2021",
         createBy: "HaNTT2",
@@ -45,7 +45,7 @@ export const classes: Class[] = [
 
     },
     {
-        name: "DevOps Foundation_HCM",
+        class: "DevOps Foundation_HCM",
         classCode: "HCM22_FR_DevOps_01",
         createOn: "22/04/2021",
         createBy: "HaNTT2",

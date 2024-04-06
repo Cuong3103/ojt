@@ -123,16 +123,14 @@ const UserListPage: FC = () => {
   const formatUserList = (users: User[]) =>
     users.map((user) => ({
       ...user,
-      fullName: [user.firstName, user.lastName].join(" "),
+      fullName: [user.firstName, user.lastName].join(", "),
       dob: fromTimestampToDateString(user.dob),
       gender: user.gender ? "male" : "female",
     }));
 
   const getUsers = async () => {
-    const isEnabled = true;
-    const response = isEnabled
-      ? await fetchUserList(currentPage + 1, limit)
-      : successUsersMock;
+    
+    const response = await fetchUserList(currentPage + 1, limit);
 
     setData(formatUserList(response.content) as any);
     setMetadata(response.meatadataDTO);

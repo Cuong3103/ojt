@@ -16,9 +16,9 @@ export const fetchUserList = async (page?: number, limit?: number) => {
   );
 };
 
-export const getUserByUUID = async (uuid: number) => {
+export const getUserByUUID = async (id: number) => {
   return handleResponse(
-    await axiosInstance.get(getRouteWithId(API_LIST.ADMIN_MODIFY_USER, uuid))
+    await axiosInstance.get(getRouteWithId(API_LIST.ADMIN_MODIFY_USER, id))
   );
 };
 
@@ -56,3 +56,5 @@ export const deleteUser = async (userId: number) => {
   const deleteUrl = API_LIST.ADMIN_MODIFY_USER + `/${userId}`;
   return handleResponse(await axiosInstance.delete(getRoute(deleteUrl)));
 };
+
+

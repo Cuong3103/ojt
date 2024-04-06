@@ -12,7 +12,8 @@ export enum API_LIST {
   ADMIN_USER_FILTER = "/user/search/hidden",
   ADMIN_MODIFY_USER = "/user",
   UPDATE_AVATAR = "/user/updateImage",
-  CREATE_CLASS = "/class",
+  VIEW_CLASS = "/class",
+  SREACH_CLASS_FOR_USER = "/class/search",
 }
 
 export enum USER_ROLE {

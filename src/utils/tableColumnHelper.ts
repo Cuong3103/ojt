@@ -119,3 +119,52 @@ export const programColumns: ColumnType[] = [
     options: {},
   },
 ];
+
+export const classColumns: ColumnType[] = [
+  
+  {
+    id: "name",
+    label: "class",
+    options: {},
+  },
+  {
+    id: "code",
+    label: "Class Code",
+    options: {},
+  },
+  {
+    id: "createdDate",
+    label: "Created On",
+    options: {},
+  },
+  {
+    id: "createBy",
+    label: "Created By",
+    options: {},
+  },
+  {
+    id: "duration",
+    label: "Duration",
+    options: {},
+  },
+  {
+    id: "classStatus",
+    label: "Status",
+    options: {},
+  },
+  {
+    id: "location",
+    label: "Location",
+    options: {},
+  },
+  {
+    id: "fsu",
+    label: "FSU",
+    options: {},
+  },
+  {
+    id: "moreButton",
+    label: "",
+    options: {},
+  },
+];
