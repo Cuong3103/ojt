@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import "./page.css";
 import { InputSearch } from "@/app/components/input-box/search-input";
 import { MdOutlineUpload } from "react-icons/md";
@@ -19,6 +19,7 @@ import { syllabusService } from "@/services/syllabuses/syllabusService";
 import useQuery from "@/hooks/useQuery";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { Syllabus } from "@/types/syllabus.type";
+import { totalPage } from "@/utils/paginationHelper";
 
 const options = [
   { icon: <FaPencilAlt />, label: "Add Training Program" },
@@ -33,6 +34,10 @@ const Page: React.FC = () => {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState<Syllabus[]>([]);
+  const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
+    setCurrentPage(0);
+    setLimit(Number(e.target.value));
+  };
   const [metadata, setMetadata] = useState({
     hasNextPage: false,
     hasPrevPage: false,
@@ -292,6 +297,26 @@ const Page: React.FC = () => {
             popupMenu={options}
             setData={setData}
           />
+          <div className="flex">
+            <Pagination
+              page={totalPage(metadata)}
+              pageCount={metadata.limit}
+              setCurrentPage={setCurrentPage}
+            />
+            <div className="flex -ml-48 z-50 items-center gap-4 mr-10">
+              <p>Rows per page</p>
+              <select
+                className="select select-ghost"
+                value={limit}
+                onChange={(e) => handleLimitSelection(e)}
+              >
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </div>
