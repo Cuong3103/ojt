@@ -1,29 +1,27 @@
-export const validateUnitFields = (
-  fields: Record<string, any>
-): Record<string, string> => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phoneRegex = /^0\d{9}$/;
+export const validateDetailFields = (fields: {
+  name: string;
+  outputStandard: string;
+  trainingTime: number;
+  deliveryType: string;
+}): Record<string, string> => {
   const errors: Record<string, string> = {};
 
-  const requiredFields = [
-    "fullName",
-    "email",
-    "phone",
-    "birthDay",
-    "userRoleId",
-  ];
-
-  requiredFields.forEach((field) => {
-    if (!fields[field]) {
-      errors[field] = `${field} is required`;
-    }
-  });
-
-  if (fields.email && !emailRegex.test(fields.email)) {
-    errors.email = "Please enter a valid email address";
+  // Kiểm tra các trường bắt buộc
+  if (!fields.name) {
+    errors.name = "Name is required";
+  } else if (fields.name.length <= 3) {
+    errors.name = "Name must be longer than 3 characters";
   }
-  if (fields.phone && !phoneRegex.test(fields.phone)) {
-    errors.phone = "Please enter a valid phone number";
+  if (!fields.outputStandard) {
+    errors.outputStandard = "Please select a Output standard";
+  }
+  if (!fields.trainingTime) {
+    errors.trainingTime = "Please enter a number for the training time";
+  } else if (isNaN(fields.trainingTime)) {
+    errors.trainingTime = "Training time must be a number";
+  }
+  if (!fields.deliveryType) {
+    errors.deliveryType = "Please select a Delivery method";
   }
 
   return errors;

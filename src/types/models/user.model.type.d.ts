@@ -29,7 +29,9 @@ export type Program = {
   createdDate?: string;
 };
 
-export type Content = {
+type Content = {
+  dayId: number;
+  unitId: number;
   name: string;
   outputStandard: string;
   trainingTime: number;

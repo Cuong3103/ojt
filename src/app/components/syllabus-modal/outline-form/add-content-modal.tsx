@@ -6,22 +6,27 @@ import { Delivery } from "../../dropdown/dropdown-delivery";
 import { SyllabusToggle } from "../../toggle/syllabus-toggle";
 import Button from "../../button/button";
 import { Content } from "@/types/models/user.model.type";
+import { validateDetailFields } from "@/utils/validateUnitUtils";
+import { toast } from "react-toastify";
 
 type AddContentFormProps = {
   showAddContentModal: () => void;
   setContents: Dispatch<SetStateAction<any>>;
+  dayId: number;
+  unitId: number;
 };
 
 export const AddContentForm: React.FC<AddContentFormProps> = ({
   showAddContentModal,
   setContents,
+  dayId,
+  unitId,
 }) => {
   const [name, setName] = useState<string>("");
   const [outputStandard, setOutputStandard] = useState<string>("");
   const [trainingTime, setTrainingTime] = useState<number>(0);
   const [deliveryType, setDeliveryType] = useState<string>("");
   const [method, setMethod] = useState<string>("");
-
   const handleCancelUnit = () => {
     // Đặt lại tất cả các trường về giá trị mặc định
     setName("");
@@ -33,9 +38,26 @@ export const AddContentForm: React.FC<AddContentFormProps> = ({
     showAddContentModal();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (dayId: number, unitId: number) => {
+    const errors = validateDetailFields({
+      name,
+      outputStandard,
+      trainingTime,
+      deliveryType,
+    });
+
+    // Nếu có lỗi, hiển thị thông báo và không thực hiện thêm nội dung mới
+    if (Object.keys(errors).length > 0) {
+      // Hiển thị thông báo lỗi bằng toast
+      Object.values(errors).forEach((errorMessage) => {
+        toast.error(errorMessage);
+      });
+      return;
+    }
     // Tạo một đối tượng mới từ dữ liệu được nhập và đẩy nó vào mảng đơn vị
-    const newContent: Content = {
+    const newContent = {
+      dayId: dayId,
+      unitId: unitId,
       name,
       outputStandard,
       trainingTime,
@@ -43,9 +65,6 @@ export const AddContentForm: React.FC<AddContentFormProps> = ({
       method,
     };
     setContents((prevUnits: Content[]) => [...prevUnits, newContent]);
-    console.log(newContent);
-    // Đặt lại tất cả các trường về giá trị mặc định
-
     // Ẩn modal
     showAddContentModal();
   };
@@ -72,7 +91,6 @@ export const AddContentForm: React.FC<AddContentFormProps> = ({
                 className="w-[313px] h-[36px] p-[10px] border-[1px] border-[#8B8B8B] rounded-[6px]"
                 value={name}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setName(e.target.value);
                 }}
               />
@@ -97,7 +115,6 @@ export const AddContentForm: React.FC<AddContentFormProps> = ({
                   const value = parseInt(e.target.value); // Chuyển đổi giá trị từ chuỗi thành số nguyên
                   if (!isNaN(value)) {
                     // Kiểm tra xem giá trị có phải là số hợp lệ hay không
-                    console.log(value);
                     setTrainingTime(value);
                   }
                 }}
@@ -137,7 +154,7 @@ export const AddContentForm: React.FC<AddContentFormProps> = ({
             <Button
               className="w-[96px] h-[31px] px-[25px] py-[7px] rounded-[10px] text-sm text-white bg-[#2D3748] flex items-center justify-center"
               title="Create"
-              onClick={handleSubmit}
+              onClick={() => handleSubmit(dayId, unitId)}
             />
           </div>
         </div>

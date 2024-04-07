@@ -18,7 +18,7 @@ import { HiOutlineDuplicate } from "react-icons/hi";
 import { syllabusService } from "@/services/syllabuses/syllabusService";
 import useQuery from "@/hooks/useQuery";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
-import { OnOffToggle } from "@/app/components/toggle/syllabus-toggle";
+import { Syllabus } from "@/types/syllabus.type";
 
 const options = [
   { icon: <FaPencilAlt />, label: "Add Training Program" },
@@ -32,6 +32,7 @@ const Page: React.FC = () => {
   }
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
+  const [data, setData] = useState<Syllabus[]>([]);
   const [metadata, setMetadata] = useState({
     hasNextPage: false,
     hasPrevPage: false,
@@ -80,16 +81,13 @@ const Page: React.FC = () => {
 
   const handleOpen = () => {
     setIsOpen(true);
-    console.log("open");
   };
 
   const handleCancel = () => {
     setIsOpen(false);
-    console.log("Cancel");
   };
   const handleSubmit = () => {
     setIsOpen(false);
-    console.log("Submit");
   };
 
   // Tạo trạng thái để lưu giữ giá trị của radio button được chọn
@@ -292,6 +290,7 @@ const Page: React.FC = () => {
             columns={syllabusColumns}
             icon={<BsFilterLeft />}
             popupMenu={options}
+            setData={setData}
           />
         </div>
       </div>
