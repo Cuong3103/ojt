@@ -3,8 +3,8 @@ import React, { FC } from "react";
 type RadioButtonProps = {
   name: string;
   options: { id: string; label: string }[];
-  value?: boolean;
-  onChange?: (value: boolean) => void;
+  value?: string;
+  onChange?: (value: string) => void;
 };
 
 export const RadioButton: FC<RadioButtonProps> = ({
@@ -16,7 +16,7 @@ export const RadioButton: FC<RadioButtonProps> = ({
   const handleChange = (optionId: string) => {
     const selectedOption = options.find((option) => option.id === optionId);
     if (selectedOption && onChange) {
-      onChange(selectedOption.id === "male");
+      onChange(selectedOption.id);
     }
   };
 
@@ -32,7 +32,7 @@ export const RadioButton: FC<RadioButtonProps> = ({
             className="radio mr-1"
             type="radio"
             name="inlineRadioOptions"
-            checked={option.id === "male" ? value === true : value === false}
+            checked={value === option.id}
             onChange={() => handleChange(option.id)}
           />
           <label

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { FC, useState } from "react";
 import { Modal } from "../modal/modal";
 import { PreviewImgModal } from "../preview-img-modal";
 import { updateAvatar } from "@/services/users";
@@ -9,15 +9,8 @@ import { SUCCESS_HTTP_CODES } from "@/utils/constants";
 import { toast } from "react-toastify";
 import { getSession } from "next-auth/react";
 
-type UploadImageProps = {
-  avatarUrl: string;
-  updateProfileAvatar: (x: string) => void;
-};
-
-export const UploadImage: FC<UploadImageProps> = ({
-  avatarUrl,
-  updateProfileAvatar,
-}) => {
+export const UploadImage: FC = () => {
+  const [avatarUrl, setAvatarUrl] = useState("");
   const [imgFile, setImgFile] = useState<File>();
   const [openFilePreview, setOpenFilePreview] = useState(false);
 
@@ -26,7 +19,7 @@ export const UploadImage: FC<UploadImageProps> = ({
 
     if (imageFile) {
       setImgFile(imageFile);
-      updateProfileAvatar(URL.createObjectURL(imageFile));
+      setAvatarUrl(URL.createObjectURL(imageFile));
       setOpenFilePreview(!openFilePreview);
     }
   };

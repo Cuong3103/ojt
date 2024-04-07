@@ -5,6 +5,8 @@ export type Option = {
   value?: string | number;
   icon?: ReactNode;
   showModal?: boolean;
+  subOption?: any;
+  onClick?: () => void;
 };
 
 export type DropdownProps = {

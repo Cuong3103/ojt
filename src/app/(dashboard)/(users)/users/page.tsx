@@ -2,12 +2,14 @@
 
 import { AddUserModal } from "@/app/components/user-modal/add-user-modal";
 import Button from "../../../components/button/button";
+import { getSession } from "@/utils/authenticationHelper";
 import { Chip } from "@/app/components/chip/chip";
 import { InputSearch } from "@/app/components/input-box/search-input";
 import Pagination from "@/app/components/pagination/index";
 import { Table } from "@/app/components/table/table";
 import { MockDataService } from "@/app/services/mock-response.service";
-import { fetchUserList, normalSearch } from "@/services/users";
+
+import { fetchUserList, getUserByUUID, updateProfile } from "@/services/users";
 import { User } from "@/types/models/user.model.type";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { userGenerator } from "@/utils/mockHelper";
@@ -22,17 +24,17 @@ import { RxAvatar } from "react-icons/rx";
 import { FaEyeSlash } from "react-icons/fa6";
 import { UserAdvancedSearch } from "@/app/components/advanced-search/UserAdvancedSearch";
 import { toast } from "react-toastify";
-import { API_LIST, getRoute } from "@/utils/constants";
-
-const options = [
-  { icon: <FaPencilAlt />, label: "Edit user", showModal: true },
-  { icon: <RxAvatar />, label: "Change role" },
-  { icon: <FaEyeSlash />, label: "De-activate user" },
-];
+import { UpdateUserModal } from "@/app/components/user-modal/update-user-modal";
+import { SUCCESS_HTTP_CODES, USER_ROLE } from "@/utils/constants";
 
 const UserListPage: FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isFiltering, setIsFiltering] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showChangeRoleModal, setShowChangeRoleModal] = useState(false);
+  const [userToUpdate, setUserToUpdate] = useState<number>(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const [showAddModal, setShowAddModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState<User[]>([]);
@@ -52,35 +54,77 @@ const UserListPage: FC = () => {
     currentPage
   );
 
-  const successUsersMock = userService.getMockResponse();
-
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(0);
     setLimit(Number(e.target.value));
   };
 
   const handleOpenAdvancedBox = () => setIsFiltering(!isFiltering);
-
   const handleNormalSearch = async (event: any) => {
     if (event.key === "Enter") {
       toast.success("HELLO");
     }
   };
 
+  const handleOpenUpdatePopup = () => {
+    setShowChangeRoleModal(false);
+    setIsPopupOpen(false);
+    setShowUpdateModal(!showUpdateModal);
+  };
+
+  const handleOpenChangeRolePopup = () => {
+    setShowChangeRoleModal(!showChangeRoleModal);
+  };
+
+  const options = [
+    {
+      icon: <FaPencilAlt />,
+      label: "Edit user",
+      onClick: handleOpenUpdatePopup,
+      showModal: true,
+    },
+    {
+      icon: <RxAvatar />,
+      label: "Change role",
+      onClick: handleOpenChangeRolePopup,
+      subOption: [
+        { label: "ADMIN", value: USER_ROLE.ADMIN },
+        { label: "TRAINER", value: USER_ROLE.TRAINER },
+        { label: "CLASS ADMIN", value: USER_ROLE.CLASS_ADMIN },
+      ],
+    },
+    { icon: <FaEyeSlash />, label: "De-activate user" },
+  ];
+
+  const handleSubMenuItemClick = async (value: number) => {
+    const getCurrentProfile = async (id: number) => {
+      if (!id) throw new Error("ID is not correct");
+
+      const response = await getUserByUUID(id);
+      return response.content;
+    };
+
+    const currentUser = await getCurrentProfile(userToUpdate);
+
+    const response = await updateProfile(
+      { ...currentUser, userRoleId: value },
+      userToUpdate
+    );
+    if (SUCCESS_HTTP_CODES.includes(response.statusCode)) {
+      toast.success("Update profile successfully");
+      getUsers();
+    }
+  };
+
   const formatUserList = (users: User[]) =>
     users.map((user) => ({
       ...user,
-      fullName: [user.firstName, user.lastName].join(" "),
+      fullName: [user.firstName, user.lastName].join(", "),
       dob: fromTimestampToDateString(user.dob),
-      gender: user.gender ? "male" : "female",
     }));
 
   const getUsers = async () => {
-    const isEnabled = true;
-    const response = isEnabled
-      ? await fetchUserList(currentPage + 1, limit)
-      : successUsersMock;
-
+    const response = await fetchUserList(currentPage + 1, limit);
     setData(formatUserList(response.content) as any);
     setMetadata(response.meatadataDTO);
   };
@@ -88,7 +132,6 @@ const UserListPage: FC = () => {
   useEffect(() => {
     getUsers();
   }, [currentPage, limit]);
-
   return (
     <div className="mb-20">
       <div className="font-bold text-xl tracking-wide mb-4 m-3">
@@ -124,7 +167,12 @@ const UserListPage: FC = () => {
         columns={userColumns}
         icon={<BsFilterLeft />}
         popupMenu={options}
+        openSubMenu={showChangeRoleModal}
+        isPopupOpen={isPopupOpen}
         setData={setData}
+        setDataToUpdate={setUserToUpdate}
+        setIsPopupOpen={setIsPopupOpen}
+        handleSubMenuItemClick={handleSubMenuItemClick}
       />
       <div className="flex">
         <Pagination
@@ -150,6 +198,13 @@ const UserListPage: FC = () => {
         <AddUserModal
           showAddModal={() => setShowAddModal(false)}
           setUsers={setData}
+        />
+      )}
+      {showUpdateModal && (
+        <UpdateUserModal
+          userId={userToUpdate}
+          showUpdateModal={() => setShowUpdateModal(false)}
+          setData={setData}
         />
       )}
     </div>

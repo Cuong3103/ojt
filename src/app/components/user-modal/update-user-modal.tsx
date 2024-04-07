@@ -20,7 +20,7 @@ import { getUserByUUID, updateProfile } from "@/services/users/index";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 
 type UpdateUserModalProps = {
-  userUUID: any;
+  userId: any;
   showUpdateModal: () => void;
   setData: Dispatch<SetStateAction<any>>;
 };
@@ -31,31 +31,30 @@ const options = [
 ];
 
 export const UpdateUserModal: FC<UpdateUserModalProps> = ({
-  userUUID,
+  userId,
   showUpdateModal,
   setData,
 }) => {
-  const [userId, setUserId] = useState(0);
+  const [userUUID, setUserUUID] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [birthDay, setBirthDay] = useState<Dayjs>();
-  const [gender, setGender] = useState<boolean>();
+  const [gender, setGender] = useState("");
   const [status, setStatus] = useState<boolean>(true);
-  const [userRoleId, setUserRoleId] = useState<number>(0);
+  const [userRoleId, setUserRoleId] = useState<number>(3);
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
 
-  const getCurrentUser = async (uuid?: string) => {
-    if (!uuid) throw new Error("UUID is not correct");
+  const getCurrentUser = async (id?: number) => {
+    if (!id) throw new Error("UUID is not correct");
 
-    const response = await getUserByUUID(uuid);
+    const response = await getUserByUUID(id);
     return response.content;
   };
-
   useEffect(() => {
     const fetchUserByUUID = async () => {
-      const currentUser = await getCurrentUser(userUUID);
-      setUserId(currentUser.id);
+      const currentUser = await getCurrentUser(userId);
+      setUserUUID(currentUser.uuid);
       setUserRoleId(currentUser.userRoleId);
       setFullName(currentUser.firstName + " " + currentUser.lastName);
       setEmail(currentUser.email);
@@ -88,7 +87,6 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
     }
 
     const editUser = async () => {
-      const password = "pass";
       const dob = birthDay?.unix();
       const names = fullName.split(" ");
       const firstName = names[0];
@@ -96,10 +94,9 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
       const user = {
         id: userId,
         uuid: userUUID,
-        email: email,
+        email,
         firstName,
         lastName,
-        password,
         phone,
         dob,
         gender,
@@ -116,6 +113,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
                 uuid,
                 firstName,
                 lastName,
+                email,
                 dob,
                 gender,
                 userRoleId,
@@ -125,7 +123,7 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
                 id,
                 uuid,
                 dob: fromTimestampToDateString(dob),
-                gender: gender ? "male" : "female",
+                gender,
                 email,
                 phone,
                 fullName: firstName + " " + lastName,
@@ -136,7 +134,6 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
               return user;
             }
           });
-
           return updatedUsers;
         });
         toast.success("Update successful");
@@ -225,8 +222,8 @@ export const UpdateUserModal: FC<UpdateUserModalProps> = ({
             <RadioButton
               name="gender"
               options={[
-                { id: "male", label: "Male" },
-                { id: "female", label: "Female" },
+                { id: "MALE", label: "Male" },
+                { id: "FEMALE", label: "Female" },
               ]}
               value={gender}
               onChange={setGender}

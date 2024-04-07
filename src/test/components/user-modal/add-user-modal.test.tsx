@@ -1,19 +1,25 @@
 import { AddUserModal } from "@/app/components/user-modal/add-user-modal";
 import { render, screen, fireEvent } from "@testing-library/react";
 import axios from "axios";
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 jest.mock("next-auth/react");
 
+jest.mock("next/router", () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+  }),
+}));
+
 describe("AddUserModal", () => {
   const postSpy = jest.spyOn(axios, "post");
-  beforeEach(() => {});
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it("should correctly render add new user modal", async () => {
-    postSpy.mockResolvedValue({ data: {} });
     render(
       <AddUserModal showAddModal={() => true} setUsers={function (): void {}} />
     );
@@ -36,7 +42,6 @@ describe("AddUserModal", () => {
   });
 
   it("should correctly cancel add new user form", async () => {
-    postSpy.mockResolvedValue({ data: {} });
     render(
       <AddUserModal showAddModal={() => true} setUsers={function (): void {}} />
     );
@@ -46,7 +51,6 @@ describe("AddUserModal", () => {
   });
 
   it("should correctly submit the form", async () => {
-    postSpy.mockResolvedValue({ data: {} });
     render(
       <AddUserModal showAddModal={() => true} setUsers={function (): void {}} />
     );
@@ -59,18 +63,18 @@ describe("AddUserModal", () => {
     const dateInput = await screen.findByLabelText("date-input");
     const statusInput = await screen.findByLabelText("status");
 
-    fireEvent.change(userType, { target: { value: 1 } });
+    fireEvent.change(userType, { target: { value: "admin" } });
     fireEvent.change(nameInput, { target: { value: "Test Name" } });
     fireEvent.change(emailInput, { target: { value: "test@gmail.com" } });
     fireEvent.change(phoneNumberInput, { target: { value: "1234567899" } });
     fireEvent.click(dateInput);
-    fireEvent.click(await screen.findByText("10"));
+    const today = dayjs();
+    fireEvent.change(dateInput, { target: { value: today } });
     fireEvent.click(statusInput);
     fireEvent.click(submitBtn);
   });
 
   it("Should throw an error if the input format is wrong", async () => {
-    postSpy.mockResolvedValue({ data: {} });
     render(
       <AddUserModal showAddModal={() => true} setUsers={function (): void {}} />
     );
@@ -80,7 +84,7 @@ describe("AddUserModal", () => {
     const emailInput = await screen.findByLabelText("email");
     const phoneNumberInput = await screen.findByLabelText("phone_number");
 
-    fireEvent.change(userType, { target: { value: 1 } });
+    fireEvent.change(userType, { target: { value: "admin" } });
     fireEvent.change(emailInput, { target: { value: "test" } });
     fireEvent.change(phoneNumberInput, { target: { value: "test" } });
     fireEvent.click(submitBtn);

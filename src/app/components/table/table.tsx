@@ -21,7 +21,13 @@ type TableProps = {
   columns: ColumnType[];
   icon?: ReactNode;
   popupMenu: Option[];
-  setData: Dispatch<SetStateAction<any>>;
+  subOptions?: Option[];
+  openSubMenu?: boolean;
+  isPopupOpen?: boolean;
+  setDataToUpdate?: Dispatch<SetStateAction<any>>;
+  setIsPopupOpen?: Dispatch<SetStateAction<any>>;
+  setData?: Dispatch<SetStateAction<any>>;
+  handleSubMenuItemClick?: (value: any) => void;
 };
 
 export const Table: FC<TableProps> = ({
@@ -29,11 +35,14 @@ export const Table: FC<TableProps> = ({
   columns,
   icon,
   popupMenu,
-  setData,
+  openSubMenu,
+  isPopupOpen,
+  setDataToUpdate,
+  handleSubMenuItemClick,
+  setIsPopupOpen,
 }) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [dataId, setDataId] = useState();
-
+  setDataToUpdate(dataId);
   const handleOpenPopup = (dataId: any) => {
     setDataId(dataId);
     setIsPopupOpen(!isPopupOpen);
@@ -68,14 +77,18 @@ export const Table: FC<TableProps> = ({
             </button>
 
             {isPopupOpen && dataId === row.id && (
-              <PopupMenu setData={setData} data={row} options={popupMenu} />
+              <PopupMenu
+                options={popupMenu}
+                openSubMenu={openSubMenu}
+                onSubMenuItemClick={handleSubMenuItemClick}
+              />
             )}
           </>
         );
       case "gender":
         return (
           <span>
-            {row[column.id] === "male" ? (
+            {row[column.id] === "MALE" ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

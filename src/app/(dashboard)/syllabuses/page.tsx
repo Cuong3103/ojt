@@ -6,7 +6,7 @@ import { MdOutlineUpload } from "react-icons/md";
 import { IoAddCircleOutline } from "react-icons/io5";
 import Button from "@/app/components/button/button";
 import { Chip } from "@/app/components/chip/chip";
-//import { syllabuses } from "./syllabus.config";
+import { syllabuses } from "./syllabus.config";
 import { BsFilterLeft } from "react-icons/bs";
 import Pagination from "@/app/components/pagination";
 import { Table } from "@/app/components/table/table";
@@ -18,11 +18,10 @@ import { HiOutlineDuplicate } from "react-icons/hi";
 import { syllabusService } from "@/services/syllabuses/syllabusService";
 import useQuery from "@/hooks/useQuery";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
-import { Syllabus } from "@/types/syllabus.type";
 import { totalPage } from "@/utils/paginationHelper";
 
 const options = [
-  { icon: <FaPencilAlt />, label: "Add Training Program" },
+  { icon: <FaPencilAlt />, label: "Add syllabus" },
   { icon: <RxAvatar />, label: "Edit syllabus" },
   { icon: <HiOutlineDuplicate />, label: "Duplicate Syllabus" },
   { icon: <FaEyeSlash />, label: "Delete syllabus" },
@@ -33,7 +32,6 @@ const Page: React.FC = () => {
   }
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const [data, setData] = useState<Syllabus[]>([]);
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(0);
     setLimit(Number(e.target.value));
@@ -45,17 +43,19 @@ const Page: React.FC = () => {
     total: 1,
   });
   const [limit, setLimit] = useState(10);
-
-  const { data: syllabusData, loading: programLoading } = useQuery(
-    syllabusService.getSyllabus
-  );
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const {
+    data: syllabusData,
+    loading: SyllabusLoading,
+    setData: setSyllabusData,
+  } = useQuery(syllabusService.getSyllabus);
 
   const syllabuses = syllabusData?.content || [];
 
   console.log("syllabusData", syllabusData);
 
   console.log("data", syllabuses);
-
+  const nullFun = () => {};
   const syllabusStatus = (syllabus: any) => {
     if (syllabus.isActive === false) {
       return <Chip inactive="Inactive" />;
@@ -115,8 +115,8 @@ const Page: React.FC = () => {
         </div>
         <div className="right flex items-center gap-2">
           <Button
-            className="bg-orange-500 rounded-lg w-20 h-8 px-2.5 py-1.5 text-white"
-            icon={<MdOutlineUpload />}
+            className="bg-orange-500 rounded-lg w-[95px] h-[32px] px-[10px] py-[7px] text-white"
+            icon={<MdOutlineUpload style={{ height: "20px", width: "20px" }} />}
             title="Import"
             onClick={handleOpen}
           />
@@ -277,8 +277,10 @@ const Page: React.FC = () => {
           )}
           <Link href={"http://localhost:3000/syllabuses/create"}>
             <Button
-              className="bg-primary-color rounded-lg w-20 h-8 px-2.5 py-1.5 text-white"
-              icon={<IoAddCircleOutline />}
+              className="bg-primary-color rounded-lg w-[139px] h-[32px] px-[10px] py-[7px] text-sm text-white"
+              icon={
+                <IoAddCircleOutline style={{ height: "20px", width: "20px" }} />
+              }
               title="Add Syllabus"
             />
           </Link>
@@ -295,7 +297,9 @@ const Page: React.FC = () => {
             columns={syllabusColumns}
             icon={<BsFilterLeft />}
             popupMenu={options}
-            setData={setData}
+            setDataToUpdate={nullFun}
+            isPopupOpen={isPopupOpen}
+            setIsPopupOpen={setIsPopupOpen}
           />
           <div className="flex">
             <Pagination

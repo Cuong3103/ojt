@@ -16,9 +16,9 @@ export const fetchUserList = async (page?: number, limit?: number) => {
   );
 };
 
-export const getUserByUUID = async (uuid: string) => {
+export const getUserByUUID = async (id: number) => {
   return handleResponse(
-    await axiosInstance.get(getRouteWithId(API_LIST.ADMIN_MODIFY_USER, uuid))
+    await axiosInstance.get(getRouteWithId(API_LIST.ADMIN_MODIFY_USER, id))
   );
 };
 
@@ -43,6 +43,7 @@ export const updateProfile = async (user: User, id: number) => {
       lastName: user.lastName,
       phone: user.phone,
       dob: user.dob,
+      email: user.email,
       status: user.status,
       gender: user.gender,
       avatarUrl: user.avatarUrl,
@@ -55,3 +56,5 @@ export const deleteUser = async (userId: number) => {
   const deleteUrl = API_LIST.ADMIN_MODIFY_USER + `/${userId}`;
   return handleResponse(await axiosInstance.delete(getRoute(deleteUrl)));
 };
+
+
