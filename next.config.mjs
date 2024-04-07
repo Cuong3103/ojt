@@ -3,6 +3,24 @@ import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig = {
   reactStrictMode: false,
   output: "standalone",
+  async headers() {
+    return [
+      {
+        source: "/api/training-program/download-template",
+        headers: [
+          {
+            key: "Content-Disposition",
+            value: "attachment; filename=training-program-template.csv",
+          },
+          {
+            key: "Content-Type",
+            value:
+              "text/csv",
+          },
+        ],
+      },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

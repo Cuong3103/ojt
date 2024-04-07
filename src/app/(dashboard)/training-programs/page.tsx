@@ -11,14 +11,13 @@ import { LuArrowUpToLine } from "react-icons/lu";
 import Button from "@/app/components/button/button";
 import useQuery from "@/hooks/useQuery";
 import { programService } from "@/services/programs/programService";
-import useDebounce from "@/hooks/useDebounce";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { Chip } from "@/app/components/chip/chip";
 import Link from "next/link";
 import { FaEyeSlash, FaPencilAlt } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
 import SearchBar from "@/app/components/input-search/SearchBar";
-import { AddUserModal } from "@/app/components/user-modal/add-user-modal";
+import { UploadFileModal } from "@/app/components/modal/UploadFileModal";
 
 const options = [
   { icon: <FaPencilAlt />, label: "Edit user" },
@@ -29,7 +28,7 @@ const options = [
 const TrainingProgram = () => {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const [showAddModal, setShowAddModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
   const [metadata, setMetadata] = useState({
     hasNextPage: false,
     hasPrevPage: false,
@@ -38,9 +37,11 @@ const TrainingProgram = () => {
   });
   const [limit, setLimit] = useState(10);
 
-  const { data: programData, loading: programLoading, setData: setProgarmData } = useQuery(
-    programService.getProgram
-  );
+  const {
+    data: programData,
+    loading: programLoading,
+    setData: setProgarmData,
+  } = useQuery(programService.getProgram);
 
   const programs = programData?.content || [];
 
@@ -79,6 +80,7 @@ const TrainingProgram = () => {
             ? `${durationInDays} days`
             : `${durationInDays} day`,
         training_status: convertTrainingStatusToText(program.training_status),
+        createdBy: program.createBy
       };
     });
 
@@ -105,7 +107,7 @@ const TrainingProgram = () => {
             }
             title="Import"
             icon={<LuArrowUpToLine />}
-            onClick={() => setShowAddModal(true)}
+            onClick={() => setShowUploadModal(true)}
           />
           <Link href={"/training-programs/create"}>
             <Button
@@ -146,10 +148,12 @@ const TrainingProgram = () => {
           </select>
         </div>
       </div>
-      {showAddModal && (
-        <AddUserModal
-          showAddModal={() => setShowAddModal(false)}
-          setUsers={setProgarmData}
+      {showUploadModal && (
+        <UploadFileModal
+          title="Import training programs"
+          showModal={() => setShowUploadModal(!showUploadModal)}
+          scanningIds={['Program ID', 'Program Name']}
+          getFileUrl={'/api/training-program/download-template'}
         />
       )}
     </section>
