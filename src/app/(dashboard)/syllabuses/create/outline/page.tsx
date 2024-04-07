@@ -413,7 +413,7 @@ const OutlineSyllabusPage: React.FC = () => {
           </div>
           <div className="w-[292px] h-[28px] flex items-center gap-[10px]">
             <Button
-              className=" w-[48px] h-[28px]  py-[2px] rounded-[8px] underline text-[#E74A3B] text-sm font-bold"
+              className=" w-[48px] h-[28px] px-[0px] py-[2px] rounded-[8px] underline text-[#E74A3B] text-sm font-bold"
               title="Cancel"
             />
             <Button
