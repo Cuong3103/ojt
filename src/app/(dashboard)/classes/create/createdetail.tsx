@@ -274,12 +274,12 @@ const CreateClassDetailPage: FC = () => {
                     <div className="w-full h-[68px] flex items-center justify-end">
                         <div className="h-[28px] flex gap-[10px] mr-[20px] font-bold">
                             <Button
-                                classCss=" w-[48px] h-[28px] py-[2px] rounded-[8px] underline text-[#E74A3B] text-sm mr-[30px]" title="Cancel" />
+                                className=" w-[48px] h-[28px] py-[2px] rounded-[8px] underline text-[#E74A3B] text-sm mr-[30px]" title="Cancel" />
                             <Button
-                                classCss="bg-[#474747] w-[140px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm "
+                                className="bg-[#474747] w-[140px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm "
                                 title="Save as draft" />
                             <Button
-                                classCss=" w-[80px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm bg-[#2D3748]"
+                                className=" w-[80px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm bg-[#2D3748]"
                                 title="Save" />
                         </div>
                     </div>

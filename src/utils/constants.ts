@@ -14,6 +14,7 @@ export enum API_LIST {
   UPDATE_AVATAR = "/user/updateImage",
   VIEW_CLASS = "/class",
   SREACH_CLASS_FOR_USER = "/class/search",
+  UPLOAD_PROGRAMS_CSV = "/trainingProgram/updatecsv",
 }
 
 export enum USER_ROLE {
