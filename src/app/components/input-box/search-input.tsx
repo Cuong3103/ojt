@@ -2,6 +2,7 @@ import { FC } from "react";
 
 type InputSearchProps = {
   onKeyDown?: (x: any) => void;
+  onChange?: (x: any) => void;
 };
 
 export const InputSearch: FC<InputSearchProps> = (props) => {
@@ -13,6 +14,7 @@ export const InputSearch: FC<InputSearchProps> = (props) => {
         className="relative ml-4 border border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md py-2 px-4 pr-10 placeholder-gray-500 text-gray-900 focus:outline-none"
         placeholder="Search"
         onKeyDown={props.onKeyDown}
+        onChange={props.onChange}
       />
       <svg
         xmlns="http://www.w3.org/2000/svg"

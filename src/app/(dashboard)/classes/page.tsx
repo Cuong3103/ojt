@@ -26,6 +26,7 @@ import { fetClassList, sreachClassByUser } from "@/services/classes";
 import { ClassAvancedSreach } from "@/app/components/advanced-search/ClassAvancedSreach";
 import { toast } from "react-toastify";
 import { SUCCESS_HTTP_CODES } from "@/utils/constants";
+import { DuplicateClass } from "@/app/components/class-modal/duplicate-class";
 
 
 const ViewClassPage: FC = () => {
@@ -90,17 +91,15 @@ const ViewClassPage: FC = () => {
     setMetadata(response.meatadataDTO);
   };
 
-  
-
-
-  
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(0);
     setLimit(Number(e.target.value));
   };
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
   const [dataClassDelete, setDataClassDelete] = useState({});
+  const [dataClassDuplicate,setDataClassDuplicate] = useState({});
   const [sreachInput, setSreachInput] = useState("")
   
   const handleOpenAvancedBox = () => setIsFiltering(!isFiltering);
@@ -109,6 +108,7 @@ const ViewClassPage: FC = () => {
        const response = await sreachClassByUser(sreachInput);
        if (SUCCESS_HTTP_CODES.includes(response.statusCode)) {
         setData(response.content)
+        console.log(response.content)
        }
       toast.success("HELLO");
 
@@ -120,13 +120,36 @@ const ViewClassPage: FC = () => {
     setShowDeleteModal(!showDeleteModal);
     setDataClassDelete(classInfo);
   };
-   
+
+
+
+  
+  // function duplicateData(data: any[]): any[] {
+  //   const duplicatedData = [...data];
+
+  //   const combinedData = [ ...data, ...duplicatedData];
+    
+  //   return combinedData;
+  // }
+  
+  const handleOpenDuplicatePopup = (classInfo: any) => {
+    setShowDuplicateModal(!showDuplicateModal)
+    setDataClassDuplicate(classInfo);
+
+    // const duplicatedData = duplicateData(data);
+    // console.log(duplicatedData);
+  }
 
   const options = [
     {
       icon: <FaPencilAlt />,
       label: "Edit class",
       showModal: true
+    },
+    {
+      icon: <FaPencilAlt />,
+      label: "Duplicated",
+      onClick: handleOpenDuplicatePopup
     },
     {
       icon: <MdOutlineDeleteForever />,
@@ -147,8 +170,7 @@ const ViewClassPage: FC = () => {
       </div>
       <article className="flex items-center m-auto justify-end">
       <div className="flex items-center gap-4 flex-grow">
-      <InputSearch onKeyDown={(e) => setSreachInput(e.target.value)} 
-       />
+      <InputSearch  onKeyDown={(e) => handleNormalSearch(e)} onChange={(e) => setSreachInput(e.target.value)} />
       <Button 
         title="Filter" 
         icon={<IoFilterSharp />}
@@ -180,7 +202,7 @@ const ViewClassPage: FC = () => {
       ></Chip>
       <div>
         <Table data={data} columns={classColumns} icon={<BsFilterLeft />} popupMenu={options} setDataToUpdate={setUserToUpdate}
-          setData={setData}  />
+          setData={setData}/>
         
        
       </div>
@@ -193,6 +215,15 @@ const ViewClassPage: FC = () => {
        
         />
       )}
+      {showDuplicateModal && (
+        <DuplicateClass 
+        classId={userToUpdate}
+        setdata={setData}
+        handleClose={() => setShowDuplicateModal(false)}
+         />
+        
+      )}
+      
     </div>
   );
 };
