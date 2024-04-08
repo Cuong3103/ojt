@@ -6,7 +6,6 @@ import { programColumns } from "@/utils/tableColumnHelper";
 import { BsFilterLeft } from "react-icons/bs";
 import Pagination from "@/app/components/pagination";
 import { totalPage } from "@/utils/paginationHelper";
-import { TableProgram } from "@/app/components/table/TableViewProgram";
 import { LuArrowUpToLine } from "react-icons/lu";
 import Button from "@/app/components/button/button";
 import useQuery from "@/hooks/useQuery";
@@ -18,6 +17,8 @@ import { FaEyeSlash, FaPencilAlt } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
 import SearchBar from "@/app/components/input-search/SearchBar";
 import { UploadFileModal } from "@/app/components/modal/UploadFileModal";
+import TableViewProgram from "@/app/components/table/TableViewProgram";
+import { TRAINING_STATUS } from "@/utils/constants";
 
 const options = [
   { icon: <FaPencilAlt />, label: "Edit user" },
@@ -40,7 +41,7 @@ const TrainingProgram = () => {
   const {
     data: programData,
     loading: programLoading,
-    setData: setProgarmData,
+    // setData: setProgarmData,
   } = useQuery(programService.getProgram);
 
   const programs = programData?.content || [];
@@ -53,12 +54,12 @@ const TrainingProgram = () => {
 
   const convertTrainingStatusToText = (trainingStatus: number) => {
     switch (trainingStatus) {
-      case 0:
-        return <Chip draft="Draft" />;
-      case 1:
-        return <Chip inactive="Inactive" />;
-      case 2:
+      case TRAINING_STATUS.active:
         return <Chip active="Active" />;
+      case TRAINING_STATUS.draft:
+        return <Chip draft="Draft" />;
+      case TRAINING_STATUS.inactive:
+        return <Chip inactive="Inactive" />;
       default:
         return "";
     }
@@ -66,20 +67,13 @@ const TrainingProgram = () => {
 
   const formatTrainingProgramList = (programs: any[]) =>
     programs.map((program) => {
-      const durationInDays = Math.round(
-        program?.duration / (24 * 60 * 60 * 1000)
-      );
-      const linkName = (
-        <Link href={"training-program/slug"}>{program?.name}</Link>
-      );
+      const durationInDays = Math.round(program?.duration / (24 * 60 * 60 * 1000));
+      const linkName = <Link href={`training-program/${program.slug}`}>{program?.name}</Link>;
       return {
         ...program,
         name: linkName,
         startTime: fromTimestampToDateString(program.startTime),
-        duration:
-          durationInDays > 1
-            ? `${durationInDays} days`
-            : `${durationInDays} day`,
+        duration: durationInDays > 1 && `${durationInDays} days`,
         training_status: convertTrainingStatusToText(program.training_status),
         createdBy: program.createBy
       };
@@ -121,12 +115,12 @@ const TrainingProgram = () => {
           </Link>
         </div>
       </div>
-      <TableProgram
+      <TableViewProgram
         data={formatTrainingProgramList(programs)}
         columns={programColumns}
         icon={<BsFilterLeft />}
         popupMenu={options}
-        // {...programs}
+        {...programs}
       />
       <div className="flex mt-[30px]">
         <Pagination
@@ -136,10 +130,7 @@ const TrainingProgram = () => {
         />
         <div className="flex -ml-48 z-50 items-center gap-4 mr-10">
           <p>Rows per page</p>
-          <select
-            className="select select-ghost "
-            onChange={(e) => handleLimitSelection(e)}
-          >
+          <select className="select select-ghost " onChange={(e) => handleLimitSelection(e)}>
             <option selected value={10}>
               10
             </option>

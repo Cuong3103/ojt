@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
 
-const useQuery = <T>(
-  promise: (query: string) => Promise<T>,
-  dependencies: any[] = []
-) => {
-  const [data, setData] = useState<T | undefined>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | undefined>();
+interface QueryResponse<T> {
+  data: T | any[];
+  loading: boolean;
+  error: any;
+  refetch: (query?: any) => Promise<void>;
+  setData: any;
+}
 
-  const fetchData = async (query: string) => {
+const useQuery = <T>(promise: (query?: any) => Promise<{ data: T }>, dependencies: any[] = []): QueryResponse<T> => {
+  const [data, setData] = useState<T | []>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<any>();
+
+  const fetchData = async (query?: string) => {
     setLoading(true);
     try {
       const res = await promise(query);
-      setData(res?.data || []);
+      setData(res?.data);
     } catch (error) {
-      setError(error as Error);
+      setError(error);
     } finally {
       setLoading(false);
     }
@@ -26,10 +31,10 @@ const useQuery = <T>(
 
   return {
     data,
-    setData,
     loading,
     error,
     refetch: fetchData,
+    setData,
   };
 };
 
