@@ -49,6 +49,7 @@ export const menuItems: MenuItem[] = [
   {
     title: "Training calendar",
     icon: FaRegCalendar,
+    path: "/training-calendar",
   },
   {
     title: "User management",

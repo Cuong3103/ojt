@@ -108,7 +108,6 @@ const ViewClassPage: FC = () => {
        const response = await sreachClassByUser(sreachInput);
        if (SUCCESS_HTTP_CODES.includes(response.statusCode)) {
         setData(response.content)
-        console.log(response.content)
        }
       toast.success("HELLO");
 
@@ -124,20 +123,11 @@ const ViewClassPage: FC = () => {
 
 
   
-  // function duplicateData(data: any[]): any[] {
-  //   const duplicatedData = [...data];
-
-  //   const combinedData = [ ...data, ...duplicatedData];
-    
-  //   return combinedData;
-  // }
+  
   
   const handleOpenDuplicatePopup = (classInfo: any) => {
     setShowDuplicateModal(!showDuplicateModal)
     setDataClassDuplicate(classInfo);
-
-    // const duplicatedData = duplicateData(data);
-    // console.log(duplicatedData);
   }
 
   const options = [

@@ -4,7 +4,7 @@ type ButtonProps = {
   title: string;
   icon?: ReactNode;
   className?: string;
-  onClick?: (x: any) => void;
+  onClick?: () => void;
   children?: ReactNode;
   disabled?: boolean;
 };
@@ -15,7 +15,7 @@ export const Button: FC<ButtonProps> = ({
   icon,
   onClick,
   children,
-  disabled
+  disabled,
 }) => {
   return (
     <div>
