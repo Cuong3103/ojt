@@ -6,6 +6,7 @@ import { PopupMenu } from "../dropdown/popup-menu";
 import { Option } from "@/types/dropdown.type";
 import { USER_ROLE } from "@/utils/constants";
 import { Chip } from "../chip/chip";
+import Link from "next/link";
 
 export type Column = {
   id: string;
@@ -23,9 +24,9 @@ type TableProps = {
   subOptions?: Option[];
   openSubMenu?: boolean;
   isPopupOpen?: boolean;
-  setDataToUpdate: Dispatch<SetStateAction<any>>;
-  setIsPopupOpen: Dispatch<SetStateAction<any>>;
-  setData: Dispatch<SetStateAction<any>>;
+  setDataToUpdate?: Dispatch<SetStateAction<any>>;
+  setIsPopupOpen?: Dispatch<SetStateAction<any>>;
+  setData?: Dispatch<SetStateAction<any>>;
   handleSubMenuItemClick?: (value: any) => void;
 };
 
@@ -142,6 +143,7 @@ export const Table: FC<TableProps> = ({
             />
           </span>
         );
+
       case "outputStandard":
         return (
           <span>
@@ -154,20 +156,7 @@ export const Table: FC<TableProps> = ({
             )}
           </span>
         );
-      case "status":
-        return (
-          <span>
-            {row[column.id] === "active" ? (
-              <Chip active="active" />
-            ) : row[column.id] === "Inactive" ? (
-              <Chip inactive="Inactive" />
-            ) : row[column.id] === "draft" ? (
-              <Chip draft="draft" />
-            ) : (
-              <Chip active="active" />
-            )}
-          </span>
-        );
+
       default:
         return row[column.id];
     }

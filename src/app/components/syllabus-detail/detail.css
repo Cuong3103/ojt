@@ -22,7 +22,7 @@ p {
   /* margin-left: 750px */
 }
 
-.button.online {
+.button.Online {
   font-size: 10px;
   width: 60px;
   height: 28px;
@@ -31,7 +31,7 @@ p {
   border: 2px solid orange;
 }
 
-.button.offline {
+.button.Offline {
   font-size: 10px;
   width: 60px;
   height: 28px;

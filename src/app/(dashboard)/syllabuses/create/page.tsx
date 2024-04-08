@@ -29,11 +29,19 @@ const CreateSyllabusPage: React.FC = () => {
         </div>
         <div className="flex items-center gap-[15px]">
           <p className="font-semibold text-base">Code</p>
-          <span className="text-sm">NPL</span>
+          <input
+            type="text"
+            placeholder="NPL"
+            className="w-[28px] h-[28px] text-sm"
+          />
         </div>
         <div className="flex items-center gap-[15px]">
           <p className="font-semibold text-base">Version</p>
-          <span className="text-sm opacity-50">1.0</span>
+          <input
+            type="text"
+            placeholder="1.0"
+            className="w-[28px] h-[28px] text-sm"
+          />
         </div>
       </div>
 
@@ -52,7 +60,7 @@ const CreateSyllabusPage: React.FC = () => {
                 <span className="font-semibold text-base">Level</span>
                 <select className=" rounded-[5px] shadow px-[10px] py-[5px] w-[270px]">
                   <option value="1">Auto Detect</option>
-                  <option value="2">Auto Detect Auto Detect</option>
+                  <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                 </select>
@@ -156,7 +164,7 @@ const CreateSyllabusPage: React.FC = () => {
         <div className="w-full h-[68px] flex items-center justify-end">
           <div className="w-[292px] h-[28px] flex items-center gap-[10px]">
             <Button
-              className=" w-[48px] h-[28px]  py-[2px] rounded-[8px] underline text-[#E74A3B] text-sm font-bold"
+              className=" w-[48px] h-[28px] px-[0px] py-[2px] rounded-[8px] underline text-[#E74A3B] text-sm font-bold"
               title="Cancel"
             />
             <Button

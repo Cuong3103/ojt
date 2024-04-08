@@ -44,6 +44,7 @@ const TrainingProgram = () => {
   } = useQuery(programService.getProgram);
 
   const programs = programData?.content || [];
+  console.log("program", programData);
 
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(0);
