@@ -40,7 +40,7 @@ export const userColumns: ColumnType[] = [
 
 export const syllabusColumns: ColumnType[] = [
   {
-    id: "syllabus",
+    id: "name",
     label: "Syllabus",
     options: {},
   },

@@ -9,12 +9,12 @@ export const programService = {
   getProgramBySlug(slug = "") {
     return axiosInstance.get(`/trainingProgram/${slug}`);
   },
-  postTrainingProgram(payload = {}){
+  postTrainingProgram(payload = {}) {
     return axiosInstance.post(`/trainingProgram`, payload);
   },
-  getProgramBySearch(query =''){
+  getProgramBySearch(query = "") {
     return axiosInstance.get(`/trainingProgram/search/${query}`);
-  }
+  },
 };
 
 export const uploadProgramsService = async (formData: FormData) => {
