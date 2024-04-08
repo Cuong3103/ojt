@@ -23,6 +23,12 @@ export enum USER_ROLE {
   CLASS_ADMIN = 2,
 }
 
+export enum TRAINING_STATUS {
+  draft = 0,
+  inactive = 1, 
+  active = 2,
+}
+
 export const HTTP_CODE = {
   OK: 200,
   CREATED: 201,

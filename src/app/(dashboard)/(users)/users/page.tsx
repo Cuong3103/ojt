@@ -162,10 +162,6 @@ const UserListPage: FC = () => {
         isOpenBox={isFiltering}
         handleOpenBox={handleOpenAdvancedBox}
       />
-      {/* <Chip
-        style={{ backgroundColor: "#474747", fontStyle: "italic" }}
-        removeBadge="HaNTT2"
-      ></Chip> */}
       <Table
         data={data}
         columns={userColumns}

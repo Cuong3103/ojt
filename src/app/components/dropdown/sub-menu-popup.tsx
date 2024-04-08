@@ -12,7 +12,7 @@ export const SubPopupMenu: FC<PopupMenuProps> = ({
 }) => {
   return (
     <>
-      <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 absolute mt-2 m-4">
+      <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 absolute">
         {subOptions.map((subOption: Option, index: number) => (
           <li key={index} className="flex">
             <a
