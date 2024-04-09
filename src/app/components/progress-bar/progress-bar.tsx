@@ -7,8 +7,8 @@ export const ProgressBar: FC<{ text: string }> = ({ text }) => {
     status = "General";
   } else if (text === "Outline") {
     status = "Outline";
-  } else if (text === "Other") {
-    status = "Other";
+  } else if (text === "Others") {
+    status = "Others";
   } else if (text === "Done") {
     status = "Done";
   }
@@ -18,10 +18,10 @@ export const ProgressBar: FC<{ text: string }> = ({ text }) => {
       text === "General"
         ? "12.5%"
         : text === "Outline"
-          ? "37.5%"
-          : text === "Other"
-            ? "62.5%"
-            : "100%",
+        ? "37.5%"
+        : text === "Others"
+        ? "62.5%"
+        : "100%",
   };
 
   const getProgressBarClass = (status: string | undefined): string => {
@@ -30,7 +30,7 @@ export const ProgressBar: FC<{ text: string }> = ({ text }) => {
         return "bg-main";
       case "Outline":
         return "bg-[#EDF2F7]";
-      case "Other":
+      case "Others":
         return "bg-orange-main";
       case "Done":
         return "bg-green-main";
@@ -62,7 +62,7 @@ export const ProgressBar: FC<{ text: string }> = ({ text }) => {
             <p className="text-xs text-center font-medium">Outline</p>
           </div>
           <div className="w-1/4 px-2.5">
-            <p className="text-xs text-center font-medium">Other</p>
+            <p className="text-xs text-center font-medium">Others</p>
           </div>
           <div className="w-1/4 px-2.5">
             <p className="text-xs text-center font-medium">Done</p>

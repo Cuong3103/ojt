@@ -15,6 +15,8 @@ export enum API_LIST {
   VIEW_CLASS = "/class",
   SREACH_CLASS_FOR_USER = "/class/search",
   UPLOAD_PROGRAMS_CSV = "/trainingProgram/updatecsv",
+  VIEW_SYLLABUS_DETAIL = "/syllabus",
+  VIEW_UNIT_DETAIL = "/unit",
 }
 
 export enum USER_ROLE {
@@ -25,7 +27,7 @@ export enum USER_ROLE {
 
 export enum TRAINING_STATUS {
   draft = 0,
-  inactive = 1, 
+  inactive = 1,
   active = 2,
 }
 

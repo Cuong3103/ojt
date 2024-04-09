@@ -1,21 +1,25 @@
 "use client";
 import "./tab.css";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
-export const Tab: FC = () => {
-  const [selectTab, setSelectTab] = useState("");
-
+type tabPage = {
+  onTabPageChange: (tabName: string) => void;
+};
+export const Tab: FC<tabPage> = ({ onTabPageChange }) => {
+  const [selectTab, setSelectTab] = useState("General");
   const handleTabChange = (tabName: string) => {
     setSelectTab(tabName);
+    onTabPageChange(tabName);
   };
 
   return (
     <div role="tablist" className="tabs tabs-lifted w-200 h-30 ">
       <label
-        className={`tab ${selectTab === "General"
-          ? "bg-black text-white"
-          : "bg-gray-500 text-white"
-          }`}
+        className={`tab ${
+          selectTab === "General"
+            ? "bg-black text-white"
+            : "bg-gray-500 text-white"
+        }`}
       >
         <input
           className="appearance-none"
@@ -30,10 +34,11 @@ export const Tab: FC = () => {
       </label>
 
       <label
-        className={`tab ${selectTab === "Outline"
-          ? "bg-black text-white"
-          : "bg-gray-500 text-white"
-          }`}
+        className={`tab ${
+          selectTab === "Outline"
+            ? "bg-black text-white"
+            : "bg-gray-500 text-white"
+        }`}
       >
         <input
           className="appearance-none"
@@ -48,21 +53,22 @@ export const Tab: FC = () => {
       </label>
 
       <label
-        className={`tab ${selectTab === "Training material"
-          ? "bg-black text-white"
-          : "bg-gray-500 text-white"
-          }`}
+        className={`tab ${
+          selectTab === "Others"
+            ? "bg-black text-white"
+            : "bg-gray-500 text-white"
+        }`}
       >
         <input
           className="appearance-none"
           type="radio"
           name="my_tabs_2"
           role="tab"
-          aria-label="Training material"
-          checked={selectTab === "Training material"}
-          onChange={() => handleTabChange("Training material")}
+          aria-label="Others"
+          checked={selectTab === "Others"}
+          onChange={() => handleTabChange("Others")}
         />
-        Training material
+        Others
       </label>
     </div>
   );
