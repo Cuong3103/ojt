@@ -14,6 +14,7 @@ export enum API_LIST {
   UPDATE_AVATAR = "/user/updateImage",
   VIEW_CLASS = "/class",
   SREACH_CLASS_FOR_USER = "/class/search",
+  UPLOAD_PROGRAMS_CSV = "/trainingProgram/updatecsv",
   VIEW_SYLLABUS_DETAIL = "/syllabus",
   VIEW_UNIT_DETAIL = "/unit",
 }
@@ -22,6 +23,12 @@ export enum USER_ROLE {
   ADMIN = 1,
   TRAINER = 3,
   CLASS_ADMIN = 2,
+}
+
+export enum TRAINING_STATUS {
+  draft = 0,
+  inactive = 1,
+  active = 2,
 }
 
 export const HTTP_CODE = {

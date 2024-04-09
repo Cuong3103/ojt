@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(async (config) => {
     return config;
   }
 
-  if (config.url?.match(/updateImage/)) {
+  if (config.url?.match(/updateImage/) || config.url?.match(/csv/)) {
     config.headers["Content-Type"] = "multipart/form-data";
   }
 

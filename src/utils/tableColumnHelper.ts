@@ -99,7 +99,7 @@ export const programColumns: ColumnType[] = [
     options: {},
   },
   {
-    id: "createdBy",
+    id: "createBy",
     label: "Created by",
     options: {},
   },

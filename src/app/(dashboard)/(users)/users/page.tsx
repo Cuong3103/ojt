@@ -9,7 +9,11 @@ import Pagination from "@/app/components/pagination/index";
 import { Table } from "@/app/components/table/table";
 import { MockDataService } from "@/app/services/mock-response.service";
 
-import { fetchUserList, getUserByUUID, updateProfile } from "@/services/users";
+import {
+  fetchUserList,
+  getUserByUUID,
+  updateProfile,
+} from "@/services/users";
 import { User } from "@/types/models/user.model.type";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { userGenerator } from "@/utils/mockHelper";
@@ -158,10 +162,6 @@ const UserListPage: FC = () => {
         isOpenBox={isFiltering}
         handleOpenBox={handleOpenAdvancedBox}
       />
-      {/* <Chip
-        style={{ backgroundColor: "#474747", fontStyle: "italic" }}
-        removeBadge="HaNTT2"
-      ></Chip> */}
       <Table
         data={data}
         columns={userColumns}

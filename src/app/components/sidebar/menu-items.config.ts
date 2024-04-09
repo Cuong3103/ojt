@@ -43,12 +43,13 @@ export const menuItems: MenuItem[] = [
     icon: GoMortarBoard,
     submenuItems: [
       { title: "View class", path: "/classes" },
-      { title: "Create class", path: "/classes/detail" },
+      { title: "Create class", path: "/classes/create" },
     ],
   },
   {
     title: "Training calendar",
     icon: FaRegCalendar,
+    path: "/training-calendar",
   },
   {
     title: "User management",

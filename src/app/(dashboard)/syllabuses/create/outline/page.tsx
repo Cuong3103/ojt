@@ -1,4 +1,5 @@
 "use client";
+"use client";
 import "./outline-page.css";
 import { ProgressBar } from "@/app/components/progress-bar/progress-bar";
 import { Tab } from "@/app/components/syllabus-tab/tab";

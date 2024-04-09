@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const useMutation = (promise: (payload: any) => Promise<any>) => {
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | undefined>();
 

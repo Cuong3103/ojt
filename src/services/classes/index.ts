@@ -27,8 +27,14 @@ export const fetClassList = async (page?: number, limit?: number) => {
     return handleResponse(await axiosInstance.delete(getRoute(deleteUrl)));
   };
 
-  export const sreachClassByUser = async (name: string, limit?: number) => {
+  export const sreachClassByUser = async (term: string, limit?: number) => {
     return handleResponse(
-      await axiosInstance.post(getRoutePagination(API_LIST.SREACH_CLASS_FOR_USER, limit), name)
+      await axiosInstance.post(getRoutePagination(API_LIST.SREACH_CLASS_FOR_USER, limit), JSON.stringify({
+        name: term,
+        code: term,
+      }))
+      
     );
+    
+    
   };

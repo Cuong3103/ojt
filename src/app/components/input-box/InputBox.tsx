@@ -8,29 +8,14 @@ interface Props {
   value?: string;
   className: string;
   placeholder?: string;
-  onChange?: (value: string) => void;
-  onKeyDown?: (event: KeyboardEvent) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   [key: string]: any;
 }
 
-function InputBox({ value, className, onChange, onKeyDown, placeholder, ...restProps }: Props, ref: any) {
-  const [input, setInput] = useState(value);
-
-  // Check user enter key in input box
-  const _onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event?.target.value || "";
-    setInput(value);
-  };
-
-
-  const _onKeyDown = (event: KeyboardEvent) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      setInput(""); // Clear input box after pressing Enter key
-    }
-  };
-
-
+function InputBox(
+  { value, className, onChange, onKeyDown, placeholder, ...restProps }: Props,
+  ref: any
+) {
   return (
     <>
       <div className={"inputbox max-w-xs"}>
@@ -39,9 +24,8 @@ function InputBox({ value, className, onChange, onKeyDown, placeholder, ...restP
             type="text"
             placeholder={placeholder}
             className={`input input-bordered w-full h-full text-black placeholder:italic placeholder:text-slate-700 ${className}`}
-            onChange={_onInputChange}
-            onKeyDown={_onKeyDown}
-            value={input}
+            onChange={onChange}
+            value={value}
             ref={ref}
             {...restProps}
           />

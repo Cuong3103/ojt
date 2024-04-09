@@ -15,8 +15,14 @@ export const PopupMenu: FC<PopupMenuProps> = ({
   openSubMenu,
   onSubMenuItemClick,
 }) => {
+  
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const handleOpenPopup = () => {
+    setShowUpdateModal(!showUpdateModal);
+  };
+
   return (
-    <div className="p-2 shadow menu dropdown-content z-[1] border-[1px] border-solid border-black bg-base-100 rounded-box w-52 absolute right-0">
+    <div className="z-[1000] p-2 shadow menu dropdown-content z-[1] border-[1px] border-solid border-black bg-base-100 rounded-box w-52 absolute right-0">
       <h3>{title}</h3>
       <ul>
         {options.map((option: Option, index: number) => (
