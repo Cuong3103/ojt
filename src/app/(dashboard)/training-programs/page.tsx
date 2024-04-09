@@ -67,15 +67,19 @@ const TrainingProgram = () => {
 
   const formatTrainingProgramList = (programs: any[]) =>
     programs.map((program) => {
-      const durationInDays = Math.round(program?.duration / (24 * 60 * 60 * 1000));
-      const linkName = <Link href={`training-program/${program.slug}`}>{program?.name}</Link>;
+      const durationInDays = Math.round(
+        program?.duration / (24 * 60 * 60 * 1000)
+      );
+      const linkName = (
+        <Link href={`training-program/${program.slug}`}>{program?.name}</Link>
+      );
       return {
         ...program,
         name: linkName,
         startTime: fromTimestampToDateString(program.startTime),
         duration: durationInDays > 1 && `${durationInDays} days`,
         training_status: convertTrainingStatusToText(program.training_status),
-        createdBy: program.createBy
+        createdBy: program.createBy,
       };
     });
 
@@ -130,7 +134,10 @@ const TrainingProgram = () => {
         />
         <div className="flex -ml-48 z-50 items-center gap-4 mr-10">
           <p>Rows per page</p>
-          <select className="select select-ghost " onChange={(e) => handleLimitSelection(e)}>
+          <select
+            className="select select-ghost "
+            onChange={(e) => handleLimitSelection(e)}
+          >
             <option selected value={10}>
               10
             </option>
@@ -144,8 +151,8 @@ const TrainingProgram = () => {
         <UploadFileModal
           title="Import training programs"
           showModal={() => setShowUploadModal(!showUploadModal)}
-          scanningIds={['Program ID', 'Program Name']}
-          getFileUrl={'/api/training-program/download-template'}
+          scanningIds={["Program ID", "Program Name"]}
+          getFileUrl={"/api/training-program/download-template"}
         />
       )}
     </section>
