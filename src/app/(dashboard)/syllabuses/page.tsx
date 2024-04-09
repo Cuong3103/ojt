@@ -6,7 +6,6 @@ import { MdOutlineUpload } from "react-icons/md";
 import { IoAddCircleOutline } from "react-icons/io5";
 import Button from "@/app/components/button/button";
 import { Chip } from "@/app/components/chip/chip";
-import { syllabuses } from "./syllabus.config";
 import { BsFilterLeft } from "react-icons/bs";
 import Pagination from "@/app/components/pagination";
 import { Table } from "@/app/components/table/table";
@@ -15,11 +14,10 @@ import Link from "next/link";
 import { FaEyeSlash, FaPencilAlt } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
 import { HiOutlineDuplicate } from "react-icons/hi";
-import { syllabusService } from "@/services/syllabuses/syllabusService";
 import useQuery from "@/hooks/useQuery";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { totalPage } from "@/utils/paginationHelper";
-
+import { syllabusService } from "@/services/syllabuses/syllabusService";
 const options = [
   { icon: <FaPencilAlt />, label: "Add syllabus" },
   { icon: <RxAvatar />, label: "Edit syllabus" },
@@ -67,9 +65,12 @@ const Page: React.FC = () => {
   };
 
   const syllabusName = (syllabus: any) => {
-    return <Link href={"/syllabuses/viewdetail"}>{syllabus.name}</Link>;
+    return (
+      <Link href={`/syllabuses/viewdetail/${syllabus.id}`}>
+        {syllabus.name}
+      </Link>
+    ); // Sử dụng syllabus.id thay vì syllabusId
   };
-
   const formatSyllabusList = (syllabuses: any[]) =>
     syllabuses.map((syllabus) => ({
       ...syllabus,
