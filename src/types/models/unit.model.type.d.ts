@@ -1,5 +1,10 @@
 export type Unit = {
-  dayId?: number;
+  syllabusId?: number;
+  dayNumber?: number;
   id?: number;
-  unitName?: string;
+  name?: string;
+  createBy?: string;
+  duration?: number;
+  modifiedBy?: string;
+  contentIds?: number[];
 };

@@ -17,6 +17,7 @@ export enum API_LIST {
   UPLOAD_PROGRAMS_CSV = "/trainingProgram/updatecsv",
   VIEW_SYLLABUS_DETAIL = "/syllabus",
   VIEW_UNIT_DETAIL = "/unit",
+  VIEW_CONTENT_DETAIL = "/content",
 }
 
 export enum USER_ROLE {

@@ -10,5 +10,5 @@ export type Syllabus = {
   isActive: boolean;
   isApproved: boolean;
   attendee: number;
-  unitIds: number;
+  unitIds: number[];
 };

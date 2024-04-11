@@ -27,3 +27,8 @@ export const getUnitByID = async (id: number) => {
     await axiosInstance.get(getRouteWithId(API_LIST.VIEW_UNIT_DETAIL, id))
   );
 };
+export const getContentByID = async (id: number) => {
+  return handleResponse(
+    await axiosInstance.get(getRouteWithId(API_LIST.VIEW_CONTENT_DETAIL, id))
+  );
+};
