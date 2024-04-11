@@ -1,6 +1,9 @@
 export type Syllabus = {
   name: string;
+  name: string;
   code: string;
+  createdDate: number;
+  createBy: string;
   createdDate: number;
   createBy: string;
   duration: string;

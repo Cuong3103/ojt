@@ -1,6 +1,7 @@
 import axiosInstance from "@/lib/axios";
 import { handleResponse } from "../base.service";
 import { API_LIST, getRoute } from "@/utils/constants";
+import axios from "axios";
 
 export const programService = {
   getProgram(query = "") {
@@ -20,5 +21,14 @@ export const programService = {
 export const uploadProgramsService = async (formData: FormData) => {
   return handleResponse(
     await axiosInstance.post(getRoute(API_LIST.UPLOAD_PROGRAMS_CSV), formData)
-  )  
-}
+  );
+};
+
+export const createProgramService = async (payload: any) => {
+  return handleResponse(
+    await axiosInstance.post(
+      getRoute(API_LIST.TRAINING_PROGRAM),
+      JSON.stringify(payload)
+    )
+  );
+};

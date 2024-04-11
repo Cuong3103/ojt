@@ -6,6 +6,13 @@ import {
   getRouteWithId,
 } from "@/utils/constants";
 import { handleResponse } from "../base.service";
+import {
+  API_LIST,
+  getRoute,
+  getRoutePagination,
+  getRouteWithId,
+} from "@/utils/constants";
+import { handleResponse } from "../base.service";
 
 export const syllabusService = {
   getSyllabus(query = "") {

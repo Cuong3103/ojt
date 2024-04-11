@@ -1,13 +1,4 @@
 import { FC, useState } from "react";
-import { FaAddressBook, FaRegHandPaper } from "react-icons/fa";
-import { HiOutlineLightBulb } from "react-icons/hi";
-import {
-  MdOutlineAssignment,
-  MdOutlineFactCheck,
-  MdOutlineGroups,
-} from "react-icons/md";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { PiExam } from "react-icons/pi";
 import { IoSearchSharp } from "react-icons/io5";
 import { Chip } from "../chip/chip";
 
