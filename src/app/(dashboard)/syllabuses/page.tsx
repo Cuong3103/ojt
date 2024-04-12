@@ -69,7 +69,7 @@ const Page: React.FC = () => {
       <Link href={`/syllabuses/viewdetail/${syllabus.id}`}>
         {syllabus.name}
       </Link>
-    ); // Sử dụng syllabus.id thay vì syllabusId
+    );
   };
   const formatSyllabusList = (syllabuses: any[]) =>
     syllabuses.map((syllabus) => ({
