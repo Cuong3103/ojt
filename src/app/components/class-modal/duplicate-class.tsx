@@ -29,7 +29,6 @@ export const DuplicateClass: FC<DuplicateClassProp> = ({
         const fetClassById = async () => {
             const currentClass =  await getCurrentClassToDup(classId);
             setClassByIdToDup(currentClass)
-            console.log(currentClass)
         }
         fetClassById();
     }, [])
@@ -47,7 +46,6 @@ export const DuplicateClass: FC<DuplicateClassProp> = ({
             })
             toast.success("Duplicate successful");
             handleClose();
-            console.log(duplicatedClass)
         }
         catch (error) {
             console.error("Error duplicating class:", error);
@@ -62,7 +60,7 @@ export const DuplicateClass: FC<DuplicateClassProp> = ({
           <div className="text-[#D45B13] text-[32px] text-center font-bold">Are you sure?</div>
           <div className="text-[14px] font-bold">
             <div className="text-center ">
-              Do you really want to DUPLICATE "<span>{classByIdToDup.name}</span>" class?
+              Do you really want to DUPLICATE `<span>{classByIdToDup.name}</span>` class?
             </div>
             
 

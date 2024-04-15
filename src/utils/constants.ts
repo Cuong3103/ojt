@@ -15,6 +15,7 @@ export enum API_LIST {
   VIEW_CLASS = "/class",
   SREACH_CLASS_FOR_USER = "/class/search",
   UPLOAD_PROGRAMS_CSV = "/trainingProgram/updatecsv",
+  UPLOAD_SYLLABUS_CSV = "/syllabus/updatecsv",
   TRAINING_PROGRAM = "/trainingProgram",
   VIEW_SYLLABUS_DETAIL = "/syllabus",
   VIEW_UNIT_DETAIL = "/unit",

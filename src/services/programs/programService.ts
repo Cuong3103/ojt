@@ -24,6 +24,12 @@ export const uploadProgramsService = async (formData: FormData) => {
   );
 };
 
+export const uploadSyllabusService = async (formData: FormData) => {
+  return handleResponse(
+    await axiosInstance.post(getRoute(API_LIST.UPLOAD_SYLLABUS_CSV), formData)
+  );
+};
+
 export const createProgramService = async (payload: any) => {
   return handleResponse(
     await axiosInstance.post(

@@ -23,7 +23,6 @@ describe("AddUserModal", () => {
     render(
       <AddUserModal showAddModal={() => true} setUsers={function (): void {}} />
     );
-
     expect(await screen.findByText("Add a new user")).toBeInTheDocument();
     expect(await screen.findByText("User type")).toBeInTheDocument();
     expect(await screen.findByText("Name")).toBeInTheDocument();
@@ -56,6 +55,7 @@ describe("AddUserModal", () => {
     );
 
     const submitBtn = await screen.findByRole("button", { name: "Save" });
+    screen.debug()
     const [userType] = await screen.findAllByRole("combobox");
     const nameInput = await screen.findByLabelText("user_name");
     const emailInput = await screen.findByLabelText("email");

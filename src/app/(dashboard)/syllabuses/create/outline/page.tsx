@@ -141,7 +141,7 @@ const OutlineSyllabusPage: React.FC<{
     <div className="w-full">
       <div className=" flex gap-[20px]">
         {/*"Container Body Content"*/}
-        <div className="left w-4/5">
+        <div className="left w-4/5 h-[500px] overflow-y-auto">
           <hr className="h-[2px] bg-[#8B8B8B]" />
           <div className="w-full">
             {/*"Dropdown day 1"*/}
