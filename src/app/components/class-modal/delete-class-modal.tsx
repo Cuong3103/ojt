@@ -57,7 +57,7 @@ export const DeleteClassModal: FC<DeleteClassModalProps> = ({
           <div className="text-[#D45B13] text-[32px] text-center font-bold">Are you sure?</div>
           <div className="text-[14px] font-bold">
             <div className="text-center ">
-              Do you really want to delete "<span>{classById.name}</span>" class?
+              Do you really want to delete `<span>{classById.name}</span>` class?
             </div>
             <div className="text-center mb-4 ">This class cannot be restored.</div>
 
