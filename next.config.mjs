@@ -14,8 +14,20 @@ const nextConfig = {
           },
           {
             key: "Content-Type",
-            value:
-              "text/csv",
+            value: "text/csv",
+          },
+        ],
+      },
+      {
+        source: "/api/syllabus/download-template",
+        headers: [
+          {
+            key: "Content-Disposition",
+            value: "attachment; filename=syllabus-template.csv",
+          },
+          {
+            key: "Content-Type",
+            value: "text/csv",
           },
         ],
       },
@@ -39,7 +51,6 @@ const nextConfig = {
     ],
   },
 };
-
 export default withSentryConfig(
   nextConfig,
   {

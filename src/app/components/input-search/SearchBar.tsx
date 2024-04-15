@@ -18,7 +18,6 @@ const SearchBar = ({value, placeholder, ...restProps}: Props) => {
       setInput(value);
     };
 
-    console.log("onChange",value);
 
     const _onClicked = (event: MouseEvent) => {
         event.preventDefault();
