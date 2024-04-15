@@ -19,6 +19,7 @@ import SearchBar from "@/app/components/input-search/SearchBar";
 import { UploadFileModal } from "@/app/components/modal/UploadFileModal";
 import TableViewProgram from "@/app/components/table/TableViewProgram";
 import { TRAINING_STATUS } from "@/utils/constants";
+import { uploadProgramsService } from "@/services/programs/programService";
 
 const options = [
   { icon: <FaPencilAlt />, label: "Edit user" },
@@ -38,14 +39,9 @@ const TrainingProgram = () => {
   });
   const [limit, setLimit] = useState(10);
 
-  const {
-    data: programData,
-    loading: programLoading,
-    // setData: setProgarmData,
-  } = useQuery(programService.getProgram);
+  const { data: programData } = useQuery(programService.getProgram);
 
   const programs = programData?.content || [];
-  console.log("program", programData);
 
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(0);
@@ -153,6 +149,7 @@ const TrainingProgram = () => {
           showModal={() => setShowUploadModal(!showUploadModal)}
           scanningIds={["Program ID", "Program Name"]}
           getFileUrl={"/api/training-program/download-template"}
+          updateService={uploadProgramsService}
         />
       )}
     </section>

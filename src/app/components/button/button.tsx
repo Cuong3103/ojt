@@ -4,7 +4,7 @@ type ButtonProps = {
   title: string;
   icon?: ReactNode;
   className?: string;
-  onClick?: () => void;
+  onClick?: (x: any) => void;
   children?: ReactNode;
   disabled?: boolean;
 };

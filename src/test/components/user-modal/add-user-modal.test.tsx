@@ -23,7 +23,6 @@ describe("AddUserModal", () => {
     render(
       <AddUserModal showAddModal={() => true} setUsers={function (): void {}} />
     );
-
     expect(await screen.findByText("Add a new user")).toBeInTheDocument();
     expect(await screen.findByText("User type")).toBeInTheDocument();
     expect(await screen.findByText("Name")).toBeInTheDocument();

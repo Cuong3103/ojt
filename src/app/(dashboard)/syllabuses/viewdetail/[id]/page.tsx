@@ -25,7 +25,6 @@ const Page: React.FC = () => {
 
   const [syllabusById, setSyllabusById] = useState<Syllabus>({});
   const unitId = syllabusById.unitIds;
-  console.log(unitId);
   //============ API Syllabus =======
   const getCurrentSyllabus = async (id?: number) => {
     if (!id) throw new Error("ID is not correct");
@@ -38,7 +37,6 @@ const Page: React.FC = () => {
       try {
         const currentSyllabus = await getCurrentSyllabus(+syllabusId);
         setSyllabusById(currentSyllabus);
-        console.log(currentSyllabus);
       } catch (error) {
         console.error("Error fetching syllabus:", error);
       }
@@ -56,7 +54,6 @@ const Page: React.FC = () => {
     const fetchSyllabusByID = async () => {
       try {
         const currentUnit = await getCurrentUnit(unitId);
-        console.log(currentUnit);
       } catch (error) {
         console.error("Error fetching Unit:", error);
       }

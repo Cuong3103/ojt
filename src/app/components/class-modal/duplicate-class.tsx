@@ -29,7 +29,6 @@ export const DuplicateClass: FC<DuplicateClassProp> = ({
         const fetClassById = async () => {
             const currentClass =  await getCurrentClassToDup(classId);
             setClassByIdToDup(currentClass)
-            console.log(currentClass)
         }
         fetClassById();
     }, [])
@@ -47,7 +46,6 @@ export const DuplicateClass: FC<DuplicateClassProp> = ({
             })
             toast.success("Duplicate successful");
             handleClose();
-            console.log(duplicatedClass)
         }
         catch (error) {
             console.error("Error duplicating class:", error);
