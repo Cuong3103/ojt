@@ -13,6 +13,7 @@ import { fromTimestampToDateString } from "@/utils/formatUtils";
 import GeneralDetailSyllabus from "./general-detail-syllabus/page";
 import OutlineDetailSyllabus from "./outline-detail-syllabus/page";
 import { Unit } from "@/types/models/unit.model.type";
+import OtherDetailSyllabus from "./others-detail-syllabus/page";
 
 const Page: React.FC = () => {
   const router = usePathname();
@@ -89,10 +90,9 @@ const Page: React.FC = () => {
       return <GeneralDetailSyllabus data={syllabusById} />;
     } else if (page === "Outline") {
       return <OutlineDetailSyllabus unitId={unitId} />;
+    } else if (page === "Others") {
+      return <OtherDetailSyllabus />;
     }
-    // } else if (page === "Others") {
-    //   return <OtherSyllabusPage />;
-    // }
   };
 
   // ======= Convert Millisecond =========
@@ -141,7 +141,8 @@ const Page: React.FC = () => {
             </p>
           </div>
           <div className="author text-sm font-medium">
-            Modified on {fromTimestampToDateString(syllabusById.createdDate)} by
+            Modified on{" "}
+            {fromTimestampToDateString(syllabusById.createdDate / 1000)} by
             <span className="ml-[2px] font-bold">
               {syllabusById.createBy && syllabusById.createBy.includes("@")
                 ? syllabusById.createBy.split("@")[0]

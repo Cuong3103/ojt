@@ -7,12 +7,8 @@ import {
 import { Unit } from "@/types/models/unit.model.type";
 import { Content } from "@/types/models/user.model.type";
 import { useEffect, useState } from "react";
-import { CiCircleMinus } from "react-icons/ci";
 import { FcPieChart } from "react-icons/fc";
 import { IoIosArrowDropdown } from "react-icons/io";
-import { IoAddCircleOutline } from "react-icons/io5";
-import { MdOutlineEdit } from "react-icons/md";
-import Button from "@/app/components/button/button";
 
 type OutlineProps = {
   unitId: number[];

@@ -19,6 +19,9 @@ export enum API_LIST {
   VIEW_SYLLABUS_DETAIL = "/syllabus",
   VIEW_UNIT_DETAIL = "/unit",
   VIEW_CONTENT_DETAIL = "/content",
+  CREATE_SYLLABUS = "/syllabus",
+  CREATE_UNIT = "/unit",
+  CREATE_CONTENT = "/content",
 }
 
 export enum USER_ROLE {
