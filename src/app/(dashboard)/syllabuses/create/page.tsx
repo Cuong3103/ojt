@@ -87,7 +87,7 @@ const CreateSyllabusPage: React.FC = () => {
     if (syllabusResponse.statusCode === 200) {
       const syllabusId = syllabusResponse.content.id; // Lấy ID của syllabus mới tạo
       console.log("SyllabusID New", syllabusId);
-      //Loop Unit
+      //====== Loop Unit======
       const units = newData.units;
       const unitIds: string[] = [];
       for (const unit of units) {
@@ -105,11 +105,13 @@ const CreateSyllabusPage: React.FC = () => {
           console.log(unitIds);
         }
       }
+
       const contents = newData.content;
       const unitIdsOfContents = mapIndexToValue(
         contents.map((content) => content.unitId - 1),
         unitIds
       );
+      console.log(unitIdsOfContents);
 
       //========= Loop Contents ==========
       for (let i = 0; i < contents.length; i++) {

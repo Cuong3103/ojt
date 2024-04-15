@@ -76,7 +76,7 @@ const Page: React.FC = () => {
       name: syllabusName(syllabus),
       status: syllabusStatus(syllabus),
       createdBy: syllabus.createBy,
-      createdOn: fromTimestampToDateString(syllabus.createdDate),
+      createdOn: fromTimestampToDateString(syllabus.createdDate / 1000),
     }));
 
   const [showUploadModal, setShowUploadModal] = useState(false);

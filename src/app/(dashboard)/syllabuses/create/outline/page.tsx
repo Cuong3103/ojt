@@ -1,10 +1,6 @@
 "use client";
 import "./outline-page.css";
-import { ProgressBar } from "@/app/components/progress-bar/progress-bar";
-import { Tab } from "@/app/components/syllabus-tab/tab";
-import { FcPieChart } from "react-icons/fc";
 import { CiCircleMinus } from "react-icons/ci";
-import { MdOutlineCancel, MdOutlineEdit } from "react-icons/md";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { Detail } from "@/app/components/syllabus-detail/detail";
 import Button from "@/app/components/button/button";
@@ -13,6 +9,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { AddContentForm } from "@/app/components/syllabus-modal/outline-form/add-content-modal";
 import { toast } from "react-toastify";
+import { MdOutlineEdit } from "react-icons/md";
 
 type Day = {
   id: number;
@@ -63,6 +60,7 @@ const OutlineSyllabusPage: React.FC<{
   const [units, setUnits] = useState<Unit[]>([]);
   const [numUnitsAdded, setNumUnitsAdded] = useState(0);
   const [contents, setContents] = useState<Content[]>([]);
+  console.log(contents);
   const [unitName, setUnitName] = useState<string>("");
   const [selectedDay, setSelectedDay] = useState(0);
   const [selectedUnit, setSelectedUnit] = useState(0);
@@ -264,7 +262,7 @@ const OutlineSyllabusPage: React.FC<{
                                   )
                                   .map((content) => (
                                     <Detail
-                                      key={content.id}
+                                      key={`${content.id}-${unit.id}`}
                                       name={content.name}
                                       outputStandard={content.outputStandard}
                                       delivery={content.deliveryType}
