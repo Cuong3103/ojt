@@ -9,10 +9,11 @@ const DuplicationOptionEnum = createEnum(["ALLOW", "REPLACE", "SKIP"]);
 
 type UploadFileModalProps = {
   title: string;
-  showModal: () => void;
   scanningIds: string[];
   getFileUrl: string;
   importSettingFileds?: string[];
+  updateService: (x: any) => void;
+  showModal: () => void;
 };
 
 export const UploadFileModal: FC<UploadFileModalProps> = ({
@@ -20,7 +21,7 @@ export const UploadFileModal: FC<UploadFileModalProps> = ({
   showModal,
   scanningIds,
   getFileUrl,
-  importSettingFileds,
+  updateService,
 }) => {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [scanningOpts, setScanningOpts] = useState<{
@@ -65,7 +66,7 @@ export const UploadFileModal: FC<UploadFileModalProps> = ({
       formData.append("file", file);
       appendScanningFields(formData);
       formData.append("duplicateHandle", duplicationOption);
-      await uploadProgramsService(formData);
+      await updateService(formData);
 
       toast.success("File uploaded successfully");
       showModal();
@@ -77,28 +78,24 @@ export const UploadFileModal: FC<UploadFileModalProps> = ({
 
   return (
     <>
-      <div
-        className="fixed top-0 left-0 w-full h-full backdrop-blur-md opacity-100 z-40"
-        // onClick={showModal}
-      >
-        <div className="rounded-lg  fixed items-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white z-50 shadow-lg w-1/2">
-          <h2 className="flex items-center justify-between text-xl bg-[#2D3748] text-white p-2 rounded-t">
-            {title}
-            <button onClick={showModal}>
-              <IoMdCloseCircleOutline />
+      <dialog className="modal " open>
+        <div className="w-[500px] flex flex-col gap-[15px] bg-white rounded-[10px] shadow-md">
+          <div className="head bg-[#2D3748] flex items-center rounded-t-[10px] justify-center p-[10px]">
+            <p className="font-bold text-base text-white">{title}</p>
+            <button onClick={showModal} className="w-6 h-6 ml-auto">
+              <IoMdCloseCircleOutline className="w-full h-full" />
             </button>
-          </h2>
+          </div>
 
-          <form className="p-10">
-            <div className="flex items-start">
-              <h3 className="font-bold text-black text-lg mt-2">
-                Import settings
-              </h3>
-              <section className="ml-5">
-                <label className="flex gap-4 items-center mb-4">
-                  <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 mr-56">
-                    File (csv)
-                  </span>
+          <div className="body flex flex-col gap-[15px] px-[20px]">
+            <div className="part-top w-full flex justify-between">
+              <div className="pt-left">
+                <p className="text-sm font-bold">Import setting</p>
+              </div>
+
+              <div className="pt-right flex flex-col gap-[15px]">
+                <div className="ptr-property flex">
+                  <p className="w-[165px] text-sm font-normal">File (csv)*</p>
                   <input
                     type="file"
                     accept=".csv"
@@ -110,100 +107,112 @@ export const UploadFileModal: FC<UploadFileModalProps> = ({
                   <Button
                     title={file ? file.name : "Select"}
                     disabled={!!file}
-                    className="btn bg-black text-white"
+                    className="btn w-[82px] h-[24px] px-[20px] py-[5px] bg-[#2D3748] text-white text-sm font-normal rounded-[5px] flex items-center justify-center"
                     onClick={(e) => onClickButton(e)}
                   />
-                </label>
-                <label className="flex gap-4 items-center mb-4">
-                  <div className="mr-20 w-full  text-sm font-medium text-slate-700">
-                    Encoding type
+                </div>
+                <div className="ptr-property flex">
+                  <p className="w-[165px] text-sm font-normal">Encoding type</p>
+                  <div className="w-[140px]">
+                    <select
+                      className="w-full px-[10px] border-[1px] border-[#ACACAC]"
+                      defaultValue="auto"
+                    >
+                      <option disabled selected>
+                        Auto Detect
+                      </option>
+                      <option>UTF-8</option>
+                      <option>UTF-16</option>
+                    </select>
                   </div>
-                  <select className="select select-bordered w-full max-w-xs">
-                    <option>Auto detect</option>
-                    <option>UTF-8</option>
-                    <option>UTF-16</option>
-                  </select>
-                </label>
-                <label className="flex gap-4 items-center mb-4">
-                  <div className="mr-20 w-full  text-sm font-medium text-slate-700">
-                    Column separator
+                </div>
+                <div className="ptr-property flex">
+                  <p className="w-[165px] text-sm font-normal">
+                    Column seperator
+                  </p>
+                  <div className="w-[140px]">
+                    <select className="w-full max-w-xs px-[10px] border-[1px] border-[#ACACAC]">
+                      <option className="" disabled selected>
+                        Comma
+                      </option>
+                    </select>
                   </div>
-                  <select className="select select-bordered w-full max-w-xs">
-                    <option selected>Comma</option>
-                  </select>
-                </label>
-                <label className="flex gap-4 items-center mb-4">
-                  <div className="mr-20 w-full  text-sm font-medium text-slate-700">
+                </div>
+                <div className="ptr-property flex">
+                  <p className="w-[165px] text-sm font-normal">
                     Import template
-                  </div>
-                  <a href={getFileUrl} className="text-blue-500 underline">
+                  </p>
+                  <a
+                    href={getFileUrl}
+                    className="w-[82px] h-[24px] px-[20px] py-[5px] underline text-[#285D9A] text-sm font-normal flex items-center justify-center"
+                  >
                     Download
                   </a>
-                </label>
-              </section>
+                </div>
+                <hr className="h-[1px] bg-[#ACACAC]" />
+              </div>
             </div>
-            <div className="divider"></div>
-            <div className="flex items-start">
-              <h3 className="font-bold text-black text-lg mt-2">
-                Duplicate controls
-              </h3>
-              <section className="ml-5 mt-3">
-                <div className="mr-20 w-full  text-sm font-medium text-slate-700 mb-3">
-                  Scanning
+            <div className="part-bottom w-full flex justify-between">
+              <div className="pb-left">
+                <p className="text-sm font-bold">Duplicate control</p>
+              </div>
+              <div className="pb-right w-[305px]">
+                <div className="pbr-top h-[49px] flex flex-col gap-[5px]">
+                  <p className="text-sm font-normal">Scanning</p>
+                  <div className="choose flex gap-[16px]">
+                    <div className="tick flex gap-[8px]">
+                      {scanningIds.map((id) => (
+                        <>
+                          <input
+                            type="checkbox"
+                            name={id}
+                            value={"true"}
+                            className="checkbox w-[16px] h-[16px] rounded-[2px]"
+                            onChange={(e) => chooseScanningOtps(e)}
+                          />
+                          <p className="text-sm">{id}</p>
+                        </>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div className="flex gap-4 mb-10">
-                  {scanningIds.map((id) => (
-                    <label className="flex items-center mr-10 gap-3">
-                      <input
-                        type="checkbox"
-                        name={id}
-                        value={"true"}
-                        className="checkbox"
-                        onChange={(e) =>
-                          chooseScanningOtps(e)
-                        }
-                      />
-
-                      <p className="text-sm">{id}</p>
-                    </label>
-                  ))}
+                <div className="pbr-bottom h-[59px] flex flex-col gap-[5px]">
+                  <p className="text-sm font-normal">Duplicate handle</p>
+                  <div className="tick flex gap-[8px]">
+                    {Object.keys(DuplicationOptionEnum).map((id) => (
+                      <>
+                        <input
+                          key={id}
+                          type="radio"
+                          name="scanning"
+                          value={id}
+                          className="checkbox w-[16px] h-[16px] rounded-[2px]"
+                          onChange={(e) => setDuplicationOption(e.target.value)}
+                        />
+                        <p className="text-sm">{id}</p>
+                      </>
+                    ))}
+                  </div>
                 </div>
-                <div className="mr-20 w-full  text-sm font-medium text-slate-700 mb-3">
-                  Duplicate handle
-                </div>
-                <div className="flex gap-4">
-                  {Object.keys(DuplicationOptionEnum).map((id) => (
-                    <label className="flex items-center mr-10 gap-3">
-                      <input
-                        type="radio"
-                        name="scanning"
-                        value={id}
-                        className="checkbox"
-                        onChange={(e) => setDuplicationOption(e.target.value)}
-                      />
-                      <p className="text-sm">{id}</p>
-                    </label>
-                  ))}
-                </div>
-              </section>
+                <div className="divider"></div>
+                <section className="flex justify-end mt-5 items-center gap-6">
+                  <Button
+                    title="Cancel"
+                    className="w-[48px] h-[28px] py-[2px] rounded-[8px] underline text-[#E74A3B] text-sm mr-[30px]"
+                    onClick={showModal}
+                  />
+                  <Button
+                    title="Import"
+                    className="btn bg-black text-white"
+                    disabled={!file}
+                    onClick={(e) => submitFile(e)}
+                  />
+                </section>
+              </div>
             </div>
-            <div className="divider"></div>
-            <section className="flex justify-end mt-5 items-center gap-6">
-              <Button
-                title="Cancel"
-                className="w-[48px] h-[28px] py-[2px] rounded-[8px] underline text-[#E74A3B] text-sm mr-[30px]"
-                onClick={showModal}
-              />
-              <Button
-                title="Import"
-                className="btn bg-black text-white"
-                disabled={!file}
-                onClick={(e) => submitFile(e)}
-              />
-            </section>
-          </form>
+          </div>
         </div>
-      </div>
+      </dialog>
     </>
   );
 };
