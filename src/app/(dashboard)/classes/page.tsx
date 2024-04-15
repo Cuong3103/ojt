@@ -18,7 +18,7 @@ import { RxAvatar } from "react-icons/rx";
 import { MockDataService } from "@/app/services/mock-response.service";
 import { Class } from "@/types/class.type";
 import { userGenerator } from "@/utils/mockHelper";
-import useQuery from "@/hooks/useQuery";
+
 
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { DeleteClassModal } from "@/app/components/class-modal/delete-class-modal";
@@ -27,6 +27,7 @@ import { ClassAvancedSreach } from "@/app/components/advanced-search/ClassAvance
 import { toast } from "react-toastify";
 import { SUCCESS_HTTP_CODES } from "@/utils/constants";
 import { DuplicateClass } from "@/app/components/class-modal/duplicate-class";
+
 
 
 const ViewClassPage: FC = () => {
@@ -38,7 +39,8 @@ const ViewClassPage: FC = () => {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [userToUpdate, setUserToUpdate] = useState<number>(0);
-  const [isFiltering, setIsFiltering ] = useState(false)
+  const [isFiltering, setIsFiltering ] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [metadata, setMetadata] = useState({
     hasNextPage: false,
@@ -75,9 +77,14 @@ const ViewClassPage: FC = () => {
     }
   };
 
+  // const getLink = () => {
+
+  // }
+
   const formattedClasses = (classes: Class[]) =>
   classes.map((clazz) => ({
     ...clazz,
+    // name: getLink(clazz.name),
     createdDate: fromTimestampToDateString(clazz.createdDate),
     duration: `${getDuration(clazz.startDate, clazz.endDate)} days`,
     classStatus: getClassStatus(clazz.classStatus)
@@ -91,15 +98,18 @@ const ViewClassPage: FC = () => {
     setMetadata(response.meatadataDTO);
   };
 
+
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(0);
     setLimit(Number(e.target.value));
   };
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+ 
   const [showDuplicateModal, setShowDuplicateModal] = useState(false);
   const [dataClassDelete, setDataClassDelete] = useState({});
   const [dataClassDuplicate,setDataClassDuplicate] = useState({});
+  
   const [sreachInput, setSreachInput] = useState("")
   
   const handleOpenAvancedBox = () => setIsFiltering(!isFiltering);
@@ -110,11 +120,9 @@ const ViewClassPage: FC = () => {
         setData(response.content)
        }
       toast.success("HELLO");
-
     }
   };
 
-  
   const handleOpenUpdatePopup = (classInfo: any) => {
     setShowDeleteModal(!showDeleteModal);
     setDataClassDelete(classInfo);
@@ -130,6 +138,8 @@ const ViewClassPage: FC = () => {
     setDataClassDuplicate(classInfo);
   }
 
+  
+
   const options = [
     {
       icon: <FaPencilAlt />,
@@ -141,6 +151,7 @@ const ViewClassPage: FC = () => {
       label: "Duplicated",
       onClick: handleOpenDuplicatePopup
     },
+   
     {
       icon: <MdOutlineDeleteForever />,
       label: "Delete class",
@@ -161,6 +172,7 @@ const ViewClassPage: FC = () => {
       <article className="flex items-center m-auto justify-end">
       <div className="flex items-center gap-4 flex-grow">
       <InputSearch  onKeyDown={(e) => handleNormalSearch(e)} onChange={(e) => setSreachInput(e.target.value)} />
+
       <Button 
         title="Filter" 
         icon={<IoFilterSharp />}
@@ -192,7 +204,7 @@ const ViewClassPage: FC = () => {
       ></Chip>
       <div>
         <Table data={data} columns={classColumns} icon={<BsFilterLeft />} popupMenu={options} setDataToUpdate={setUserToUpdate}
-          setData={setData}/>
+          setData={setData} setIsPopupOpen={setIsPopupOpen} isPopupOpen={isPopupOpen}/>
         
        
       </div>
@@ -213,6 +225,7 @@ const ViewClassPage: FC = () => {
          />
         
       )}
+      
       
     </div>
   );
