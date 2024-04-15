@@ -62,7 +62,7 @@ export const DuplicateClass: FC<DuplicateClassProp> = ({
           <div className="text-[#D45B13] text-[32px] text-center font-bold">Are you sure?</div>
           <div className="text-[14px] font-bold">
             <div className="text-center ">
-              Do you really want to DUPLICATE "<span>{classByIdToDup.name}</span>" class?
+              Do you really want to DUPLICATE `<span>{classByIdToDup.name}</span>` class?
             </div>
             
 

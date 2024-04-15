@@ -56,6 +56,7 @@ describe("AddUserModal", () => {
     );
 
     const submitBtn = await screen.findByRole("button", { name: "Save" });
+    screen.debug()
     const [userType] = await screen.findAllByRole("combobox");
     const nameInput = await screen.findByLabelText("user_name");
     const emailInput = await screen.findByLabelText("email");
