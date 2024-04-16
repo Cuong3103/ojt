@@ -57,25 +57,11 @@ export const AddUserModal: FC<AddUserModalProps> = ({
 
     const createUser = async () => {
       let response: any;
-      const isEnabled = true;
-      const password = "pass";
-      const dob = birthDay?.unix();
-      const names = fullName.split(" ");
-      const firstName = names[0];
-      const lastName = names.slice(1).join(" ");
-      const user = {
-        firstName,
-        lastName,
-        password,
-        phone,
-        email,
-        dob,
-        gender,
-        userRoleId,
-      };
-      if (isEnabled) {
-        response = await addUser(user as any);
-      } else {
+      const isEnabled = await isFlagEnabled(UsersFlag.CREATE_USER);
+      if (!isEnabled) {
+        const id = Math.floor(Math.random() * 100);
+        const dob = birthDay?.format("YYYY-MM-DD");
+        const user = { id, fullName, phone, email, dob, gender, role };
         response = new MockResponse(201, user);
       }
       if (SUCCESS_HTTP_CODES.includes(response.statusCode)) {
@@ -89,6 +75,7 @@ export const AddUserModal: FC<AddUserModalProps> = ({
 
     await createUser();
     showAddModal();
+    createUser();
   };
 
   return (

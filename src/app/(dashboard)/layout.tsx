@@ -22,7 +22,7 @@ const DashboardLayout: FC<DashboardLayoutProps> = async (props) => {
           <Sidebar />
           {props.children}
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }
