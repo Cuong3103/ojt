@@ -34,11 +34,12 @@ export type Program = {
 };
 
 type Content = {
-  dayId: number;
-  unitId: number;
-  name: string;
-  outputStandard: string;
-  trainingTime: number;
-  deliveryType: string;
-  method: string;
+  dayId?: number;
+  unitId?: number;
+  name?: string;
+  outputStandard?: string;
+  trainingTime?: number;
+  deliveryType?: string;
+  method?: string;
+  duration?: string;
 };

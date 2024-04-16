@@ -1,36 +1,5 @@
-import Button from "@/app/components/button/button";
-import Image from "next/image";
-import { Dispatch, SetStateAction, useState } from "react";
-import { toast } from "react-toastify";
-
-type OtherProps = {
-  otherFormData: Dispatch<SetStateAction<any>>;
-};
-const OtherSyllabusPage: React.FC<OtherProps> = ({ otherFormData }) => {
-  const [formData, setFormData] = useState({
-    quiz: "",
-    assignment: "",
-    final: "",
-    finalTheory: "",
-    gpa: "",
-  });
-  const handleSaveOtherForm = () => {
-    const updateOtherForm = {
-      quiz: quiz,
-      assignment: assignment,
-      final: final,
-      finalTheory: finalTheory,
-      gpa: gpa,
-    };
-    setFormData(updateOtherForm);
-    otherFormData(updateOtherForm);
-    toast.success("Save Other Data successfully");
-  };
-  const [quiz, setQuiz] = useState("");
-  const [assignment, setAssignment] = useState("");
-  const [final, setFinal] = useState("");
-  const [finalTheory, setFinalTheory] = useState("");
-  const [gpa, setGpa] = useState("");
+import { FcPieChart } from "react-icons/fc";
+const OtherDetailSyllabus: React.FC = () => {
   return (
     <div className="w-full">
       <div className="content w-[942px] flex flex-col gap-[10px] pt-[10px] pl-[20px] ">
@@ -42,12 +11,7 @@ const OtherSyllabusPage: React.FC<OtherProps> = ({ otherFormData }) => {
             <div className="w-full h-[310px] shadow flex items-center rounded-b-[10px]">
               <div className="w-full h-[209.15px] px-[16px] flex items-center gap-[20px]">
                 <div className="w-[208.86px] h-[209.15px] flex items-center">
-                  <Image
-                    src="../assets/icons/pieChart.svg"
-                    alt="lecture"
-                    width={208.86}
-                    height={209.15}
-                  />
+                  <FcPieChart className="w-[208.86px] h-[209.15px]" />
                 </div>
 
                 <div className="w-[179px] h-[135px] flex flex-col gap-[15px]">
@@ -116,36 +80,21 @@ const OtherSyllabusPage: React.FC<OtherProps> = ({ otherFormData }) => {
                 {" "}
                 <div className="w-[145px] h-[27px] flex items-center justify-between">
                   <p className="text-sm font-normal">Quiz *</p>
-                  <input
-                    type="text"
-                    className="w-[47px] h-[27px] border-[1px] border-[#000000]   px-[5px] rounded-[10px] flex items-center justify-center  text-sm font-normal"
-                    placeholder="15%"
-                    onChange={(e) => {
-                      setQuiz(e.target.value);
-                    }}
-                  />
+                  <p className="w-[47px] h-[27px] border-[1px] border-[#000000] px-[5px] rounded-[10px] flex items-center justify-center  text-sm font-normal">
+                    25%
+                  </p>
                 </div>
                 <div className="w-[145px] h-[27px] flex items-center justify-between">
                   <p className="text-sm font-normal">Assignment *</p>
-                  <input
-                    type="text"
-                    className="w-[47px] h-[27px] border-[1px] border-[#000000] px-[5px] rounded-[10px] flex items-center justify-center  text-sm font-normal"
-                    placeholder="15%"
-                    onChange={(e) => {
-                      setAssignment(e.target.value);
-                    }}
-                  />
+                  <p className="w-[47px] h-[27px] border-[1px] border-[#000000] px-[5px] rounded-[10px] flex items-center justify-center  text-sm font-normal">
+                    25%
+                  </p>
                 </div>
                 <div className="w-[145px] h-[27px] flex items-center justify-between">
                   <p className="text-sm font-normal">Final *</p>
-                  <input
-                    type="text"
-                    className="w-[47px] h-[27px] border-[1px] border-[#000000] px-[5px] rounded-[10px] flex items-center justify-center  text-sm font-normal"
-                    placeholder="15%"
-                    onChange={(e) => {
-                      setFinal(e.target.value);
-                    }}
-                  />
+                  <p className="w-[47px] h-[27px] border-[1px] border-[#000000] px-[5px] rounded-[10px] flex items-center justify-center  text-sm font-normal">
+                    30%
+                  </p>
                 </div>
                 <hr className="h-[2px] bg-[#474747]" />
               </div>
@@ -153,14 +102,9 @@ const OtherSyllabusPage: React.FC<OtherProps> = ({ otherFormData }) => {
                 {" "}
                 <div className="w-[145px] h-[27px] flex items-center justify-between">
                   <p className="text-sm font-normal">Final Theory*</p>
-                  <input
-                    type="text"
-                    className="w-[47px] h-[27px] border-[1px] border-[#000000] px-[5px] rounded-[10px] flex items-center justify-center  text-sm font-normal"
-                    placeholder="70%"
-                    onChange={(e) => {
-                      setFinalTheory(e.target.value);
-                    }}
-                  />
+                  <p className="w-[47px] h-[27px] border-[1px] border-[#000000] px-[5px] rounded-[10px] flex items-center justify-center  text-sm font-normal">
+                    20%
+                  </p>
                 </div>
               </div>
               <div className="bot w-full px-[16px]  flex flex-col gap-[15px]">
@@ -171,46 +115,17 @@ const OtherSyllabusPage: React.FC<OtherProps> = ({ otherFormData }) => {
                 </div>
                 <div className="w-[145px] h-[27px] flex items-center justify-between">
                   <p className="text-sm font-normal">GPA*</p>
-                  <input
-                    type="text"
-                    className="w-[47px] h-[27px] border-[1px] border-[#000000] px-[5px] rounded-[10px] flex items-center justify-center  text-sm font-normal"
-                    placeholder="70%"
-                    onChange={(e) => {
-                      setGpa(e.target.value);
-                    }}
-                  />
+                  <p className="w-[47px] h-[27px] border-[1px] border-[#000000] px-[5px] rounded-[10px] flex items-center justify-center  text-sm font-normal">
+                    70%
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div> hahaha</div>
-      </div>
-      <div className="w-full h-[68px] flex items-center justify-between">
-        <div>
-          <Button
-            className="bg-main w-[110px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm font-bold"
-            title="Previous"
-          />
-        </div>
-        <div className="w-[292px] h-[28px] flex items-center gap-[10px]">
-          <Button
-            className=" w-[48px] h-[28px] px-[0px] py-[2px] rounded-[8px] underline text-[#E74A3B] text-sm font-bold"
-            title="Cancel"
-          />
-          <Button
-            className="bg-[#474747] w-[140px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm font-bold"
-            title="Save as draft"
-          />
-          <Button
-            className="bg-main w-[80px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm font-bold"
-            title="Save"
-            onClick={handleSaveOtherForm}
-          />
         </div>
       </div>
     </div>
   );
 };
 
-export default OtherSyllabusPage;
+export default OtherDetailSyllabus;

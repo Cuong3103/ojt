@@ -26,7 +26,7 @@ export const AddContentForm: React.FC<AddContentFormProps> = ({
   const [outputStandard, setOutputStandard] = useState<string>("");
   const [trainingTime, setTrainingTime] = useState<number>(0);
   const [deliveryType, setDeliveryType] = useState<string>("");
-  const [method, setMethod] = useState<string>("");
+  const [method, setMethod] = useState<string>("Offline");
   const handleCancelUnit = () => {
     // Đặt lại tất cả các trường về giá trị mặc định
     setName("");
