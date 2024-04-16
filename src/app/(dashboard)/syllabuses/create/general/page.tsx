@@ -9,7 +9,7 @@ type GeneralProps = {
 };
 const GeneralSyllabusPage: React.FC<GeneralProps> = ({ generalFormData }) => {
   const [level, setLevel] = useState("");
-  const [attendee, setAttendee] = useState("");
+  const [attendee, setAttendee] = useState(Number);
   const [technical, setTechnical] = useState("");
   const [formGeneral, setFormGeneral] = useState({
     level: "",
@@ -17,6 +17,14 @@ const GeneralSyllabusPage: React.FC<GeneralProps> = ({ generalFormData }) => {
     technicalRequirements: "",
   });
   const handleSave = () => {
+    if (isNaN(attendee)) {
+      toast.error("Attendee number must be a valid number.");
+      return;
+    }
+    if (technical === "") {
+      toast.error("Please enter data must not be blank");
+      return;
+    }
     const updateGeneralData = {
       level: level,
       attendeeNumber: attendee,

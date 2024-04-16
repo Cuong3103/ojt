@@ -60,7 +60,6 @@ const OutlineSyllabusPage: React.FC<{
   const [units, setUnits] = useState<Unit[]>([]);
   const [numUnitsAdded, setNumUnitsAdded] = useState(0);
   const [contents, setContents] = useState<Content[]>([]);
-  console.log(contents);
   const [unitName, setUnitName] = useState<string>("");
   const [selectedDay, setSelectedDay] = useState(0);
   const [selectedUnit, setSelectedUnit] = useState(0);

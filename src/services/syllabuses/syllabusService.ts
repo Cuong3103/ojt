@@ -51,3 +51,7 @@ export const createContentAPI = async (content: Content) => {
     await axiosInstance.post(getRoute(API_LIST.CREATE_CONTENT), content)
   );
 };
+export const deleteSyllabus = async (syllabusId: number) => {
+  const deleteUrl = API_LIST.DELETE_SYLLABUS + `/${syllabusId}`;
+  return handleResponse(await axiosInstance.delete(getRoute(deleteUrl)));
+};

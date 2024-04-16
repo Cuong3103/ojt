@@ -23,6 +23,7 @@ export enum API_LIST {
   CREATE_SYLLABUS = "/syllabus",
   CREATE_UNIT = "/unit",
   CREATE_CONTENT = "/content",
+  DELETE_SYLLABUS = "/syllabus",
 }
 
 export enum USER_ROLE {

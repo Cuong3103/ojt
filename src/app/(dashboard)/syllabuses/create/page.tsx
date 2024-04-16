@@ -10,7 +10,6 @@ import GeneralSyllabusPage from "./general/page";
 import OutlineSyllabusPage from "./outline/page";
 import OtherSyllabusPage from "./other/page";
 import { toast } from "react-toastify";
-import Link from "next/link";
 import {
   createContentAPI,
   createSyllabusAPI,
@@ -81,12 +80,32 @@ const CreateSyllabusPage: React.FC = () => {
       isActive: true,
       version: version,
     };
+    // Kiểm tra các trường bắt buộc
+    if (!syllabusName || !code || !data.technicalRequirements) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+    if (isNaN(data.attendeeNumber)) {
+      toast.error("Please input Attendee type number");
+      return;
+    }
+
+    // Kiểm tra định dạng dữ liệu đầu vào
+    if (!/^\d+(\.\d+)?$/.test(version)) {
+      toast.error("Invalid version format. Please use X.Y format.");
+      return;
+    }
+    if (!data.units) {
+      toast.error("Please continue input units Outline page and Save input");
+      return;
+    }
 
     syllabusResponse = await createSyllabusAPI(syllabus as any);
 
     if (syllabusResponse.statusCode === 200) {
       const syllabusId = syllabusResponse.content.id; // Lấy ID của syllabus mới tạo
       console.log("SyllabusID New", syllabusId);
+
       //====== Loop Unit======
       const units = newData.units;
       const unitIds: string[] = [];
@@ -111,7 +130,6 @@ const CreateSyllabusPage: React.FC = () => {
         contents.map((content) => content.unitId - 1),
         unitIds
       );
-      console.log(unitIdsOfContents);
 
       //========= Loop Contents ==========
       for (let i = 0; i < contents.length; i++) {
@@ -128,6 +146,7 @@ const CreateSyllabusPage: React.FC = () => {
         };
         const contentResponse = await createContentAPI(contentData);
       }
+      window.location.href = "/syllabuses";
     } else {
       syllabusResponse = new MockResponse(201, syllabus);
       toast.success("Create Syllabus successfully (mocked)");
@@ -167,7 +186,7 @@ const CreateSyllabusPage: React.FC = () => {
           <input
             type="text"
             placeholder="C# Language Program"
-            className="searchSyllabus"
+            className="w-[300px] h-[36px] border-[1px] border-[#8B8B8B] p-[10px] rounded-[6px] font-normal"
             onChange={(e) => {
               setSyllabusName(e.target.value);
             }}
@@ -178,7 +197,7 @@ const CreateSyllabusPage: React.FC = () => {
           <input
             type="text"
             placeholder="NPL"
-            className="w-[28px] h-[28px] text-sm"
+            className="w-[50px] h-[28px] text-sm border-[1px] border-[#8B8B8B] p-[10px] rounded-[6px] "
             onChange={(e) => {
               setCode(e.target.value);
             }}
@@ -189,7 +208,7 @@ const CreateSyllabusPage: React.FC = () => {
           <input
             type="text"
             placeholder="1.0"
-            className="w-[28px] h-[28px] text-sm"
+            className="w-[40px] h-[28px] text-sm border-[1px] border-[#8B8B8B] p-[10px] rounded-[6px] "
             onChange={(e) => {
               setVersion(e.target.value);
             }}
@@ -204,15 +223,13 @@ const CreateSyllabusPage: React.FC = () => {
         </div>
         {/**=======HANDLE CHANGE PAGE ========== */}
         <div>{handleRenderPage(selectedTab)}</div>
-        <Link href={"/syllabuses"}>
-          <Button
-            title="Done"
-            className="bg-red-400 text-white"
-            onClick={() =>
-              handleCreateSyllabus(createSyllabus, syllabusName, code, version)
-            }
-          ></Button>
-        </Link>
+        <Button
+          title="Done"
+          className="bg-red-400 text-white"
+          onClick={() =>
+            handleCreateSyllabus(createSyllabus, syllabusName, code, version)
+          }
+        ></Button>
       </div>
     </div>
   );

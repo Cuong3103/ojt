@@ -9,11 +9,7 @@ import Pagination from "@/app/components/pagination/index";
 import { Table } from "@/app/components/table/table";
 import { MockDataService } from "@/app/services/mock-response.service";
 
-import {
-  fetchUserList,
-  getUserByUUID,
-  updateProfile,
-} from "@/services/users";
+import { fetchUserList, getUserByUUID, updateProfile } from "@/services/users";
 import { User } from "@/types/models/user.model.type";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { userGenerator } from "@/utils/mockHelper";
@@ -38,7 +34,6 @@ const UserListPage: FC = () => {
   const [showChangeRoleModal, setShowChangeRoleModal] = useState(false);
   const [userToUpdate, setUserToUpdate] = useState<number>(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
   const [showAddModal, setShowAddModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [data, setData] = useState<User[]>([]);
