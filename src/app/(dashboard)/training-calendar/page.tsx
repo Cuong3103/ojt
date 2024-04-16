@@ -76,7 +76,7 @@ const TrainingCalendarPage: FC = () => {
       <div className="p-4 rounded-lg border-2">
         <TrainingCalendar />
         {sesionPerDay.map((sessionsPerDay) => (
-          <div className="pt-3 pb-3">
+          <div className="pt-3 pb-3" key={0}>
             <div className="bg-primary-color text-white rounded-lg pl-3">
               {sessionsPerDay.label}
             </div>

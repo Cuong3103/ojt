@@ -1,3 +1,5 @@
+"use client"
+
 import { Detail } from "@/app/components/syllabus-detail/detail";
 import "./outline-detail-page.css";
 import {

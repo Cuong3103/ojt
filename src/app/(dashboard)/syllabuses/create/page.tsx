@@ -219,7 +219,7 @@ const CreateSyllabusPage: React.FC = () => {
       <div className="px-[20px]">
         {" "}
         <div className="w-[600px] mb-0">
-          <Tab onTabPageChange={handleTabChange}/>
+          <Tab onTabPageChange={handleTabChange} tabLabels={["General", "Outline", "Others"]}/>
         </div>
         {/**=======HANDLE CHANGE PAGE ========== */}
         <div>{handleRenderPage(selectedTab)}</div>

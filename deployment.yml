@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: nextjs
-        image: gcr.io/sonic-stratum-415515/fams-ui:1.0.4
+        image: gcr.io/sonic-stratum-415515/fams-ui:1.0.5
         ports:
         - containerPort: 3000
