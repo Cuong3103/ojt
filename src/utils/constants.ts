@@ -13,6 +13,7 @@ export enum API_LIST {
   ADMIN_MODIFY_USER = "/user",
   UPDATE_AVATAR = "/user/updateImage",
   VIEW_CLASS = "/class",
+  CREATE_CLASS = "/class",
   SREACH_CLASS_FOR_USER = "/class/search",
   UPLOAD_PROGRAMS_CSV = "/trainingProgram/updatecsv",
   UPLOAD_SYLLABUS_CSV = "/syllabus/updatecsv",

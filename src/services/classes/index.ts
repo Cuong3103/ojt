@@ -6,6 +6,7 @@ import {
   getRouteWithId,
 } from "@/utils/constants";
 import { handleResponse } from "../base.service";
+import { Class, ClassBody } from "@/types/class.type";
 
 
 export const fetClassList = async (page?: number, limit?: number) => {
@@ -13,6 +14,12 @@ export const fetClassList = async (page?: number, limit?: number) => {
       await axiosInstance.get(
         getRoutePagination(API_LIST.VIEW_CLASS, page, limit)
       )
+    );
+  };
+
+  export const createClass = async (body: ClassBody) => {
+    return handleResponse(
+      await axiosInstance.post(getRoute(API_LIST.CREATE_CLASS), body)
     );
   };
 
@@ -27,14 +34,8 @@ export const fetClassList = async (page?: number, limit?: number) => {
     return handleResponse(await axiosInstance.delete(getRoute(deleteUrl)));
   };
 
-  export const sreachClassByUser = async (term: string, limit?: number) => {
+  export const sreachClassByUser = async (name: string, limit?: number) => {
     return handleResponse(
-      await axiosInstance.post(getRoutePagination(API_LIST.SREACH_CLASS_FOR_USER, limit), JSON.stringify({
-        name: term,
-        code: term,
-      }))
-      
+      await axiosInstance.post(getRoutePagination(API_LIST.SREACH_CLASS_FOR_USER, limit), name)
     );
-    
-    
   };

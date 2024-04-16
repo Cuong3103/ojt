@@ -1,15 +1,50 @@
-
-
-export type Class = {
+export type ClassBody = {
+  classDTO: {
     name: string;
     code: string;
-    createOn: string;
-    createBy: string;
-    duration: string;
-    classStatus: string;
+    // createOn?: string;
+    createBy?: string;
+    duration: number | undefined;
+    classStatus: number | string;
     location: string;
     fsu: string;
-    createdDate: number ;
-    startDate: number ;
-    endDate: number
+    createdDate?: number;
+    startDate: number;
+    endDate: number;
+    startTime: string;
+    endTime: string;
+    status: number;
+    trainerIds: string[];
+    adminIds: string[];
+    attendee: string;
+    attendeePlanned: number;
+    attendeeAccepted: number;
+    attendeeActual: number;
+    trainingProgramId: number;
+  };
+  weekDays: string[];
+};
+
+export type Class = {
+  name: string;
+  code: string;
+  // createOn?: string;
+  createBy?: string;
+  duration: number | undefined;
+  classStatus: number | string;
+  location: string;
+  fsu: string;
+  createdDate?: number;
+  startDate: number;
+  endDate: number;
+  startTime: string;
+  endTime: string;
+  status: number;
+  trainerIds: string[];
+  adminIds: string[];
+  attendee: string;
+  attendeePlanned: number;
+  attendeeAccepted: number;
+  attendeeActual: number;
+  trainingProgramId: number | undefined;
 };

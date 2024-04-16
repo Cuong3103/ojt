@@ -17,6 +17,7 @@ export const PopupMenu: FC<PopupMenuProps> = ({
 }) => {
   
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+
   const handleOpenPopup = () => {
     setShowUpdateModal(!showUpdateModal);
   };
