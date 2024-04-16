@@ -52,6 +52,12 @@ const GeneralSyllabusPage: React.FC<GeneralProps> = ({ generalFormData }: Genera
                   setLevel(e.target.value);
                 }}
               >
+              <select
+                className=" rounded-[5px] shadow px-[10px] py-[5px] w-[270px]"
+                onChange={(e) => {
+                  setLevel(e.target.value);
+                }}
+              >
                 <option value="1">Auto Detect</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -63,7 +69,12 @@ const GeneralSyllabusPage: React.FC<GeneralProps> = ({ generalFormData }: Genera
               <span className="font-semibold text-base">Attendee number</span>
               <input
                 className="attendee border-[1px] border-[#8B8B8B] p-[10px] rounded-[6px] w-[173px] placeholder-gray-400"
+                className="attendee border-[1px] border-[#8B8B8B] p-[10px] rounded-[6px] w-[173px] placeholder-gray-400"
                 type="text"
+                placeholder="Please enter number"
+                onChange={(e) => {
+                  setAttendee(e.target.value);
+                }}
                 placeholder="Please enter number"
                 onChange={(e) => {
                   setAttendee(e.target.value);
@@ -84,6 +95,9 @@ const GeneralSyllabusPage: React.FC<GeneralProps> = ({ generalFormData }: Genera
                 id=""
                 cols={parseInt("30")}
                 rows={parseInt("10")}
+                onChange={(e) => {
+                  setTechnical(e.target.value);
+                }}
                 onChange={(e) => {
                   setTechnical(e.target.value);
                 }}
@@ -173,6 +187,7 @@ const GeneralSyllabusPage: React.FC<GeneralProps> = ({ generalFormData }: Genera
           <Button
             className="bg-main w-[80px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm font-bold"
             title="Save"
+            onClick={handleSave}
             onClick={handleSave}
           />
         </div>
