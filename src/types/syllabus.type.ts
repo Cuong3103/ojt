@@ -1,7 +1,6 @@
 export type Syllabus = {
   id: number;
   name: string;
-  id?: number;
   code: string;
   createdDate: number;
   createBy: string;
@@ -13,4 +12,7 @@ export type Syllabus = {
   isApproved: boolean;
   attendee: number;
   unitIds: number[];
+  version: string;
+  modifiedBy: string;
+
 };

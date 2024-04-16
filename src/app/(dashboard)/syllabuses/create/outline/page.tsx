@@ -1,6 +1,11 @@
 "use client";
+"use client";
 import "./outline-page.css";
+import { ProgressBar } from "@/app/components/progress-bar/progress-bar";
+import { Tab } from "@/app/components/syllabus-tab/tab";
+import { FcPieChart } from "react-icons/fc";
 import { CiCircleMinus } from "react-icons/ci";
+import { MdOutlineCancel, MdOutlineEdit } from "react-icons/md";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { Detail } from "@/app/components/syllabus-detail/detail";
 import Button from "@/app/components/button/button";
@@ -9,7 +14,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { AddContentForm } from "@/app/components/syllabus-modal/outline-form/add-content-modal";
 import { toast } from "react-toastify";
-import { MdOutlineEdit } from "react-icons/md";
 
 type Day = {
   id: number;
@@ -29,41 +33,22 @@ type Content = {
   deliveryType: string;
   method: string;
 };
-type OutlineFormData = {
-  days: Day[];
-  units: Unit[];
-  content: Content[];
-};
-const OutlineSyllabusPage: React.FC<{
-  outlineFormData: (data: any) => void;
-}> = ({ outlineFormData }) => {
-  // ===========Form Outline Data Api===================
-  const [outlineForm, setOutlineForm] = useState<OutlineFormData>({
-    days: [],
-    units: [],
-    content: [],
-  });
-  const handleSaveOutlineForm = () => {
-    const updatedOutlineForm = {
-      days: [...days],
-      units: [...units],
-      content: [...contents],
-    };
-    setOutlineForm(updatedOutlineForm);
-    outlineFormData(updatedOutlineForm);
-    toast.success("Save Outline Data successfully");
-  };
-  //============== Add Unit ====================
-  const [showAddUnit, setShowAddUnit] = useState(false);
+const OutlineSyllabusPage: React.FC = () => {
+  {
+    /**============== Add Unit ==================== */
+  }
   const [showAddContentModal, setShowAddContentModal] = useState(false);
+  const [showAddUnit, setShowAddUnit] = useState(false);
+
+  // Khởi tạo state cho days, units và contents
   const [days, setDays] = useState<Day[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
+  // Đặt biến là int thì cho phép tạo lần đầu còn true false chỉ check đã tạo hoặc chưa tạo
   const [numUnitsAdded, setNumUnitsAdded] = useState(0);
   const [contents, setContents] = useState<Content[]>([]);
   const [unitName, setUnitName] = useState<string>("");
   const [selectedDay, setSelectedDay] = useState(0);
   const [selectedUnit, setSelectedUnit] = useState(0);
-
   //================ ADD DAY =================
   const handleAddDay = () => {
     const newDayId = days.length + 1;
@@ -75,7 +60,7 @@ const OutlineSyllabusPage: React.FC<{
       if (numUnitsAdded === 0) {
         const newUnitId = units.length + 1;
         const newUnit: Unit = { id: newUnitId, dayId: dayId, unitName: "" };
-        setShowAddUnit(true);
+        setShowAddUnit(true); // Hiển thị form thêm đơn vị mới
         setUnits([...units, newUnit]);
         setNumUnitsAdded(numUnitsAdded + 1);
       } else {
@@ -91,14 +76,14 @@ const OutlineSyllabusPage: React.FC<{
     unitId: number,
     unitName: string
   ) => {
-    //=============== Check UnitName =================
+    // kiểm tra đã nhập tên unit chưa
     if (unitName === "" || unitName.length <= 3) {
       toast.error(
         "Please enter a unit name with more than 3 characters before creating"
       );
       return;
     }
-    // ================= Check Unit Exist =================
+    // kiểm tra unit đã tồn tại chưa
     const existingUnit = units.find(
       (unit) => unit.dayId === dayId && unit.id === unitId
     );
@@ -138,7 +123,7 @@ const OutlineSyllabusPage: React.FC<{
     <div className="w-full">
       <div className=" flex gap-[20px]">
         {/*"Container Body Content"*/}
-        <div className="left w-4/5 h-[500px] overflow-y-auto">
+        <div className="left w-4/5">
           <hr className="h-[2px] bg-[#8B8B8B]" />
           <div className="w-full">
             {/*"Dropdown day 1"*/}
@@ -159,6 +144,8 @@ const OutlineSyllabusPage: React.FC<{
                   </summary>
 
                   <ul className="syllabus-list py-[10px] shadow bg-base-100 w-full left-0 top-11">
+                    {/**==========Add Name Unit ==========*/}
+
                     {units
                       .filter((unit) => unit.dayId === day.id) // Lọc ra các đơn vị có dayId tương ứng
                       .map((unit) => (
@@ -261,7 +248,7 @@ const OutlineSyllabusPage: React.FC<{
                                   )
                                   .map((content) => (
                                     <Detail
-                                      key={`${content.id}-${unit.id}`}
+                                      key={content.id}
                                       name={content.name}
                                       outputStandard={content.outputStandard}
                                       delivery={content.deliveryType}
@@ -403,7 +390,6 @@ const OutlineSyllabusPage: React.FC<{
           <Button
             className="bg-main w-[80px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm font-bold"
             title="Save"
-            onClick={handleSaveOutlineForm}
           />
         </div>
       </div>

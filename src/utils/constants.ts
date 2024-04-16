@@ -10,7 +10,6 @@ export enum API_LIST {
   REFRESH_TOKEN = "/auth/refresh",
   ADMIN_USER_LIST = "/user/hidden",
   ADMIN_USER_FILTER = "/user/search/hidden",
-  ADMIN_SYLLABUS_FILTER = "/syllabus/search/hidden",
   ADMIN_MODIFY_USER = "/user",
   UPDATE_AVATAR = "/user/updateImage",
   VIEW_CLASS = "/class",
@@ -21,11 +20,6 @@ export enum API_LIST {
   TRAINING_PROGRAM = "/trainingProgram",
   VIEW_SYLLABUS_DETAIL = "/syllabus",
   VIEW_UNIT_DETAIL = "/unit",
-  VIEW_CONTENT_DETAIL = "/content",
-  CREATE_SYLLABUS = "/syllabus",
-  CREATE_UNIT = "/unit",
-  CREATE_CONTENT = "/content",
-  DELETE_SYLLABUS = "/syllabus",
 }
 
 export enum USER_ROLE {
