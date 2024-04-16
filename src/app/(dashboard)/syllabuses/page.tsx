@@ -119,7 +119,7 @@ const Page: React.FC = () => {
               updateService={uploadSyllabusService}
             />
           )}
-          <Link href={"http://localhost:3000/syllabuses/create"}>
+          <Link href={"/syllabuses/create"}>
             <Button
               className="bg-primary-color rounded-lg w-[139px] h-[32px] px-[10px] py-[7px] text-sm text-white"
               icon={
