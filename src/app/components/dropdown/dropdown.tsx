@@ -14,7 +14,7 @@ export const Dropdown: FC<DropdownProps> = ({
   return (
     <form>
       <select
-        className={` w-full max-w-xs ${error ? "error" : ""}`}
+        className={` w-44 max-w-lg ${error ? "error" : ""}`}
         id={id}
         value={value}
         onChange={onChange}

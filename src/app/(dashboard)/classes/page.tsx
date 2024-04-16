@@ -64,16 +64,11 @@ const ViewClassPage: FC = () => {
     }
   };
 
-  // const getLink = () => {
-
-  // }
-
-  const formattedClasses = (classes: Class[]) =>
-    classes.map((clazz) => ({
+  const formattedClasses = (classes: any) =>
+    classes.map((clazz: any) => ({
       ...clazz,
-      // name: getLink(clazz.name),
-      createdDate: fromTimestampToDateString(clazz.createdDate),
-      duration: `${getDuration(clazz.startDate, clazz.endDate)} days`,
+      createdDate: fromTimestampToDateString(clazz.createdDate / 1000),
+      duration: `${clazz.duration} days`,
       classStatus: getClassStatus(clazz.classStatus),
     }));
 
@@ -81,6 +76,8 @@ const ViewClassPage: FC = () => {
     const response = await fetClassList(currentPage + 1, limit);
 
     setData(formattedClasses(response.content) as any);
+    //console.log('setData(formattedClasses(response.content) as any):', formattedClasses(response.content));
+    
     setMetadata(response.meatadataDTO);
   };
 
@@ -94,7 +91,6 @@ const ViewClassPage: FC = () => {
   const [showDuplicateModal, setShowDuplicateModal] = useState(false);
   const [dataClassDelete, setDataClassDelete] = useState({});
   const [dataClassDuplicate, setDataClassDuplicate] = useState({});
-
   const [sreachInput, setSreachInput] = useState("");
 
   const handleOpenAvancedBox = () => setIsFiltering(!isFiltering);
@@ -152,7 +148,6 @@ const ViewClassPage: FC = () => {
             onKeyDown={(e) => handleNormalSearch(e)}
             onChange={(e) => setSreachInput(e.target.value)}
           />
-
           <Button
             title="Filter"
             icon={<IoFilterSharp />}

@@ -1,6 +1,6 @@
 import axiosInstance from "@/lib/axios";
 import { handleResponse } from "../base.service";
-import { API_LIST, getRoute } from "@/utils/constants";
+import { API_LIST, getRoute, getRouteWithId } from "@/utils/constants";
 import axios from "axios";
 
 export const programService = {
@@ -27,6 +27,12 @@ export const uploadProgramsService = async (formData: FormData) => {
 export const uploadSyllabusService = async (formData: FormData) => {
   return handleResponse(
     await axiosInstance.post(getRoute(API_LIST.UPLOAD_SYLLABUS_CSV), formData)
+  );
+};
+
+export const getProgramById = async (id: number) => {
+  return handleResponse(
+    await axiosInstance.get(getRouteWithId(API_LIST.TRAINING_PROGRAM, id))
   );
 };
 

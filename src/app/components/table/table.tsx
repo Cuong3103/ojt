@@ -24,8 +24,8 @@ type TableProps = {
   subOptions?: Option[];
   openSubMenu?: boolean;
   isPopupOpen?: boolean;
-  setDataToUpdate?: Dispatch<SetStateAction<any>>;
-  setIsPopupOpen?: Dispatch<SetStateAction<any>>;
+  setDataToUpdate: Dispatch<SetStateAction<any>>;
+  setIsPopupOpen: Dispatch<SetStateAction<any>>;
   setData?: Dispatch<SetStateAction<any>>;
   handleSubMenuItemClick?: (value: any) => void;
 };
@@ -41,8 +41,11 @@ export const Table: FC<TableProps> = ({
   handleSubMenuItemClick,
   setIsPopupOpen,
 }) => {
+  console.log('data', data);
+  
   const [dataId, setDataId] = useState();
   setDataToUpdate(dataId);
+
   const handleOpenPopup = (dataId: any) => {
     setDataId(dataId);
     setIsPopupOpen(!isPopupOpen);
@@ -156,7 +159,32 @@ export const Table: FC<TableProps> = ({
             )}
           </span>
         );
-
+      case "status":
+        return (
+          <span>
+            {row[column.id] === "active" ? (
+              <Chip active="active" />
+            ) : row[column.id] === "Inactive" ? (
+              <Chip inactive="Inactive" />
+            ) : row[column.id] === "draft" ? (
+              <Chip draft="draft" />
+            ) : (
+              <Chip active="active" />
+            )}
+          </span>
+        );
+      case "name":
+        return (
+          <div>
+            <Link
+              href={{
+                pathname: `classes/${row.id}`,
+              }}
+            >
+              {row[column.id]}
+            </Link>
+          </div>
+        );
       default:
         return row[column.id];
     }
@@ -183,18 +211,29 @@ export const Table: FC<TableProps> = ({
           </tr>
         </thead>
         <tbody className="divide-y divide-black w-full overflow-y-scroll">
-          {data.map((row, index) => (
-            <tr key={index} className="hover w-1/4">
-              {columns.map((column) => (
-                <td
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
-                  key={column.id}
-                >
-                  {renderCellContent(row, column)}
-                </td>
-              ))}
+          {data.length === 0 ? (
+            <tr>
+              <td
+                colSpan={columns.length}
+                className="px-6 py-4 whitespace-nowrap text-lg text-gray-900 text-center "
+              >
+                No data
+              </td>
             </tr>
-          ))}
+          ) : (
+            data.map((row, index) => (
+              <tr key={index} className="hover w-1/4">
+                {columns.map((column) => (
+                  <td
+                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                    key={column.id}
+                  >
+                    {renderCellContent(row, column)}
+                  </td>
+                ))}
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

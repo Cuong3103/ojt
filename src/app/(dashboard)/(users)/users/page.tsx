@@ -123,7 +123,9 @@ const UserListPage: FC = () => {
     }));
 
   const getUsers = async () => {
+    
     const response = await fetchUserList(currentPage + 1, limit);
+
     setData(formatUserList(response.content) as any);
     setMetadata(response.meatadataDTO);
   };

@@ -6,6 +6,7 @@ export type User = {
   firstName: string;
   lastName: string;
   username?: string;
+  fullName?: string;
   email: string;
   dob?: number;
   avatarUrl?: string;
@@ -20,13 +21,16 @@ export type User = {
 
 export type Program = {
   id: number;
+  name: string;
   uuid?: string;
-  programName?: string;
-  createdOn?: string;
-  createdBy?: string;
-  duration?: string;
-  status?: string;
+  startTime: number;
+  duration?: number;
+  training_status: number;
+  status?: boolean;
+  syllabusIds: number[];
   createdDate?: string;
+  createBy?: string;
+  modifiedBy?: string;
 };
 
 type Content = {

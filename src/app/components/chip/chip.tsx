@@ -3,7 +3,7 @@ import { IoClose } from "react-icons/io5";
 import "../status/status.css";
 
 type ChipProps = {
-  active?: string;
+  active?: string |number;
   inactive?: string;
   draft?: string;
   removeBadge?: string;
@@ -22,7 +22,7 @@ export const Chip: FC<ChipProps> = ({
   return (
     <>
       {active && (
-        <div className="badge badge-neutrall" style={style}>
+        <div className="badge badge-lg" style={style}>
           {active}
         </div>
       )}
