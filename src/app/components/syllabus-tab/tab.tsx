@@ -19,14 +19,16 @@ export const Tab: FC<tabPage> = ({ onTabPageChange, tabLabels }) => {
     return <div>No tabs available</div>;
   }
 
-  useEffect(() => {
-    if (tabLabels.length > 0) {
-      setSelectTab(tabLabels[0]);
+  const handleSelectTab = (tabs: string[]) => {
+    if (tabs.length > 0) {
+      setSelectTab(tabs[0]);
     }
+  }
+
+  useEffect(() => {
+    handleSelectTab(tabLabels); 
   }, [tabLabels]);
   
-  
-
   return (
     <div role="tablist" className="tabs tabs-lifted w-200 h-30 ">
       {tabLabels.map((label) => (

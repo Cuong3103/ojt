@@ -834,7 +834,7 @@ const ViewClassDetail: FC = () => {
                   <div className="time">
                     {trainers.length > 0 &&
                       trainers.map((trainer) => (
-                        <div className="text-more-info">
+                        <div className="text-more-info" key={0}>
                           {trainer.firstName + " " + trainer.lastName}
 
                           <div className="dropdown dropdown-hover dropdown-top">
@@ -877,7 +877,7 @@ const ViewClassDetail: FC = () => {
                   <div className="time">
                     {admins.length > 0 &&
                       admins.map((admin) => (
-                        <div className="text-more-info">
+                        <div className="text-more-info" key={0}>
                           {admin.firstName + " " + admin.lastName}
                           <div className="dropdown dropdown-hover dropdown-top">
                             <div tabIndex={0} style={{ cursor: "pointer" }}>

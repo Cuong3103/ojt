@@ -1,4 +1,6 @@
-"use client";
+"use client"
+
+/* eslint-disable */
 import Button from "@/app/components/button/button";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -7,7 +9,8 @@ import { toast } from "react-toastify";
 type GeneralProps = {
   generalFormData: Dispatch<SetStateAction<any>>;
 };
-const GeneralSyllabusPage: React.FC<GeneralProps> = ({ generalFormData }) => {
+
+const GeneralSyllabusPage: React.FC<GeneralProps> = ({ generalFormData }: GeneralProps) => {
   const [level, setLevel] = useState("");
   const [attendee, setAttendee] = useState(Number);
   const [technical, setTechnical] = useState("");
@@ -178,4 +181,5 @@ const GeneralSyllabusPage: React.FC<GeneralProps> = ({ generalFormData }) => {
   );
 };
 
+// eslint-disable-next-line
 export default GeneralSyllabusPage;

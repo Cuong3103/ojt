@@ -3,7 +3,7 @@ export const LOGIN_FLAG = "login";
 export const BASE_API_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:8080/api/v1"
-    : "http://34.101.243.11:8081/api/v1";
+    : "http://35.185.188.103:8081/api/v1";
 
 export enum API_LIST {
   LOGIN = "/auth/signin",

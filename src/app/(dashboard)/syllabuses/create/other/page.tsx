@@ -1,3 +1,4 @@
+"use client"
 import Button from "@/app/components/button/button";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
