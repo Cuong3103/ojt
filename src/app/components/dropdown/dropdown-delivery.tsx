@@ -40,7 +40,7 @@ export const Delivery: FC<DeliveryProps> = ({ onDeliveryTypeChange }) => {
         <div className="flex flex-col pb-[10px] gap-[5px] bg-white shadow-md z-10">
           <div
             className="flex items-center px-[16px] gap-[10px] cursor-pointer"
-            onClick={() => handleSetType("Assignment_Lab")}
+            onClick={() => handleSetType("Assignment/Lab")}
           >
             <MdOutlineAssignment />
             <p className="text-[#2C5282] font-medium text-xs">
@@ -51,7 +51,7 @@ export const Delivery: FC<DeliveryProps> = ({ onDeliveryTypeChange }) => {
 
           <div
             className="flex items-center px-[16px] gap-[10px] cursor-pointer"
-            onClick={() => handleSetType("Concept_Lecture")}
+            onClick={() => handleSetType("Concept/Lecture")}
           >
             {" "}
             <HiOutlineLightBulb />
@@ -62,7 +62,7 @@ export const Delivery: FC<DeliveryProps> = ({ onDeliveryTypeChange }) => {
 
           <div
             className="flex items-center px-[16px] gap-[10px] cursor-pointer"
-            onClick={() => handleSetType("Guide_Review")}
+            onClick={() => handleSetType("Guide/Review")}
           >
             {" "}
             <FaRegHandPaper />
@@ -71,7 +71,7 @@ export const Delivery: FC<DeliveryProps> = ({ onDeliveryTypeChange }) => {
 
           <div
             className="flex items-center px-[16px] gap-[10px] cursor-pointer"
-            onClick={() => handleSetType("Test_Quiz")}
+            onClick={() => handleSetType("Test/Quiz")}
           >
             {" "}
             <MdOutlineFactCheck />
@@ -89,7 +89,7 @@ export const Delivery: FC<DeliveryProps> = ({ onDeliveryTypeChange }) => {
 
           <div
             className="flex items-center px-[16px] gap-[10px] cursor-pointer"
-            onClick={() => handleSetType("Seminar_Workshop")}
+            onClick={() => handleSetType("Seminar/Workshop")}
           >
             {" "}
             <MdOutlineGroups />
