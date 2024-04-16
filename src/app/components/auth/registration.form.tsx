@@ -22,7 +22,7 @@ export const RegistrationForm: FC<RegistrationFormProps> = (props) => {
       redirect: true,
       callbackUrl: props.callbackUrl
         ? props.callbackUrl
-        : "http://localhost:3000",
+        : "/",
     });
   };
 
