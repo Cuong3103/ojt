@@ -20,6 +20,11 @@ export enum API_LIST {
   TRAINING_PROGRAM = "/trainingProgram",
   VIEW_SYLLABUS_DETAIL = "/syllabus",
   VIEW_UNIT_DETAIL = "/unit",
+  VIEW_CONTENT_DETAIL = "/content",
+  CREATE_SYLLABUS = "/syllabus",
+  CREATE_UNIT = "/unit",
+  CREATE_CONTENT = "/content",
+  DELETE_SYLLABUS = "/syllabus",
 }
 
 export enum USER_ROLE {
