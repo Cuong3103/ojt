@@ -17,32 +17,20 @@ import { HiOutlineDuplicate } from "react-icons/hi";
 import useQuery from "@/hooks/useQuery";
 import { fromTimestampToDateString } from "@/utils/formatUtils";
 import { totalPage } from "@/utils/paginationHelper";
-import { searchSyllabus, syllabusService } from "@/services/syllabuses/syllabusService";
+import { syllabusService } from "@/services/syllabuses/syllabusService";
 import { UploadFileModal } from "@/app/components/modal/UploadFileModal";
 import { uploadSyllabusService } from "@/services/programs/programService";
-import { DeleteSyllabusModal } from "@/app/components/syllabus-modal/delete-syllabus-modal";
-import { Syllabus } from "@/types/syllabus.type";
-import useMutation from "@/hooks/useMutation";
-import { toast } from "react-toastify";
-
+const options = [
+  { icon: <FaPencilAlt />, label: "Add syllabus" },
+  { icon: <RxAvatar />, label: "Edit syllabus" },
+  { icon: <HiOutlineDuplicate />, label: "Duplicate Syllabus" },
+  { icon: <FaEyeSlash />, label: "Delete syllabus" },
+];
 const Page: React.FC = () => {
-  const handleOpenUpdatePopup = (syllabusInfo: any) => {
-    setShowDeleteModal(!showDeleteModal);
-    setDataSyllabusDelete(syllabusInfo);
-  };
-  const options = [
-    { icon: <FaPencilAlt />, label: "Add syllabus" },
-    { icon: <RxAvatar />, label: "Edit syllabus" },
-    { icon: <HiOutlineDuplicate />, label: "Duplicate Syllabus" },
-    {
-      icon: <FaEyeSlash />,
-      label: "Delete syllabus",
-      onClick: handleOpenUpdatePopup,
-    },
-  ];
   {
     /**================== Api ========================= */
   }
+  const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const handleLimitSelection = (e: ChangeEvent<HTMLSelectElement>) => {
     setCurrentPage(0);
@@ -63,7 +51,8 @@ const Page: React.FC = () => {
   } = useQuery(syllabusService.getSyllabus);
 
   const syllabuses = syllabusData?.content || [];
-  const [syllabusToUpdate, setSyllabusToUpdate] = useState<number>(0);
+
+  const nullFun = () => {};
   const syllabusStatus = (syllabus: any) => {
     if (syllabus.isActive === false) {
       return <Chip inactive="Inactive" />;
@@ -79,21 +68,25 @@ const Page: React.FC = () => {
       <Link href={`/syllabuses/viewdetail/${syllabus.id}`}>
         {syllabus.name}
       </Link>
-    );
+    ); // Sử dụng syllabus.id thay vì syllabusId
   };
-  const formatSyllabusList = (syllabuses: Syllabus[]) =>
+  const formatSyllabusList = (syllabuses: any[]) =>
     syllabuses.map((syllabus) => ({
       ...syllabus,
       name: syllabusName(syllabus),
       status: syllabusStatus(syllabus),
       createdBy: syllabus.createBy,
-      createdOn: fromTimestampToDateString(syllabus.createdDate / 1000),
+      createdOn: fromTimestampToDateString(syllabus.createdDate),
     }));
 
   const [showUploadModal, setShowUploadModal] = useState(false);
 
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [dataSyllabusDelete, setDataSyllabusDelete] = useState({});
+  const [selectedOption, setSelectedOption] = useState("allow");
+
+  // Hàm xử lý sự kiện thay đổi của input radio
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedOption(event.target.value);
+  };
 
   return (
     <div className="w-screen">
@@ -102,7 +95,8 @@ const Page: React.FC = () => {
       </div>
       <div className="head-control mt-2 flex items-center justify-between px-5">
         <div className="left">
-          <InputSearch onChange={(e) => console.log("SEARCH TERM::", e.target.value)} />
+          <InputSearch />
+          <InputSearch />
         </div>
         <div className="right flex items-center gap-2">
           <Button
@@ -142,19 +136,11 @@ const Page: React.FC = () => {
             columns={syllabusColumns}
             icon={<BsFilterLeft />}
             popupMenu={options}
-            setData={setSyllabusData}
-            setDataToUpdate={setSyllabusToUpdate}
+            setDataToUpdate={nullFun}
             isPopupOpen={isPopupOpen}
             setIsPopupOpen={setIsPopupOpen}
           />
           <div className="flex">
-            {showDeleteModal && (
-              <DeleteSyllabusModal
-                setData={setSyllabusData}
-                syllabusId={syllabusToUpdate}
-                handleClose={() => setShowDeleteModal(false)}
-              />
-            )}
             <Pagination
               page={totalPage(metadata)}
               pageCount={metadata.limit}

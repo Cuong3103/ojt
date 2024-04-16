@@ -30,22 +30,19 @@ export const Detail: FC<DetailProps> = ({
   delivery,
 }) => {
   const handleSetDelivery = (value: string) => {
-    if (value === "Assignment/Lab" || value === "Assignment_Lab") {
+    if (value === "Assignment/Lab") {
       return <MdOutlineAssignment style={{ height: "24px", width: "24px" }} />;
-    } else if (value === "Concept/Lecture" || value === "Concept_Lecture") {
+    } else if (value === "Concept/Lecture") {
       return <HiOutlineLightBulb style={{ height: "24px", width: "24px" }} />;
-    } else if (value === "Guide/Review" || value === "Guide_Review") {
+    } else if (value === "Guide/Review") {
       return <FaRegHandPaper style={{ height: "24px", width: "24px" }} />;
-    } else if (value === "Test/Quiz" || value === "Test_Quiz") {
+    } else if (value === "Test/Quiz") {
       return <MdOutlineFactCheck style={{ height: "24px", width: "24px" }} />;
     } else if (value === "Exam") {
       return <PiExam style={{ height: "24px", width: "24px" }} />;
-    } else if (value === "Seminar/Workshop" || value === "Seminar_Workshop") {
+    } else if (value === "Seminar/Workshop") {
       return <MdOutlineGroups style={{ height: "24px", width: "24px" }} />;
     }
-  };
-  const convertDuration = (value: number) => {
-    return Math.floor(value / 60000);
   };
   return (
     <div className="w-full bg-[#DFDEDE] flex items-center justify-between px-[20px] py-[5px] rounded-[10px]">
@@ -57,9 +54,7 @@ export const Detail: FC<DetailProps> = ({
           <Chip active={outputStandard} />
         </div>
         <div className="w-[49px] h-[28px] flex items-center">
-          <p className="text-sm font-normal">
-            {convertDuration(trainingTime)}mins
-          </p>
+          <p className="text-sm font-normal">{trainingTime}mins</p>
         </div>
         <div>
           <button
