@@ -3,14 +3,25 @@ import { SlClose } from "react-icons/sl";
 
 import "./syllabus.css";
 
-export const SyllabusCard: FC = () => {
+interface SyllabusCardProps {
+  name: string;
+  status: string; 
+  version: string;
+  duration: string;
+  modifiedBy: string;
+  modifiedDate: string;
+  days?:number;
+}
+
+
+export const SyllabusCard: FC<SyllabusCardProps> = ({ name, status, version, duration, modifiedBy, modifiedDate, days }) => {
   return (
     <div className="syllabus-container">
       <div className="top-content">
         <div className="top-left-content">
-          <h4 className="course-name">Linux</h4>
+          <div className="course-name">{name}</div>
           <div className="status">
-            Active{/*Sau này import status thay vào*/}
+            {status}
           </div>
         </div>
         <div className="top-right-icon">
@@ -18,11 +29,11 @@ export const SyllabusCard: FC = () => {
         </div>
       </div>
       <div className="bot-content">
-        <p className="course-content">LIN v2.0</p>
+        <p className="course-content">{version}</p>
         <div className="vertical-line"></div>
-        <p className="course-content">4 days (12 hours)</p>
+        <p className="course-content">{`${days ?days : ''} days`} ({duration})</p>
         <div className="vertical-line"></div>
-        <p className="course-content">Modified on 23/07/2022 by Johny Deep</p>
+        <p className="course-content">Modified on {modifiedDate} by {modifiedBy}</p>
       </div>
     </div>
   );
