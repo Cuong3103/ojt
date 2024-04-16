@@ -1,7 +1,39 @@
+"use client";
 import Button from "@/app/components/button/button";
 import Image from "next/image";
+import { Dispatch, SetStateAction, useState } from "react";
+import { toast } from "react-toastify";
 
-const GeneralSyllabusPage: React.FC = () => {
+type GeneralProps = {
+  generalFormData: Dispatch<SetStateAction<any>>;
+};
+const GeneralSyllabusPage: React.FC<GeneralProps> = ({ generalFormData }) => {
+  const [level, setLevel] = useState("");
+  const [attendee, setAttendee] = useState(Number);
+  const [technical, setTechnical] = useState("");
+  const [formGeneral, setFormGeneral] = useState({
+    level: "",
+    attendeeNumber: "",
+    technicalRequirements: "",
+  });
+  const handleSave = () => {
+    if (isNaN(attendee)) {
+      toast.error("Attendee number must be a valid number.");
+      return;
+    }
+    if (technical === "") {
+      toast.error("Please enter data must not be blank");
+      return;
+    }
+    const updateGeneralData = {
+      level: level,
+      attendeeNumber: attendee,
+      technicalRequirements: technical,
+    };
+    setFormGeneral(updateGeneralData);
+    generalFormData(updateGeneralData);
+    toast.success("Save General Data successfully");
+  };
   return (
     <>
       <div className=" flex gap-[20px]">
@@ -11,7 +43,12 @@ const GeneralSyllabusPage: React.FC = () => {
             {/*"============Level==================="*/}
             <div className="mt-[10px] flex items-center gap-[39px]">
               <span className="font-semibold text-base">Level</span>
-              <select className=" rounded-[5px] shadow px-[10px] py-[5px] w-[270px]">
+              <select
+                className=" rounded-[5px] shadow px-[10px] py-[5px] w-[270px]"
+                onChange={(e) => {
+                  setLevel(e.target.value);
+                }}
+              >
                 <option value="1">Auto Detect</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -22,9 +59,12 @@ const GeneralSyllabusPage: React.FC = () => {
             <div className="mt-[10px] flex items-center gap-[41px]">
               <span className="font-semibold text-base">Attendee number</span>
               <input
-                className="attendee border-[1px] border-[#8B8B8B] p-[10px] rounded-[6px] w-[173px]"
-                type="text"
-                placeholder="20"
+                className="attendee border-[1px] border-[#8B8B8B] p-[10px] rounded-[6px] w-[173px] placeholder-gray-400"
+                type="number"
+                placeholder="Please enter number"
+                onChange={(e) => {
+                  setAttendee(e.target.value);
+                }}
               />
             </div>
             {/*"============Technical Requirement(s)==="*/}
@@ -41,6 +81,9 @@ const GeneralSyllabusPage: React.FC = () => {
                 id=""
                 cols={parseInt("30")}
                 rows={parseInt("10")}
+                onChange={(e) => {
+                  setTechnical(e.target.value);
+                }}
               ></textarea>
             </div>
             {/*"============Course Objectives=========="*/}
@@ -127,6 +170,7 @@ const GeneralSyllabusPage: React.FC = () => {
           <Button
             className="bg-main w-[80px] h-[28px] px-[25px] py-[2px] rounded-[8px] shadow text-white text-sm font-bold"
             title="Save"
+            onClick={handleSave}
           />
         </div>
       </div>
